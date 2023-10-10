@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToolbarModule } from "./toolbar/toolbar.component";
 import { NgOptimizedImage } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { MatCardModule } from "@angular/material/card";
     ToolbarModule,
     NgOptimizedImage,
     MatCardModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

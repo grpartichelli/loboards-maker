@@ -3,18 +3,23 @@
 .app {
   height: 100%;
   width: 100%;
-  background: colors.$primary-background;
   display: flex;
   flex-direction: column;
 
   &__body {
     display: flex;
     justify-content: center;
-    padding: 2.5rem;
+    padding: 2rem;
     flex: 1;
   }
 
   &__image {
     margin-left: 2.5rem;
+
+    &-card {
+      padding: 2rem;
+      height: fit-content;
+      background-color: colors.$primary-background;
+    }
   }
 }

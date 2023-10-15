@@ -1,14 +1,37 @@
 <div class="app">
   <lobogames-creator-toolbar></lobogames-creator-toolbar>
   <div class="app__body">
-    <mat-card class="app__image-card">
-      <img
-        class="app__image"
-        alt="lobogames logo"
-        [ngSrc]="logoUrl"
-        width="516"
-        height="140"
-      />
-    </mat-card>
+    <div class="app__image-container">
+      <mat-card class="app__image-card">
+        <img
+          class="app__image"
+          alt="lobogames logo"
+          [ngSrc]="logoUrl"
+          width="516"
+          height="140"
+        />
+      </mat-card>
+    </div>
+
+    <div class="app__options-container">
+      <mat-card
+        class="app__option app__option--create-game"
+        (click)="onGameCreatorClick()"
+      >
+        <mat-icon svgIcon="board_piece"></mat-icon>
+        <span>Criador de Jogos</span>
+      </mat-card>
+      <mat-card class="app__option app__option--app" (click)="onAppClick()">
+        <mat-icon>phone_android</mat-icon>
+        <span>Aplicativo</span>
+      </mat-card>
+      <mat-card
+        class="app__option app__option--about-us"
+        (click)="onProjectClick()"
+      >
+        <mat-icon>open_in_new</mat-icon>
+        <span>Website</span>
+      </mat-card>
+    </div>
   </div>
 </div>

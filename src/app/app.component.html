@@ -1,22 +1,23 @@
 <div class="app">
   <lobogames-toolbar
+    *ngIf="isToolbarVisible"
     (onMenuActionRequested)="onMenuClicked()"
   ></lobogames-toolbar>
   <mat-drawer-container class="app__sidenav-container">
     <mat-drawer class="app__sidenav" mode="side" [opened]="isSidenavOpen">
       <mat-nav-list>
         <mat-divider></mat-divider>
-        <div class="app__sidenav__item" (click)="onGameCreatorClicked()">
+        <div class="app__sidenav__item" routerLink="/creator">
           <mat-icon>home</mat-icon>
           <span>Criador de Jogos</span>
         </div>
         <mat-divider></mat-divider>
-        <div class="app__sidenav__item" (click)="onAppClicked()">
+        <div class="app__sidenav__item" (click)="Navigation.openApp()">
           <mat-icon>phone_android</mat-icon>
           <span>Aplicativo</span>
         </div>
         <mat-divider></mat-divider>
-        <div class="app__sidenav__item" (click)="onWebsiteClicked()">
+        <div class="app__sidenav__item" (click)="Navigation.openWebsite()">
           <mat-icon>open_in_new</mat-icon>
           <span>Website</span>
         </div>

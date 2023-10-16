@@ -13,18 +13,21 @@
   <div class="home__options-container">
     <mat-card
       class="home__option home__option--create-game"
-      (click)="onGameCreatorClicked()"
+      routerLink="/creator"
     >
       <mat-icon svgIcon="board_piece"></mat-icon>
       <span>Criador de Jogos</span>
     </mat-card>
-    <mat-card class="home__option home__option--app" (click)="onAppClicked()">
+    <mat-card
+      class="home__option home__option--app"
+      (click)="Navigation.openApp()"
+    >
       <mat-icon>phone_android</mat-icon>
       <span>Aplicativo</span>
     </mat-card>
     <mat-card
       class="home__option home__option--about-us"
-      (click)="onWebsiteClicked()"
+      (click)="Navigation.openWebsite()"
     >
       <mat-icon>open_in_new</mat-icon>
       <span>Website</span>

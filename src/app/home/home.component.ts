@@ -2,6 +2,8 @@ import { Component, NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { NgOptimizedImage } from "@angular/common";
+import { Navigation } from "../utils/navigation";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "lobogames-home",
@@ -10,23 +12,12 @@ import { NgOptimizedImage } from "@angular/common";
 })
 export class HomeComponent {
   public readonly logoUrl = "assets/logo.png";
-
-  public onAppClicked() {
-    window.open(
-      "https://play.google.com/store/apps/details?id=com.marcoantonioaav.lobogames",
-    );
-  }
-
-  public onGameCreatorClicked() {}
-
-  public onWebsiteClicked() {
-    window.open("https://www.inf.ufrgs.br/lobogames/");
-  }
+  public readonly Navigation = Navigation;
 }
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [MatCardModule, MatIconModule, NgOptimizedImage],
+  imports: [MatCardModule, MatIconModule, NgOptimizedImage, RouterLink],
   exports: [HomeComponent],
 })
 export class HomeModule {}

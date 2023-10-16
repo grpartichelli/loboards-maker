@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Navigation } from "./utils/navigation";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -9,10 +11,12 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class AppComponent {
   public isSidenavOpen = false;
+  public readonly Navigation = Navigation;
 
   constructor(
     private readonly iconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,
+    private readonly router: Router,
   ) {
     this.iconRegistry.addSvgIcon(
       "board_piece",
@@ -22,19 +26,11 @@ export class AppComponent {
     );
   }
 
+  public get isToolbarVisible(): boolean {
+    return this.router.url !== "/creator";
+  }
+
   public onMenuClicked() {
     this.isSidenavOpen = !this.isSidenavOpen;
-  }
-
-  public onAppClicked() {
-    window.open(
-      "https://play.google.com/store/apps/details?id=com.marcoantonioaav.lobogames",
-    );
-  }
-
-  public onGameCreatorClicked() {}
-
-  public onWebsiteClicked() {
-    window.open("https://www.inf.ufrgs.br/lobogames/");
   }
 }

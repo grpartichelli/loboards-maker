@@ -12,6 +12,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { HttpClientModule } from "@angular/common/http";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
+import { CreatorModule } from "./creator/creator.component";
+import { HomeModule } from "./home/home.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +29,8 @@ import { MatListModule } from "@angular/material/list";
     HttpClientModule,
     MatSidenavModule,
     MatListModule,
+    CreatorModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Location } from "@angular/common";
 
 @Component({
   selector: "app-root",
@@ -9,6 +8,9 @@ import { Location } from "@angular/common";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
+  public isSidenavOpen = true;
+  public readonly logoUrl = "assets/logo.png";
+
   constructor(
     private readonly iconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,
@@ -20,17 +22,20 @@ export class AppComponent {
       ),
     );
   }
-  public readonly logoUrl = "assets/logo.png";
 
-  public onGameCreatorClick() {}
-
-  public onAppClick() {
+  public onAppClicked() {
     window.open(
       "https://play.google.com/store/apps/details?id=com.marcoantonioaav.lobogames",
     );
   }
 
-  public onProjectClick() {
+  public onMenuClicked() {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
+
+  public onGameCreatorClicked() {}
+
+  public onWebsiteClicked() {
     window.open("https://www.inf.ufrgs.br/lobogames/");
   }
 }

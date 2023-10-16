@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">
   <button
+    class="toolbar__menu example-icon"
     mat-icon-button
-    class="example-icon"
     aria-label="Example icon-button with menu icon"
+    (click)="onMenuClicked()"
   >
-    <mat-icon>home</mat-icon>
+    <mat-icon>menu</mat-icon>
   </button>
   <span>Logic Board Games Creator</span>
   <span class="example-spacer"></span>

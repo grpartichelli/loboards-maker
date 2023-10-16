@@ -8,8 +8,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  public isSidenavOpen = true;
-  public readonly logoUrl = "assets/logo.png";
+  public isSidenavOpen = false;
 
   constructor(
     private readonly iconRegistry: MatIconRegistry,
@@ -23,14 +22,14 @@ export class AppComponent {
     );
   }
 
+  public onMenuClicked() {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
+
   public onAppClicked() {
     window.open(
       "https://play.google.com/store/apps/details?id=com.marcoantonioaav.lobogames",
     );
-  }
-
-  public onMenuClicked() {
-    this.isSidenavOpen = !this.isSidenavOpen;
   }
 
   public onGameCreatorClicked() {}

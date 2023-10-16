@@ -23,38 +23,6 @@
         <mat-divider></mat-divider>
       </mat-nav-list>
     </mat-drawer>
-    <mat-drawer-content class="app__body">
-      <div class="app__image-container">
-        <mat-card class="app__image-card">
-          <img
-            class="app__image"
-            alt="lobogames logo"
-            [ngSrc]="logoUrl"
-            width="516"
-            height="140"
-          />
-        </mat-card>
-      </div>
-      <div class="app__options-container">
-        <mat-card
-          class="app__option app__option--create-game"
-          (click)="onGameCreatorClicked()"
-        >
-          <mat-icon svgIcon="board_piece"></mat-icon>
-          <span>Criador de Jogos</span>
-        </mat-card>
-        <mat-card class="app__option app__option--app" (click)="onAppClicked()">
-          <mat-icon>phone_android</mat-icon>
-          <span>Aplicativo</span>
-        </mat-card>
-        <mat-card
-          class="app__option app__option--about-us"
-          (click)="onWebsiteClicked()"
-        >
-          <mat-icon>open_in_new</mat-icon>
-          <span>Website</span>
-        </mat-card>
-      </div>
-    </mat-drawer-content>
+    <router-outlet></router-outlet>
   </mat-drawer-container>
 </div>

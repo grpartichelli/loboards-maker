@@ -11,14 +11,14 @@ import { RouterLink } from "@angular/router";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
-  constructor(private readonly navigationUtils: NavigationService) {}
+  constructor(private readonly navigationService: NavigationService) {}
 
   public onAppClicked() {
-    this.navigationUtils.navigateToApp();
+    this.navigationService.navigateToApp();
   }
 
   public onWebsiteClicked() {
-    this.navigationUtils.navigateToWebsite();
+    this.navigationService.navigateToWebsite();
   }
 }
 

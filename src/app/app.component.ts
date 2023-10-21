@@ -12,17 +12,17 @@ export class AppComponent {
 
   constructor(
     private readonly iconsRegistry: IconsRegistry,
-    private readonly navigationUtils: NavigationService,
+    private readonly navigationService: NavigationService,
   ) {
     this.iconsRegistry.registerAll();
   }
 
   public get isToolbarVisible(): boolean {
-    return this.navigationUtils.isOnCreatorRoute();
+    return this.navigationService.isOnCreatorRoute();
   }
 
   public onAppClicked() {
-    this.navigationUtils.navigateToApp();
+    this.navigationService.navigateToApp();
   }
 
   public onMenuClicked() {
@@ -30,6 +30,6 @@ export class AppComponent {
   }
 
   public onWebsiteClicked() {
-    this.navigationUtils.navigateToWebsite();
+    this.navigationService.navigateToWebsite();
   }
 }

@@ -2,7 +2,7 @@ import { Component, NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { NgOptimizedImage } from "@angular/common";
-import { Navigation } from "../../utils/navigation";
+import { NavigationService } from "../../commons/navigation.service";
 import { RouterLink } from "@angular/router";
 
 @Component({
@@ -11,8 +11,15 @@ import { RouterLink } from "@angular/router";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
-  public readonly logoUrl = "assets/logo.png";
-  public readonly Navigation = Navigation;
+  constructor(private readonly navigationUtils: NavigationService) {}
+
+  public onAppClicked() {
+    this.navigationUtils.navigateToApp();
+  }
+
+  public onWebsiteClicked() {
+    this.navigationUtils.navigateToWebsite();
+  }
 }
 
 @NgModule({

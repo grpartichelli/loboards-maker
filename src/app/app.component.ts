@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Navigation } from "./utils/navigation";
-import { Router } from "@angular/router";
+import { NavigationService } from "./commons/navigation.service";
+import { IconsRegistry } from "./commons/icons.registry";
 
 @Component({
   selector: "app-root",
@@ -11,26 +9,27 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   public isSidenavOpen = false;
-  public readonly Navigation = Navigation;
 
   constructor(
-    private readonly iconRegistry: MatIconRegistry,
-    private readonly domSanitizer: DomSanitizer,
-    private readonly router: Router,
+    private readonly iconsRegistry: IconsRegistry,
+    private readonly navigationUtils: NavigationService,
   ) {
-    this.iconRegistry.addSvgIcon(
-      "board_piece",
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/board_piece.svg",
-      ),
-    );
+    this.iconsRegistry.registerAll();
   }
 
   public get isToolbarVisible(): boolean {
-    return this.router.url !== "/creator";
+    return this.navigationUtils.isOnCreatorRoute();
+  }
+
+  public onAppClicked() {
+    this.navigationUtils.navigateToApp();
   }
 
   public onMenuClicked() {
     this.isSidenavOpen = !this.isSidenavOpen;
+  }
+
+  public onWebsiteClicked() {
+    this.navigationUtils.navigateToWebsite();
   }
 }

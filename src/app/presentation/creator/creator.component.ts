@@ -10,7 +10,11 @@ import { MatButtonModule } from "@angular/material/button";
   encapsulation: ViewEncapsulation.None,
 })
 export class CreatorComponent {
-  public readonly logoUrl = "assets/logo.png";
+  constructor() {}
+
+  public onAccept() {}
+
+  public onReject() {}
 }
 
 @NgModule({

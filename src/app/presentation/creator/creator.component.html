@@ -9,7 +9,7 @@
     <img
       class="creator__logo"
       alt="lobogames logo"
-      [ngSrc]="logoUrl"
+      ngSrc="assets/logo.png"
       width="250"
       height="72"
     />
@@ -17,7 +17,9 @@
   <div class="creator__body"><span> Testing </span></div>
 
   <div class="creator__actions">
-    <button mat-raised-button>Voltar</button>
-    <button mat-raised-button color="accent">Continuar</button>
+    <button mat-raised-button (click)="onReject()">Voltar</button>
+    <button mat-raised-button color="accent" (click)="onAccept()">
+      Continuar
+    </button>
   </div>
 </div>

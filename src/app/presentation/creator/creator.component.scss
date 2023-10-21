@@ -37,5 +37,10 @@ $progress-bar-height: 0.6rem !important;
     padding-block: 3rem;
     display: flex;
     justify-content: space-around;
+
+    button {
+      height: 2.5rem !important;
+      width: 9.375rem;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { Component, NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { NgOptimizedImage } from "@angular/common";
-import { Navigation } from "../utils/navigation";
+import { Navigation } from "../../utils/navigation";
 import { RouterLink } from "@angular/router";
 
 @Component({

@@ -4,16 +4,14 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ToolbarModule } from "./presentation/toolbar/toolbar.component";
-import { NgOptimizedImage } from "@angular/common";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
+import { ToolbarModule } from "./components/toolbar/toolbar.component";
+import { NgOptimizedImage, NgIf } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { MatSidenavModule } from "@angular/material/sidenav";
+import { CreatorModule } from "./components/creator/creator.component";
+import { HomeModule } from "./components/home/home.component";
 import { MatListModule } from "@angular/material/list";
-import { CreatorModule } from "./presentation/creator/creator.component";
-import { HomeModule } from "./presentation/home/home.component";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,16 +19,15 @@ import { HomeModule } from "./presentation/home/home.component";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToolbarModule,
     NgOptimizedImage,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
     HttpClientModule,
-    MatSidenavModule,
-    MatListModule,
+    ToolbarModule,
     CreatorModule,
     HomeModule,
+    NgIf,
+    MatListModule,
+    MatSidenavModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

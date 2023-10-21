@@ -28,13 +28,11 @@ $progress-bar-height: 0.6rem !important;
 
   &__body {
     flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 1.5rem;
   }
 
   &__actions {
-    padding-block: 3rem;
+    padding-block: 1.5rem 3rem;
     display: flex;
     justify-content: space-around;
 

@@ -1,6 +1,6 @@
-import { CreatorState } from "./creator.state";
+import { CreatorState, CreatorStateType } from "./creator.state";
 
-export class CancelState extends CreatorState {
+export class ImageUploadState extends CreatorState {
   public accept(): Promise<CreatorState> {
     return Promise.resolve(this);
   }
@@ -10,6 +10,10 @@ export class CancelState extends CreatorState {
   }
 
   public isTerminal(): boolean {
-    return true;
+    return false;
+  }
+
+  public type(): CreatorStateType {
+    return CreatorStateType.IMAGE_UPLOAD;
   }
 }

@@ -1,10 +1,11 @@
 import { Component, NgModule, ViewEncapsulation, OnInit } from "@angular/core";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { ImageUploadState } from "./states/image-upload.state";
 import { CreatorState } from "./states/creator.state";
 import { NavigationService } from "../../commons/navigation.service";
+import { ImageUploadStepModule } from "../image-upload-step/image-upload-step.component";
 
 @Component({
   selector: "lobogames-creator",
@@ -41,7 +42,12 @@ export class CreatorComponent implements OnInit {
 
 @NgModule({
   declarations: [CreatorComponent],
-  imports: [MatProgressBarModule, MatButtonModule, NgOptimizedImage],
+  imports: [
+    MatProgressBarModule,
+    MatButtonModule,
+    NgOptimizedImage,
+    ImageUploadStepModule,
+  ],
   exports: [CreatorComponent],
 })
 export class CreatorModule {}

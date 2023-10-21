@@ -14,7 +14,9 @@
       height="72"
     />
   </div>
-  <div class="creator__body"><span> Testing </span></div>
+  <div class="creator__body">
+    <image-upload-step *ngIf="state.isImageUploadState"></image-upload-step>
+  </div>
 
   <div class="creator__actions">
     <button mat-raised-button (click)="onReject()">Voltar</button>

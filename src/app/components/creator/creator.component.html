@@ -3,7 +3,7 @@
     <mat-progress-bar
       class="creator__progress-bar"
       mode="determinate"
-      value="50"
+      [value]="progress"
       color="accent"
     ></mat-progress-bar>
     <img
@@ -14,7 +14,7 @@
       height="72"
     />
   </div>
-  <div class="creator__body">
+  <div class="creator__body" [class]="enterAnimationClass">
     <image-upload-step *ngIf="state.isImageUploadState"></image-upload-step>
   </div>
 

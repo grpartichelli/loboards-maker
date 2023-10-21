@@ -1,12 +1,13 @@
 import { CreatorState, CreatorStateType } from "./creator.state";
+import { CancelState } from "./cancel.state";
 
 export class ImageUploadState extends CreatorState {
   public accept(): Promise<CreatorState> {
-    return Promise.resolve(this);
+    return this.stayOnCurrentState();
   }
 
   public reject(): Promise<CreatorState> {
-    return this.navigationService.navigateToHome().then(() => this);
+    return this.moveTo(CancelState);
   }
 
   public isTerminal(): boolean {
@@ -15,5 +16,9 @@ export class ImageUploadState extends CreatorState {
 
   public type(): CreatorStateType {
     return CreatorStateType.IMAGE_UPLOAD;
+  }
+
+  public progress(): number {
+    return 50;
   }
 }

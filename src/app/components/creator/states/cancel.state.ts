@@ -2,11 +2,11 @@ import { CreatorState, CreatorStateType } from "./creator.state";
 
 export class CancelState extends CreatorState {
   public accept(): Promise<CreatorState> {
-    return Promise.resolve(this);
+    return this.stayOnCurrentState();
   }
 
   public reject(): Promise<CreatorState> {
-    return this.navigationService.navigateToHome().then(() => this);
+    return this.stayOnCurrentState();
   }
 
   public isTerminal(): boolean {
@@ -15,5 +15,9 @@ export class CancelState extends CreatorState {
 
   public type(): CreatorStateType {
     return CreatorStateType.CANCEL;
+  }
+
+  public progress(): number {
+    return 0;
   }
 }

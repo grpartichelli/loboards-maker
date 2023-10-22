@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>{{ data.description }}</div>
+<div mat-dialog-actions class="simple-dialog__actions">
+  <button *ngIf="isConfirmation" mat-button (click)="onCancelClicked()">
+    Cancelar
+  </button>
+  <button
+    *ngIf="isConfirmation"
+    mat-button
+    cdkFocusInitial
+    (click)="onConfirmClicked()"
+  >
+    Continuar
+  </button>
+  <button
+    *ngIf="isAlert"
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    (click)="onConfirmClicked()"
+  >
+    Ok
+  </button>
+</div>

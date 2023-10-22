@@ -3,7 +3,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Injectable({ providedIn: "root" })
-export class IconsRegistry {
+export class IconRegistry {
   constructor(
     private readonly iconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,

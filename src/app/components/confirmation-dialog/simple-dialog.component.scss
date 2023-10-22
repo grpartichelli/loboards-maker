@@ -1,0 +1,8 @@
+@use "../../../colors";
+
+.simple-dialog {
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -5,7 +5,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToolbarModule } from "./components/toolbar/toolbar.component";
-import { NgOptimizedImage, NgIf } from "@angular/common";
+import { NgOptimizedImage, CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { CreatorModule } from "./components/creator/creator.component";
 import { HomeModule } from "./components/home/home.component";
@@ -24,7 +24,7 @@ import { MatIconModule } from "@angular/material/icon";
     ToolbarModule,
     CreatorModule,
     HomeModule,
-    NgIf,
+    CommonModule,
     MatListModule,
     MatSidenavModule,
     MatIconModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NavigationService } from "./commons/navigation.service";
-import { IconsRegistry } from "./commons/icons.registry";
+import { IconRegistry } from "./commons/icon.registry";
 import { Router } from "@angular/router";
 
 @Component({
@@ -12,11 +12,11 @@ export class AppComponent implements OnInit {
   public isSidenavOpen = false;
 
   constructor(
-    private readonly iconsRegistry: IconsRegistry,
+    private readonly iconRegistry: IconRegistry,
     private readonly navigationService: NavigationService,
     private readonly router: Router,
   ) {
-    this.iconsRegistry.registerAll();
+    this.iconRegistry.registerAll();
   }
 
   public ngOnInit(): void {

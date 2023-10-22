@@ -1,3 +1,18 @@
+<input
+  type="file"
+  class="image-upload-step__image-input"
+  (change)="onImageUpload($event)"
+  accept="image/*"
+  #imageInput
+/>
+
 <div class="image-upload-step">
-  <span>Testing</span>
+  <mat-card
+    class="image-upload-step__image-upload"
+    (click)="imageInput.click()"
+  >
+    <mat-icon>add_photo_alternate</mat-icon>
+    <span>Imagem do tabuleiro</span>
+    <img alt="tabuleiro" [src]="image.src" *ngIf="image.src" />
+  </mat-card>
 </div>

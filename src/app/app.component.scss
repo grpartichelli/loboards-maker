@@ -7,7 +7,6 @@
   flex-direction: column;
 
   &__sidenav {
-    background-color: colors.$primary;
     width: 19rem;
 
     &__item {
@@ -28,6 +27,14 @@
 
     &-container {
       flex: 1;
+
+      mat-drawer-content {
+        overflow: unset !important;
+      }
+    }
+
+    &-list {
+      padding: 0;
     }
   }
 }

@@ -1,20 +1,26 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavigationService } from "./commons/navigation.service";
 import { IconsRegistry } from "./commons/icons.registry";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public isSidenavOpen = false;
 
   constructor(
     private readonly iconsRegistry: IconsRegistry,
     private readonly navigationService: NavigationService,
+    private readonly router: Router,
   ) {
     this.iconsRegistry.registerAll();
+  }
+
+  public ngOnInit(): void {
+    this.router.events.subscribe(() => (this.isSidenavOpen = false));
   }
 
   public get isToolbarVisible(): boolean {

@@ -1,0 +1,33 @@
+<div class="home">
+  <div class="home__image-container">
+    <mat-card class="home__image-card">
+      <img
+        class="home__image"
+        alt="lobogames logo"
+        ngSrc="assets/logo.png"
+        width="516"
+        height="140"
+      />
+    </mat-card>
+  </div>
+  <div class="home__options-container">
+    <mat-card
+      class="home__option home__option--create-game"
+      routerLink="/creator"
+    >
+      <mat-icon svgIcon="board_piece"></mat-icon>
+      <span>Criador de Tabuleiros</span>
+    </mat-card>
+    <mat-card class="home__option home__option--app" (click)="onAppClicked()">
+      <mat-icon>phone_android</mat-icon>
+      <span>Aplicativo</span>
+    </mat-card>
+    <mat-card
+      class="home__option home__option--website"
+      (click)="onWebsiteClicked()"
+    >
+      <mat-icon>open_in_new</mat-icon>
+      <span>Website</span>
+    </mat-card>
+  </div>
+</div>

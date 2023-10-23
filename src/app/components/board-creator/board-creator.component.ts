@@ -78,8 +78,8 @@ export class BoardCreatorComponent implements OnInit {
   private updateEnteringAnimations() {
     this.enterAnimationClass =
       this.lastChangeStateCommand === ChangeStateCommand.ACCEPT
-        ? "creator__state--enter-left"
-        : "creator__state--enter-right";
+        ? "board-creator__state--enter-left"
+        : "board-creator__state--enter-right";
     this.changeDetectorRef.detectChanges();
 
     setTimeout(() => {

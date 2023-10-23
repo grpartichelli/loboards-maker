@@ -10,9 +10,10 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { ImageUploadState } from "./states/image-upload.state";
-import { CreatorState } from "./states/creator.state";
+import { BoardCreatorState } from "./states/board-creator.state";
 import { NavigationService } from "../../commons/navigation.service";
 import { ImageUploadStepModule } from "../image-upload-step/image-upload-step.component";
+import { BoardModel } from "../../models/board.model";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -21,16 +22,16 @@ const enum ChangeStateCommand {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "lobogames-creator",
-  templateUrl: "./creator.component.html",
-  styleUrls: ["./creator.component.scss"],
+  selector: "lobogames-board-creator",
+  templateUrl: "./board-creator.component.html",
+  styleUrls: ["./board-creator.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class CreatorComponent implements OnInit {
+export class BoardCreatorComponent implements OnInit {
   public enterAnimationClass = "";
   private lastChangeStateCommand = ChangeStateCommand.ACCEPT;
   public progress = 0;
-  public state!: CreatorState;
+  public state!: BoardCreatorState;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
@@ -38,8 +39,15 @@ export class CreatorComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const initialState = new ImageUploadState(this.navigationService);
+    const initialState = new ImageUploadState(
+      new BoardModel(),
+      this.navigationService,
+    );
     this.onStateChanged(initialState);
+  }
+
+  public get isAcceptEnabled(): boolean {
+    return this.state.isAcceptEnabled();
   }
 
   public onAccept(): void {
@@ -56,7 +64,7 @@ export class CreatorComponent implements OnInit {
     });
   }
 
-  private onStateChanged(newState: CreatorState): void {
+  private onStateChanged(newState: BoardCreatorState): void {
     if (newState.isTerminal()) {
       this.navigationService.navigateToHome().then();
       return;
@@ -72,6 +80,7 @@ export class CreatorComponent implements OnInit {
       this.lastChangeStateCommand === ChangeStateCommand.ACCEPT
         ? "creator__state--enter-left"
         : "creator__state--enter-right";
+    this.changeDetectorRef.detectChanges();
 
     setTimeout(() => {
       this.enterAnimationClass = "";
@@ -81,7 +90,7 @@ export class CreatorComponent implements OnInit {
 }
 
 @NgModule({
-  declarations: [CreatorComponent],
+  declarations: [BoardCreatorComponent],
   imports: [
     MatProgressBarModule,
     MatButtonModule,
@@ -89,6 +98,6 @@ export class CreatorComponent implements OnInit {
     NgIf,
     ImageUploadStepModule,
   ],
-  exports: [CreatorComponent],
+  exports: [BoardCreatorComponent],
 })
 export class CreatorModule {}

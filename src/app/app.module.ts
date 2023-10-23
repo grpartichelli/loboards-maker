@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToolbarModule } from "./components/toolbar/toolbar.component";
 import { NgOptimizedImage, CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { CreatorModule } from "./components/creator/creator.component";
+import { CreatorModule } from "./components/board-creator/board-creator.component";
 import { HomeModule } from "./components/home/home.component";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenavModule } from "@angular/material/sidenav";

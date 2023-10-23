@@ -1,13 +1,17 @@
-import { CreatorState, CreatorStateType } from "./creator.state";
+import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
 import { CancelState } from "./cancel.state";
 
-export class ImageUploadState extends CreatorState {
-  public accept(): Promise<CreatorState> {
+export class ImageUploadState extends BoardCreatorState {
+  public accept(): Promise<BoardCreatorState> {
     return this.stayOnCurrentState();
   }
 
-  public reject(): Promise<CreatorState> {
+  public reject(): Promise<BoardCreatorState> {
     return this.moveTo(CancelState);
+  }
+
+  public isAcceptEnabled(): boolean {
+    return Boolean(this.model.image.src);
   }
 
   public isTerminal(): boolean {

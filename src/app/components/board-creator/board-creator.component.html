@@ -1,0 +1,35 @@
+<div class="board-creator">
+  <div class="board-creator__header">
+    <mat-progress-bar
+      class="board-creator__progress-bar"
+      mode="determinate"
+      [value]="progress"
+      color="accent"
+    ></mat-progress-bar>
+    <img
+      class="board-creator__logo"
+      alt="lobogames logo"
+      ngSrc="assets/logo.png"
+      width="250"
+      height="72"
+    />
+  </div>
+  <div class="board-creator__body" [class]="enterAnimationClass">
+    <image-upload-step
+      *ngIf="state.isImageUploadState"
+      [model]="state.model"
+    ></image-upload-step>
+  </div>
+
+  <div class="board-creator__actions">
+    <button mat-raised-button (click)="onReject()">Voltar</button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="onAccept()"
+      [disabled]="!isAcceptEnabled"
+    >
+      Continuar
+    </button>
+  </div>
+</div>

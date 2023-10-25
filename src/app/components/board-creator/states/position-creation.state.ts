@@ -1,18 +1,17 @@
 import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
-import { CancelState } from "./cancel.state";
-import { PositionCreationState } from "./position-creation.state";
+import { ImageUploadState } from "./image-upload.state";
 
-export class ImageUploadState extends BoardCreatorState {
+export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    return this.moveTo(PositionCreationState);
+    return this.stayOnCurrentState();
   }
 
   public reject(): Promise<BoardCreatorState> {
-    return this.moveTo(CancelState);
+    return this.moveTo(ImageUploadState);
   }
 
   public isAcceptEnabled(): boolean {
-    return Boolean(this.model.image.src);
+    return true;
   }
 
   public isTerminal(): boolean {
@@ -20,10 +19,10 @@ export class ImageUploadState extends BoardCreatorState {
   }
 
   public type(): CreatorStateType {
-    return CreatorStateType.IMAGE_UPLOAD;
+    return CreatorStateType.POSITION_CREATION;
   }
 
   public progress(): number {
-    return 33;
+    return 66;
   }
 }

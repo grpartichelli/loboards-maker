@@ -2,10 +2,13 @@ import { NavigationService } from "../../../commons/navigation.service";
 import { ImageUploadState } from "./image-upload.state";
 import { CancelState } from "./cancel.state";
 import { BoardModel } from "../../../models/board.model";
+import { LocalStorageService } from "../../../commons/local-storage.service";
+import { PositionCreationState } from "./position-creation.state";
 
 export abstract class BoardCreatorState {
   constructor(
     public readonly model: BoardModel,
+    protected readonly localStorageService: LocalStorageService,
     protected readonly navigationService: NavigationService,
   ) {}
 
@@ -19,7 +22,14 @@ export abstract class BoardCreatorState {
   public moveTo(
     state: CreatorStateImplementations,
   ): Promise<BoardCreatorState> {
-    return Promise.resolve(new state(this.model, this.navigationService));
+    const nextState = new state(
+      this.model,
+      this.localStorageService,
+      this.navigationService,
+    );
+    this.localStorageService.saveData("board", this.model);
+    this.localStorageService.saveData("state", nextState.type());
+    return Promise.resolve(nextState);
   }
 
   public stayOnCurrentState(): Promise<BoardCreatorState> {
@@ -29,11 +39,19 @@ export abstract class BoardCreatorState {
   public get isImageUploadState(): boolean {
     return this.type() === CreatorStateType.IMAGE_UPLOAD;
   }
+
+  public get isPositionCreationState(): boolean {
+    return this.type() === CreatorStateType.POSITION_CREATION;
+  }
 }
 
 export enum CreatorStateType {
-  IMAGE_UPLOAD = "creator.image-upload",
   CANCEL = "creator.cancel",
+  IMAGE_UPLOAD = "creator.image-upload",
+  POSITION_CREATION = "creator.position-creation",
 }
 
-type CreatorStateImplementations = typeof ImageUploadState | typeof CancelState;
+type CreatorStateImplementations =
+  | typeof ImageUploadState
+  | typeof CancelState
+  | typeof PositionCreationState;

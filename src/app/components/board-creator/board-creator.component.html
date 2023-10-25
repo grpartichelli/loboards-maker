@@ -19,6 +19,11 @@
       *ngIf="state.isImageUploadState"
       [model]="state.model"
     ></image-upload-step>
+    <position-creation-step
+      *ngIf="state.isPositionCreationState"
+      [model]="state.model"
+    >
+    </position-creation-step>
   </div>
 
   <div class="board-creator__actions">

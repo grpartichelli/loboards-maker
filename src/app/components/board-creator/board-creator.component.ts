@@ -9,11 +9,18 @@ import {
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
-import { ImageUploadState } from "./states/image-upload.state";
-import { BoardCreatorState } from "./states/board-creator.state";
+
 import { NavigationService } from "../../commons/navigation.service";
 import { ImageUploadStepModule } from "../image-upload-step/image-upload-step.component";
+import { LocalStorageService } from "../../commons/local-storage.service";
+import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
+import {
+  BoardCreatorState,
+  CreatorStateType,
+} from "./states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
+import { PositionCreationState } from "./states/position-creation.state";
+import { ImageUploadState } from "./states/image-upload.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -35,15 +42,12 @@ export class BoardCreatorComponent implements OnInit {
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly localStorageService: LocalStorageService,
     private readonly navigationService: NavigationService,
   ) {}
 
   public ngOnInit(): void {
-    const initialState = new ImageUploadState(
-      new BoardModel(),
-      this.navigationService,
-    );
-    this.onStateChanged(initialState);
+    this.onStateChanged(this.resolveInitialState());
   }
 
   public get isAcceptEnabled(): boolean {
@@ -75,6 +79,26 @@ export class BoardCreatorComponent implements OnInit {
     this.updateEnteringAnimations();
   }
 
+  private resolveInitialState() {
+    const model =
+      this.localStorageService.getData<BoardModel>("board") ?? new BoardModel();
+    const stateType =
+      this.localStorageService.getData<CreatorStateType>("state");
+    if (stateType === CreatorStateType.POSITION_CREATION) {
+      return new PositionCreationState(
+        model,
+        this.localStorageService,
+        this.navigationService,
+      );
+    } else {
+      return new ImageUploadState(
+        model,
+        this.localStorageService,
+        this.navigationService,
+      );
+    }
+  }
+
   private updateEnteringAnimations() {
     this.enterAnimationClass =
       this.lastChangeStateCommand === ChangeStateCommand.ACCEPT
@@ -97,6 +121,7 @@ export class BoardCreatorComponent implements OnInit {
     NgOptimizedImage,
     NgIf,
     ImageUploadStepModule,
+    PositionCreationStepModule,
   ],
   exports: [BoardCreatorComponent],
 })

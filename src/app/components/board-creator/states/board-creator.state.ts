@@ -27,6 +27,7 @@ export abstract class BoardCreatorState {
       this.localStorageService,
       this.navigationService,
     );
+    this.localStorageService.saveImage("boardImage", this.model.image);
     this.localStorageService.saveData("board", this.model);
     this.localStorageService.saveData("state", nextState.type());
     return Promise.resolve(nextState);

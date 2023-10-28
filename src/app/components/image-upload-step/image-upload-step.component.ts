@@ -27,11 +27,9 @@ export class ImageUploadStepComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    if (this.model.image.src) {
-      this.model.image.onload = () => {
-        this.validateImageSize();
-      };
-    }
+    this.model.image.onload = () => {
+      this.validateImageSize();
+    };
   }
 
   public get isImageVisible(): boolean {

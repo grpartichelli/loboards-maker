@@ -82,6 +82,8 @@ export class BoardCreatorComponent implements OnInit {
   private resolveInitialState() {
     const model =
       this.localStorageService.getData<BoardModel>("board") ?? new BoardModel();
+    model.image =
+      this.localStorageService.getImage("boardImage") ?? new Image();
     const stateType =
       this.localStorageService.getData<CreatorStateType>("state");
     if (stateType === CreatorStateType.POSITION_CREATION) {

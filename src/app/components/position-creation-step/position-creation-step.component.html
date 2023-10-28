@@ -1,5 +1,9 @@
 <div class="position-creation-step">
   <mat-card class="position-creation-step__card">
-    <canvas class="position-creation-step__canvas" id="image-canvas"></canvas>
+    <canvas
+      class="position-creation-step__canvas"
+      id="image-canvas"
+      (click)="onCanvasClick($event)"
+    ></canvas>
   </mat-card>
 </div>

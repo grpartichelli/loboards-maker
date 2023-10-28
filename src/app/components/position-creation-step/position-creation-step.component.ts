@@ -40,6 +40,23 @@ export class PositionCreationStepComponent implements AfterViewInit {
       this.canvas.height,
     );
   }
+
+  public onCanvasClick(mouseEvent: MouseEvent) {
+    this.resolveCursorPosition(mouseEvent);
+  }
+
+  private resolveCursorPosition(mouseEvent: MouseEvent) {
+    const rect = this.canvas.getBoundingClientRect();
+    const x = mouseEvent.clientX - rect.left;
+    const y = mouseEvent.clientY - rect.top;
+    console.log(x, y);
+
+    var radius = 25;
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    this.ctx.fill();
+  }
 }
 
 @NgModule({

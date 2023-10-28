@@ -32,6 +32,7 @@ export class LocalStorageService {
       key,
       dataURL.replace(/^data:image\/(png|jpg);base64,/, ""),
     );
+    canvas.remove();
   }
 
   public getImage(key: string): HTMLImageElement | null {

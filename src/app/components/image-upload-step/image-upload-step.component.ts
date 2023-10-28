@@ -6,6 +6,7 @@ import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DialogService } from "../../commons/dialog.service";
 import { BoardModel } from "../../models/board.model";
+import { LocalStorageService } from "../../commons/local-storage.service";
 
 @Component({
   selector: "image-upload-step[model]",
@@ -18,6 +19,7 @@ export class ImageUploadStepComponent {
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly dialogService: DialogService,
+    private readonly localStorageService: LocalStorageService,
   ) {}
 
   public onDeleteClicked() {
@@ -52,6 +54,9 @@ export class ImageUploadStepComponent {
       }
 
       if (this.model.image.naturalWidth === this.model.image.naturalHeight) {
+        this.localStorageService.saveImage("board-image", this.model.image);
+        this.model.image.src =
+          this.localStorageService.getImage("board-image")?.src ?? "";
         this.changeDetectorRef.detectChanges();
         return;
       }

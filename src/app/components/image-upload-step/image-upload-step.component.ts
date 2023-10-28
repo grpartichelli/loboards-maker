@@ -1,10 +1,4 @@
-import {
-  Component,
-  NgModule,
-  ChangeDetectorRef,
-  Input,
-  OnInit,
-} from "@angular/core";
+import { Component, NgModule, ChangeDetectorRef, Input } from "@angular/core";
 import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -18,23 +12,13 @@ import { BoardModel } from "../../models/board.model";
   templateUrl: "./image-upload-step.component.html",
   styleUrls: ["./image-upload-step.component.scss"],
 })
-export class ImageUploadStepComponent implements OnInit {
+export class ImageUploadStepComponent {
   @Input() model!: BoardModel;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly dialogService: DialogService,
   ) {}
-
-  public ngOnInit(): void {
-    this.model.image.onload = () => {
-      this.validateImageSize();
-    };
-  }
-
-  public get isImageVisible(): boolean {
-    return Boolean(this.model.image.src);
-  }
 
   public onDeleteClicked() {
     this.resetImage();
@@ -58,11 +42,12 @@ export class ImageUploadStepComponent implements OnInit {
 
     this.model.image.src = window.URL.createObjectURL(file);
     this.model.image.onload = () => {
-      if (!this.validateImageSize()) {
+      if (!this.model.isImageLoadedCorrectly) {
         this.dialogService.openAlert(
           "Falha ao carregar imagem",
           "Por favor tente novamente",
         );
+        this.resetImage();
         return;
       }
 
@@ -81,14 +66,6 @@ export class ImageUploadStepComponent implements OnInit {
       );
       this.resetImage();
     };
-  }
-
-  private validateImageSize(): boolean {
-    if (!this.model?.image?.naturalHeight && !this.model?.image?.naturalWidth) {
-      this.resetImage();
-      return false;
-    }
-    return true;
   }
 }
 

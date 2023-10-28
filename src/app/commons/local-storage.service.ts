@@ -9,7 +9,7 @@ export class LocalStorageService {
   }
 
   public getData<T>(key: string): T | null {
-    let item = localStorage.getItem(key);
+    const item = localStorage.getItem(key);
     if (item == null) {
       return item;
     }

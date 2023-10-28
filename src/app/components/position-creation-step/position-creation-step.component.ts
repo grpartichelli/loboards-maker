@@ -1,10 +1,16 @@
-import { Component, NgModule, ChangeDetectorRef, Input } from "@angular/core";
+import {
+  Component,
+  NgModule,
+  ChangeDetectorRef,
+  Input,
+  OnInit,
+  AfterViewInit,
+} from "@angular/core";
 import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
-import { DialogService } from "../../commons/dialog.service";
 import { BoardModel } from "../../models/board.model";
 
 @Component({
@@ -12,13 +18,20 @@ import { BoardModel } from "../../models/board.model";
   templateUrl: "./position-creation-step.component.html",
   styleUrls: ["./position-creation-step.component.scss"],
 })
-export class PositionCreationStepComponent {
+export class PositionCreationStepComponent implements AfterViewInit {
   @Input() model!: BoardModel;
+  private canvas!: HTMLCanvasElement;
+  private ctx!: CanvasRenderingContext2D;
 
-  constructor(
-    private readonly changeDetectorRef: ChangeDetectorRef,
-    private readonly dialogService: DialogService,
-  ) {}
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
+
+  public ngAfterViewInit(): void {
+    this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
+    this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+    this.initialize();
+  }
+
+  public initialize() {}
 }
 
 @NgModule({

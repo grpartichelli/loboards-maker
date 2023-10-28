@@ -1,6 +1,6 @@
 <div class="image-upload-step">
   <mat-card
-    *ngIf="!isImageVisible"
+    *ngIf="!model.imageExists"
     class="image-upload-step__upload"
     (click)="imageInput.click()"
   >
@@ -15,7 +15,7 @@
     <span>Imagem do tabuleiro</span>
   </mat-card>
 
-  <mat-card *ngIf="isImageVisible" class="image-upload-step__image-card">
+  <mat-card *ngIf="model.imageExists" class="image-upload-step__image-card">
     <img
       class="image-upload-step__image"
       alt="tabuleiro"

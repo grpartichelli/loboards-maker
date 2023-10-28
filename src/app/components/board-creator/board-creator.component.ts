@@ -47,7 +47,25 @@ export class BoardCreatorComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.onStateChanged(this.resolveInitialState());
+    const state = this.resolveInitialState();
+
+    if (state.model.imageExists) {
+      state.model.image.onload = () => {
+        if (state.model.isImageLoadedCorrectly) {
+          this.onStateChanged(state);
+        } else {
+          this.onStateChanged(
+            new ImageUploadState(
+              state.model,
+              this.localStorageService,
+              this.navigationService,
+            ),
+          );
+        }
+      };
+    } else {
+      this.onStateChanged(state);
+    }
   }
 
   public get isAcceptEnabled(): boolean {
@@ -79,26 +97,36 @@ export class BoardCreatorComponent implements OnInit {
     this.updateEnteringAnimations();
   }
 
-  private resolveInitialState() {
-    const model =
-      this.localStorageService.getData<BoardModel>("board") ?? new BoardModel();
+  public resolveInitialState() {
+    const model = BoardModel.fromOther(
+      this.localStorageService.getData<BoardModel>("board"),
+    );
+
     model.image =
       this.localStorageService.getImage("boardImage") ?? new Image();
+
     const stateType =
       this.localStorageService.getData<CreatorStateType>("state");
+
+    const imageUpload = new ImageUploadState(
+      model,
+      this.localStorageService,
+      this.navigationService,
+    );
+
+    if (!model.imageExists) {
+      return imageUpload;
+    }
+
     if (stateType === CreatorStateType.POSITION_CREATION) {
       return new PositionCreationState(
         model,
         this.localStorageService,
         this.navigationService,
       );
-    } else {
-      return new ImageUploadState(
-        model,
-        this.localStorageService,
-        this.navigationService,
-      );
     }
+
+    return imageUpload;
   }
 
   private updateEnteringAnimations() {

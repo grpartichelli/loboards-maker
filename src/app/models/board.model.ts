@@ -24,7 +24,46 @@ export class BoardModel {
   public selectedPositionColor = PositionColorTypeModel.GREEN;
 
   public addNewPosition(coordinate: CoordinateModel): void {
-    this.positions.push(new PositionModel("", coordinate, 0));
+    this.positions.push(
+      new PositionModel(
+        this.calculateId(),
+        coordinate,
+        this.calculateAccessibilityOrder(),
+      ),
+    );
+  }
+
+  private calculateAccessibilityOrder(): number {
+    const accessibilityOrders = this.positions.map(
+      (position) => position.accessibilityOrder,
+    );
+    let accessibilityOrder = 0;
+    while (accessibilityOrders.includes(accessibilityOrder)) {
+      accessibilityOrder++;
+    }
+    return accessibilityOrder;
+  }
+
+  private calculateId(): string {
+    const ids = this.positions.map((position) => position.id);
+    let number = 0;
+    let char = "a";
+    let id = char;
+
+    while (ids.includes(id)) {
+      if (char === "z") {
+        char = String.fromCharCode("a".charCodeAt(0) - 1);
+        number++;
+      }
+
+      char = String.fromCharCode(char.charCodeAt(0) + 1);
+      if (number === 0) {
+        id = char;
+      } else {
+        id = number + char;
+      }
+    }
+    return id;
   }
 
   public findPositionById(id: string): PositionModel | null {

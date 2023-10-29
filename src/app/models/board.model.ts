@@ -6,9 +6,9 @@ export class BoardModel {
     const model = new BoardModel();
     if (other) {
       model.positionRadiusScale = other.positionRadiusScale;
-      model.positions = other.positions.map((position) =>
-        PositionModel.fromOther(position),
-      );
+      // model.positions = other.positions.map((position) =>
+      //   PositionModel.fromOther(position),
+      // );
     }
     return model;
   }

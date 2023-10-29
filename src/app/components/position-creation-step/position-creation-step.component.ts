@@ -6,7 +6,6 @@ import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
 import { CoordinateModel } from "../../models/coordinate.model";
-import { PositionModel } from "../../models/position.model";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -27,6 +26,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   private drawCanvas(): void {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.drawImage(
       this.model.image,
       0,

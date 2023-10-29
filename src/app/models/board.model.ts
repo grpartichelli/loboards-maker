@@ -1,4 +1,5 @@
 import { PositionModel } from "./position.model";
+import { CoordinateModel } from "./coordinate.model";
 
 export class BoardModel {
   public static fromOther(other: BoardModel | null): BoardModel {
@@ -15,6 +16,10 @@ export class BoardModel {
   public image: HTMLImageElement = new Image();
   public positionRadiusScale = 1 / 18;
   public positions = new Array<PositionModel>();
+
+  public addNewPosition(coordinate: CoordinateModel): void {
+    this.positions.push(new PositionModel("", coordinate, 0));
+  }
 
   public findPositionById(id: string): PositionModel | null {
     return this.positions.find((position) => position.id === id) ?? null;

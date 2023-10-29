@@ -13,7 +13,7 @@ export class BoardModel {
   }
 
   public image: HTMLImageElement = new Image();
-  public positionRadiusScale = 0;
+  public positionRadiusScale = 1 / 18;
   public positions = new Array<PositionModel>();
 
   public findPositionById(id: string): PositionModel | null {

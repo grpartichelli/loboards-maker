@@ -12,6 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
+import { CoordinateModel } from "../../models/coordinate.model";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -45,17 +46,18 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.resolveCursorPosition(mouseEvent);
   }
 
-  private resolveCursorPosition(mouseEvent: MouseEvent) {
+  private resolveCursorPosition(mouseEvent: MouseEvent): CoordinateModel {
     const rect = this.canvas.getBoundingClientRect();
     const x = mouseEvent.clientX - rect.left;
     const y = mouseEvent.clientY - rect.top;
-    console.log(x, y);
 
     var radius = 25;
 
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
     this.ctx.fill();
+
+    return new CoordinateModel(x, y);
   }
 }
 

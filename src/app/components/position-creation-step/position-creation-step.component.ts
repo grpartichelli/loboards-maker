@@ -8,6 +8,8 @@ import { BoardModel } from "../../models/board.model";
 import { CoordinateModel } from "../../models/coordinate.model";
 import { PositionModel } from "../../models/position.model";
 import { PositionColorTypeModel } from "../../models/position-color-type.model";
+import { MatSliderModule } from "@angular/material/slider";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -18,6 +20,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   @Input() model!: BoardModel;
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
+  public sliderPercentage = 0.25;
 
   public ngAfterViewInit(): void {
     this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
@@ -67,9 +70,19 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.ctx.fill();
   }
 
+  public formatSliderLabel(value: number): string {
+    return `${Math.round(value * 100)}%`;
+  }
+
   public onCanvasClick(mouseEvent: MouseEvent) {
     const coord = this.resolveCursorPosition(mouseEvent);
     this.model.addNewPosition(coord);
+    this.drawCanvas();
+  }
+
+  public onRadiusScaleSliderChange() {
+    this.model.positionRadiusScale =
+      this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;
     this.drawCanvas();
   }
 
@@ -90,6 +103,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
     MatIconModule,
     RouterLink,
     MatDialogModule,
+    MatSliderModule,
+    FormsModule,
   ],
   exports: [PositionCreationStepComponent],
 })

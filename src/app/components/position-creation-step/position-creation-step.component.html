@@ -1,9 +1,28 @@
 <div class="position-creation-step">
-  <mat-card class="position-creation-step__card">
-    <canvas
-      class="position-creation-step__canvas"
-      id="image-canvas"
-      (click)="onCanvasClick($event)"
-    ></canvas>
-  </mat-card>
+  <div class="position-creation-step__container">
+    <div class="position-creation-step__settings">
+      <mat-slider
+        min="0.01"
+        max="1"
+        step="0.01"
+        discrete
+        [displayWith]="formatSliderLabel"
+      >
+        <input
+          matSliderThumb
+          [(ngModel)]="sliderPercentage"
+          (ngModelChange)="onRadiusScaleSliderChange()"
+        />
+      </mat-slider>
+    </div>
+    <div class="position-creation-step__board">
+      <mat-card class="position-creation-step__card">
+        <canvas
+          class="position-creation-step__canvas"
+          id="image-canvas"
+          (click)="onCanvasClick($event)"
+        ></canvas>
+      </mat-card>
+    </div>
+  </div>
 </div>

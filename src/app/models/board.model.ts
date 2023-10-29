@@ -17,8 +17,10 @@ export class BoardModel {
     return model;
   }
 
+  public static MAX_RADIUS_SCALE = 0.2;
+
   public image: HTMLImageElement = new Image();
-  public positionRadiusScale = 1 / 18;
+  public positionRadiusScale = BoardModel.MAX_RADIUS_SCALE * 0.25;
   public positionColor = PositionColorTypeModel.RED;
   public positions = new Array<PositionModel>();
   public selectedPositionColor = PositionColorTypeModel.GREEN;

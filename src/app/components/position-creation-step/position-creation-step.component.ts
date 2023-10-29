@@ -6,6 +6,7 @@ import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
 import { CoordinateModel } from "../../models/coordinate.model";
+import { PositionModel } from "../../models/position.model";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -35,12 +36,22 @@ export class PositionCreationStepComponent implements AfterViewInit {
       this.canvas.height,
     );
 
-    const radius = this.model.positionRadiusScale * this.canvas.width;
+    const radius = this.model.getBorderRadius(this.canvas.width);
+    const borderRadius = this.model.getBorderPositionRadius(this.canvas.width);
+    const selectedRadius = this.model.getSelectedPositionRadius(
+      this.canvas.width,
+    );
     this.model.positions.forEach((position) => {
-      this.ctx.beginPath();
-      this.ctx.arc(position.coord.x, position.coord.y, radius, 0, 2 * Math.PI);
-      this.ctx.fill();
+      this.drawCircle(position, selectedRadius);
+      this.drawCircle(position, borderRadius);
+      this.drawCircle(position, radius);
     });
+  }
+
+  public drawCircle(position: PositionModel, radius: number) {
+    this.ctx.beginPath();
+    this.ctx.arc(position.coord.x, position.coord.y, radius, 0, 2 * Math.PI);
+    this.ctx.fill();
   }
 
   public onCanvasClick(mouseEvent: MouseEvent) {

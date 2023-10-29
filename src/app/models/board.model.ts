@@ -32,4 +32,16 @@ export class BoardModel {
   public get isImageLoadedCorrectly(): boolean {
     return this.image.complete && this.image.naturalHeight !== 0;
   }
+
+  public getBorderRadius(width: number): number {
+    return this.positionRadiusScale * width;
+  }
+
+  public getBorderPositionRadius(width: number): number {
+    return this.getBorderRadius(width) * 1.08;
+  }
+
+  public getSelectedPositionRadius(width: number): number {
+    return this.getBorderPositionRadius(width) * 1.11;
+  }
 }

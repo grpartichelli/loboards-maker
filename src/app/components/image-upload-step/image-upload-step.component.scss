@@ -21,6 +21,7 @@
       max-width: 34rem;
       height: 34rem;
       max-height: 34rem;
+      background-color: colors.$lobogames-white;
     }
 
     &-delete {
@@ -29,6 +30,7 @@
       right: 5%;
       cursor: pointer;
       transform: scale(2);
+      color: colors.$accent;
     }
   }
 

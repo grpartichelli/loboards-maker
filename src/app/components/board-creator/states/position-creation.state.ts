@@ -11,7 +11,7 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public isAcceptEnabled(): boolean {
-    return true;
+    return false;
   }
 
   public isTerminal(): boolean {

@@ -18,17 +18,24 @@
   }
 
   &__settings {
-    padding: 2rem;
+    padding: 1rem 2rem;
     flex: 1;
   }
 
+  &__color-selects {
+    display: flex;
+    column-gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
   &__board {
-    flex: 3;
+    flex: 1;
     display: flex;
   }
 
   &__card {
-    margin: auto;
+    margin-right: auto;
+    margin-block: auto;
     width: 34rem;
     max-width: 34rem;
     height: 34rem;

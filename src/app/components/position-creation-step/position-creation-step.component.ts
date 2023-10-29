@@ -1,5 +1,5 @@
 import { Component, NgModule, Input, AfterViewInit } from "@angular/core";
-import { NgOptimizedImage, NgIf } from "@angular/common";
+import { NgOptimizedImage, NgIf, NgForOf, NgStyle } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
@@ -7,9 +7,15 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
 import { CoordinateModel } from "../../models/coordinate.model";
 import { PositionModel } from "../../models/position.model";
-import { PositionColorTypeModel } from "../../models/position-color-type.model";
+import {
+  PositionColorModel,
+  PositionColorHexTypeModel,
+} from "../../models/position-color-hex-type.model";
 import { MatSliderModule } from "@angular/material/slider";
 import { FormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -21,6 +27,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
   public sliderPercentage = 0.25;
+  public colors = PositionColorModel.allColorful();
 
   public ngAfterViewInit(): void {
     this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
@@ -53,7 +60,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
           this.model.selectedPositionColor,
         );
       } else {
-        this.drawCircle(position, borderRadius, PositionColorTypeModel.BLACK);
+        this.drawCircle(position, borderRadius, PositionColorModel.BLACK.hex);
       }
       this.drawCircle(position, radius, this.model.positionColor);
     });
@@ -62,11 +69,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public drawCircle(
     position: PositionModel,
     radius: number,
-    color: PositionColorTypeModel,
+    hexTypeModel: PositionColorHexTypeModel,
   ) {
     this.ctx.beginPath();
     this.ctx.arc(position.coord.x, position.coord.y, radius, 0, 2 * Math.PI);
-    this.ctx.fillStyle = color;
+    this.ctx.fillStyle = hexTypeModel;
     this.ctx.fill();
   }
 
@@ -80,7 +87,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  public onRadiusScaleSliderChange() {
+  public onColorChange() {
+    this.drawCanvas();
+  }
+
+  public onSliderPercantageChange() {
     this.model.positionRadiusScale =
       this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;
     this.drawCanvas();
@@ -105,6 +116,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
     MatDialogModule,
     MatSliderModule,
     FormsModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    NgForOf,
+    NgStyle,
   ],
   exports: [PositionCreationStepComponent],
 })

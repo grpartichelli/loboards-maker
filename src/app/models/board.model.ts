@@ -1,6 +1,9 @@
 import { PositionModel } from "./position.model";
 import { CoordinateModel } from "./coordinate.model";
-import { PositionColorTypeModel } from "./position-color-type.model";
+import {
+  PositionColorHexTypeModel,
+  PositionColorModel,
+} from "./position-color-hex-type.model";
 
 export class BoardModel {
   public static fromOther(other: BoardModel | null): BoardModel {
@@ -21,9 +24,9 @@ export class BoardModel {
 
   public image: HTMLImageElement = new Image();
   public positionRadiusScale = BoardModel.MAX_RADIUS_SCALE * 0.25;
-  public positionColor = PositionColorTypeModel.RED;
+  public positionColor = PositionColorHexTypeModel.DARK_BLUE;
   public positions = new Array<PositionModel>();
-  public selectedPositionColor = PositionColorTypeModel.GREEN;
+  public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
 
   public addNewPosition(coordinate: CoordinateModel): void {
     this.positions.push(

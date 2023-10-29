@@ -1,11 +1,15 @@
 import { PositionModel } from "./position.model";
 import { CoordinateModel } from "./coordinate.model";
+import { PositionColorTypeModel } from "./position-color-type.model";
 
 export class BoardModel {
   public static fromOther(other: BoardModel | null): BoardModel {
     const model = new BoardModel();
     if (other) {
       model.positionRadiusScale = other.positionRadiusScale;
+      model.selectedPositionColor = other.selectedPositionColor;
+      model.positionColor = other.positionColor;
+      model.image = other.image;
       // model.positions = other.positions.map((position) =>
       //   PositionModel.fromOther(position),
       // );
@@ -15,7 +19,9 @@ export class BoardModel {
 
   public image: HTMLImageElement = new Image();
   public positionRadiusScale = 1 / 18;
+  public positionColor = PositionColorTypeModel.RED;
   public positions = new Array<PositionModel>();
+  public selectedPositionColor = PositionColorTypeModel.GREEN;
 
   public addNewPosition(coordinate: CoordinateModel): void {
     this.positions.push(new PositionModel("", coordinate, 0));
@@ -38,7 +44,7 @@ export class BoardModel {
   }
 
   public getBorderPositionRadius(width: number): number {
-    return this.getBorderRadius(width) * 1.08;
+    return this.getBorderRadius(width) * 1.09;
   }
 
   public getSelectedPositionRadius(width: number): number {

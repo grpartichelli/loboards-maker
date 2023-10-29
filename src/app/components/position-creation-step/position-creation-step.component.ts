@@ -7,6 +7,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
 import { CoordinateModel } from "../../models/coordinate.model";
 import { PositionModel } from "../../models/position.model";
+import { PositionColorTypeModel } from "../../models/position-color-type.model";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -42,15 +43,27 @@ export class PositionCreationStepComponent implements AfterViewInit {
       this.canvas.width,
     );
     this.model.positions.forEach((position) => {
-      this.drawCircle(position, selectedRadius);
-      this.drawCircle(position, borderRadius);
-      this.drawCircle(position, radius);
+      if (position.selected) {
+        this.drawCircle(
+          position,
+          selectedRadius,
+          this.model.selectedPositionColor,
+        );
+      } else {
+        this.drawCircle(position, borderRadius, PositionColorTypeModel.BLACK);
+      }
+      this.drawCircle(position, radius, this.model.positionColor);
     });
   }
 
-  public drawCircle(position: PositionModel, radius: number) {
+  public drawCircle(
+    position: PositionModel,
+    radius: number,
+    color: PositionColorTypeModel,
+  ) {
     this.ctx.beginPath();
     this.ctx.arc(position.coord.x, position.coord.y, radius, 0, 2 * Math.PI);
+    this.ctx.fillStyle = color;
     this.ctx.fill();
   }
 

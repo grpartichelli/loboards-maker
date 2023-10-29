@@ -1,6 +1,8 @@
 import { CoordinateModel } from "./coordinate.model";
 
 export class PositionModel {
+  public selected = false;
+
   public static fromOther(other: PositionModel): PositionModel {
     return new PositionModel(
       other.id,

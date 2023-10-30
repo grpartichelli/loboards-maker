@@ -1,51 +1,56 @@
 <div class="position-creation-step">
   <div class="position-creation-step__container">
-    <div class="position-creation-step__settings">
-      <mat-label>Tamanho das peças: </mat-label>
-      <mat-slider
-        min="0.01"
-        max="1"
-        step="0.01"
-        discrete
-        [displayWith]="formatSliderLabel"
-      >
-        <input
-          matSliderThumb
-          [(ngModel)]="sliderPercentage"
-          (ngModelChange)="onSliderPercantageChange()"
-        />
-      </mat-slider>
-
-      <div class="position-creation-step__color-selects">
-        <mat-form-field>
-          <mat-label>Cor das peças</mat-label>
-          <mat-select
-            [(value)]="model.positionColor"
-            (selectionChange)="onColorChange()"
+    <div class="position-creation-step__container-left">
+      <div class="position-creation-step__position-cards"></div>
+      <div class="position-creation-step__settings">
+        <div class="position-creation-step__radius-slider">
+          <mat-label>Tamanho das peças: </mat-label>
+          <mat-slider
+            min="0.01"
+            max="1"
+            step="0.01"
+            discrete
+            [displayWith]="formatSliderLabel"
           >
-            <mat-option *ngFor="let color of colors" [value]="color.hex">
-              <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
-              {{ color.name }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
+            <input
+              matSliderThumb
+              [(ngModel)]="sliderPercentage"
+              (ngModelChange)="onSliderPercantageChange()"
+            />
+          </mat-slider>
+        </div>
 
-        <mat-form-field>
-          <mat-label>Cor do cursor</mat-label>
-          <mat-select
-            [(value)]="model.selectedPositionColor"
-            (selectionChange)="onColorChange()"
-          >
-            <mat-option *ngFor="let color of colors" [value]="color.hex">
-              <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
-              {{ color.name }}</mat-option
+        <div class="position-creation-step__color-selects">
+          <mat-form-field>
+            <mat-label>Cor das peças</mat-label>
+            <mat-select
+              [(value)]="model.positionColor"
+              (selectionChange)="onColorChange()"
             >
-          </mat-select>
-        </mat-form-field>
+              <mat-option *ngFor="let color of colors" [value]="color.hex">
+                <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
+                {{ color.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Cor do cursor</mat-label>
+            <mat-select
+              [(value)]="model.selectedPositionColor"
+              (selectionChange)="onColorChange()"
+            >
+              <mat-option *ngFor="let color of colors" [value]="color.hex">
+                <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
+                {{ color.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
-    <div class="position-creation-step__board">
-      <mat-card class="position-creation-step__card">
+    <div class="position-creation-step__container-right">
+      <mat-card class="position-creation-step__board-card">
         <canvas
           class="position-creation-step__canvas"
           id="image-canvas"

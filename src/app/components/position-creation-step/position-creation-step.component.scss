@@ -17,14 +17,16 @@
     height: 100%;
 
     &-right {
+      margin: auto;
       flex: 1;
       display: flex;
     }
 
     &-left {
+      margin: auto;
       display: flex;
       flex-direction: column;
-      padding: 1rem 2rem 0 2rem;
+      padding: 1rem 3rem 0 2rem;
       flex: 1;
       row-gap: 1rem;
     }
@@ -35,7 +37,8 @@
 
   &__position-cards {
     overflow-y: auto;
-    flex: 1;
+    width: 29.5rem;
+    height: 25.75rem;
   }
 
   &__color-selects {
@@ -45,8 +48,6 @@
   }
 
   &__board-card {
-    margin-right: auto;
-    margin-block: auto;
     width: 34rem;
     max-width: 34rem;
     height: 34rem;

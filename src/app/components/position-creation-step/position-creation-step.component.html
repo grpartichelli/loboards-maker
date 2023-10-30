@@ -28,7 +28,7 @@
         </div>
 
         <div class="position-creation-step__color-selects">
-          <mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
             <mat-label>Cor das peças</mat-label>
             <mat-select
               [(value)]="model.positionColor"
@@ -41,7 +41,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
             <mat-label>Cor do cursor</mat-label>
             <mat-select
               [(value)]="model.selectedPositionColor"

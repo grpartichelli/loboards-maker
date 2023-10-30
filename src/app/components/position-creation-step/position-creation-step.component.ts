@@ -16,6 +16,7 @@ import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
+import { MatListModule } from "@angular/material/list";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -121,6 +122,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
     MatSelectModule,
     NgForOf,
     NgStyle,
+    MatListModule,
   ],
   exports: [PositionCreationStepComponent],
 })

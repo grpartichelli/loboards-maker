@@ -1,6 +1,6 @@
 $progress-bar-height: 0.6rem !important;
 
-.creator {
+.board-creator {
   height: 100%;
   width: 100%;
   display: flex;
@@ -28,7 +28,7 @@ $progress-bar-height: 0.6rem !important;
 
   &__body {
     flex: 1;
-    padding: 1.5rem;
+    overflow-y: auto;
   }
 
   &__state {

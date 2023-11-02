@@ -1,23 +1,52 @@
 @use "../../../colors";
 
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
 .image-upload-step {
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
 
-  &__image-input {
+  &__image {
+    max-height: 100%;
+    max-width: 100%;
+
+    &-card {
+      margin: auto;
+      width: 34rem;
+      max-width: 34rem;
+      height: 34rem;
+      max-height: 34rem;
+      background-color: colors.$lobogames-white;
+    }
+
+    &-delete {
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      cursor: pointer;
+      transform: scale(2);
+      color: colors.$accent;
+    }
+  }
+
+  &__input {
     display: none;
   }
 
-  &__image-upload {
+  &__upload {
+    margin: auto;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    height: 30rem;
-    width: 30rem;
+    height: 25rem;
+    width: 25rem;
 
     border-radius: 2rem;
     cursor: pointer;
@@ -27,11 +56,11 @@
     }
 
     .mat-icon {
-      transform: scale(8);
+      transform: scale(7.5);
     }
 
     span {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 500;
       position: absolute;
       top: 80%;

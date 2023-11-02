@@ -1,0 +1,31 @@
+import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
+import { ImageUploadState } from "./image-upload.state";
+
+export class PositionCreationState extends BoardCreatorState {
+  public accept(): Promise<BoardCreatorState> {
+    return this.stayOnCurrentState();
+  }
+
+  public reject(): Promise<BoardCreatorState> {
+    return this.moveTo(ImageUploadState);
+  }
+
+  public isAcceptEnabled(): boolean {
+    return (
+      this.model.positions.length > 1 &&
+      !this.model.positions.some((position) => position.id.length === 0)
+    );
+  }
+
+  public isTerminal(): boolean {
+    return false;
+  }
+
+  public type(): CreatorStateType {
+    return CreatorStateType.POSITION_CREATION;
+  }
+
+  public progress(): number {
+    return 66;
+  }
+}

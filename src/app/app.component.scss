@@ -28,7 +28,7 @@
     &-container {
       flex: 1;
 
-      mat-drawer-content {
+      ::ng-deep mat-drawer-content {
         overflow: unset !important;
       }
     }

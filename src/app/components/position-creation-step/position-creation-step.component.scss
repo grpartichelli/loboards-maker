@@ -1,0 +1,108 @@
+@use "../../../colors";
+
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.position-creation-step {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &__container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    &-right {
+      margin: auto;
+      flex: 1;
+      display: flex;
+    }
+
+    &-left {
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 3rem 0 2rem;
+      flex: 1;
+      row-gap: 1rem;
+    }
+  }
+
+  &__settings {
+    margin-inline: auto;
+
+    @media (min-width: 1586px) {
+      display: flex;
+      column-gap: 1.5rem;
+    }
+  }
+
+  &__radius-slider {
+    display: flex;
+    align-items: center;
+  }
+
+  &__position-cards {
+    margin-inline: auto;
+    overflow-y: auto;
+    width: 30rem;
+    height: 25.75rem;
+    padding: 1rem;
+
+    @media (min-width: 1586px) {
+      width: 49rem;
+      height: 28.5rem;
+    }
+  }
+
+  &__position-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 6rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    column-gap: 1.5rem;
+
+    &-delete {
+      position: absolute;
+      top: 18%;
+      right: 3%;
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    &-move {
+      transform: scale(1.5);
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+
+    &-id-input {
+    }
+  }
+
+  &__color-selects {
+    display: flex;
+    column-gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__board-card {
+    width: 34rem;
+    max-width: 34rem;
+    height: 34rem;
+    max-height: 34rem;
+    background-color: colors.$lobogames-white;
+  }
+
+  &__canvas {
+    width: 100%;
+    height: 100%;
+  }
+}

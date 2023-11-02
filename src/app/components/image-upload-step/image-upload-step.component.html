@@ -1,18 +1,30 @@
-<input
-  type="file"
-  class="image-upload-step__image-input"
-  (change)="onImageUpload($event)"
-  accept="image/*"
-  #imageInput
-/>
-
 <div class="image-upload-step">
   <mat-card
-    class="image-upload-step__image-upload"
+    *ngIf="!model.imageExists"
+    class="image-upload-step__upload"
     (click)="imageInput.click()"
   >
+    <input
+      type="file"
+      class="image-upload-step__input"
+      (change)="onImageUpload($event)"
+      accept="image/*"
+      #imageInput
+    />
     <mat-icon>add_photo_alternate</mat-icon>
     <span>Imagem do tabuleiro</span>
-    <img alt="tabuleiro" [src]="image.src" *ngIf="image.src" />
+  </mat-card>
+
+  <mat-card *ngIf="model.imageExists" class="image-upload-step__image-card">
+    <img
+      class="image-upload-step__image"
+      alt="tabuleiro"
+      [src]="model.image.src"
+    />
+    <mat-icon
+      class="image-upload-step__image-delete"
+      (click)="onDeleteClicked()"
+      >close</mat-icon
+    >
   </mat-card>
 </div>

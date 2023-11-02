@@ -33,12 +33,23 @@
   }
 
   &__settings {
+    margin-inline: auto;
+
+    @media (min-width: 1586px) {
+      display: flex;
+      column-gap: 1.5rem;
+    }
   }
 
   &__position-cards {
+    margin-inline: auto;
     overflow-y: auto;
     width: 29.5rem;
     height: 25.75rem;
+
+    @media (min-width: 1586px) {
+      height: 28.5rem;
+    }
   }
 
   &__color-selects {

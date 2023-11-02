@@ -2,12 +2,12 @@
   <div class="position-creation-step__container">
     <div class="position-creation-step__container-left">
       <div class="position-creation-step__position-cards">
-        <mat-list>
-          <mat-list-item *ngFor="let position of model.positions">
-            <mat-icon>crop_square</mat-icon>
-            <span>{{ position.id }}</span>
-          </mat-list-item>
-        </mat-list>
+        <mat-card
+          *ngFor="let position of model.positions"
+          class="position-creation-step__position-card"
+        >
+          Test
+        </mat-card>
       </div>
       <div class="position-creation-step__settings">
         <div class="position-creation-step__radius-slider">

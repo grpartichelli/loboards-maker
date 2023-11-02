@@ -46,10 +46,21 @@
     overflow-y: auto;
     width: 29.5rem;
     height: 25.75rem;
+    padding: 1rem;
 
     @media (min-width: 1586px) {
+      width: 48rem;
       height: 28.5rem;
     }
+  }
+
+  &__position-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
   }
 
   &__color-selects {

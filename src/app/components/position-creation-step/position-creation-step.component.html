@@ -5,6 +5,9 @@
         class="position-creation-step__position-cards"
         cdkDropList
         (cdkDropListDropped)="onCdkDropListDropped($event)"
+        [ngStyle]="{
+          cursor: isCursorGrabbing ? 'grabbing' : null
+        }"
       >
         <mat-card
           *ngFor="let position of model.positions"
@@ -20,7 +23,10 @@
             class="position-creation-step__position-card"
             *cdkDragPlaceholder
           ></mat-card>
-          <mat-icon class="position-creation-step__position-card-move"
+          <mat-icon
+            (mousedown)="onCdkHandleClicked()"
+            cdkDragHandle
+            class="position-creation-step__position-card-move"
             >menu</mat-icon
           >
 

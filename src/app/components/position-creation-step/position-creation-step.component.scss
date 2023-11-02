@@ -53,10 +53,6 @@
     height: 25.75rem;
     padding: 1rem;
 
-    &:active {
-      cursor: grabbing;
-    }
-
     @media (min-width: 1586px) {
       width: 49rem;
       height: 28.5rem;
@@ -72,10 +68,6 @@
     border-radius: 1rem;
     padding: 1rem;
     column-gap: 1.5rem;
-
-    &:active {
-      cursor: grabbing;
-    }
 
     &-delete {
       position: absolute;

@@ -23,6 +23,7 @@ import {
   moveItemInArray,
   CdkDragDrop,
   CdkDragPlaceholder,
+  CdkDragHandle,
 } from "@angular/cdk/drag-drop";
 
 @Component({
@@ -36,6 +37,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   private ctx!: CanvasRenderingContext2D;
   public cardBorderStyle = "";
   public colors = PositionColorModel.allColorful();
+  public isCursorGrabbing = false;
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
 
   public ngAfterViewInit(): void {
@@ -96,7 +98,12 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
+  public onCdkHandleClicked() {
+    this.isCursorGrabbing = true;
+  }
+
   public onCdkDropListDropped(event: CdkDragDrop<PositionModel[]>) {
+    this.isCursorGrabbing = false;
     moveItemInArray(
       this.model.positions,
       event.previousIndex,
@@ -165,6 +172,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
     CdkDrag,
     CdkDropList,
     CdkDragPlaceholder,
+    CdkDragHandle,
   ],
   exports: [PositionCreationStepComponent],
 })

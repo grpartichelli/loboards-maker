@@ -1,16 +1,25 @@
 <div class="position-creation-step">
   <div class="position-creation-step__container">
     <div class="position-creation-step__container-left">
-      <div class="position-creation-step__position-cards">
+      <div
+        class="position-creation-step__position-cards"
+        cdkDropList
+        (cdkDropListDropped)="onCdkDropListDropped($event)"
+      >
         <mat-card
           *ngFor="let position of model.positions"
           class="position-creation-step__position-card"
+          cdkDrag
           (mouseenter)="onPositionMouseEnter(position)"
           (mouseleave)="onPositionMouseLeave(position)"
           [ngStyle]="{
             border: position.selected ? cardBorderStyle : null
           }"
         >
+          <mat-card
+            class="position-creation-step__position-card"
+            *cdkDragPlaceholder
+          ></mat-card>
           <mat-icon class="position-creation-step__position-card-move"
             >menu</mat-icon
           >

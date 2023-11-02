@@ -1,10 +1,4 @@
-import {
-  Component,
-  NgModule,
-  Input,
-  AfterViewInit,
-  ChangeDetectorRef,
-} from "@angular/core";
+import { Component, NgModule, Input, AfterViewInit } from "@angular/core";
 import { NgOptimizedImage, NgIf, NgForOf, NgStyle } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -23,6 +17,13 @@ import { MatInputModule } from "@angular/material/input";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatListModule } from "@angular/material/list";
+import {
+  CdkDrag,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragDrop,
+  CdkDragPlaceholder,
+} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "position-creation-step[model]",
@@ -95,6 +96,14 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
+  public onCdkDropListDropped(event: CdkDragDrop<PositionModel[]>) {
+    moveItemInArray(
+      this.model.positions,
+      event.previousIndex,
+      event.currentIndex,
+    );
+  }
+
   public onColorChange() {
     this.updateCardBorderStyle();
     this.drawCanvas();
@@ -153,6 +162,9 @@ export class PositionCreationStepComponent implements AfterViewInit {
     NgForOf,
     NgStyle,
     MatListModule,
+    CdkDrag,
+    CdkDropList,
+    CdkDragPlaceholder,
   ],
   exports: [PositionCreationStepComponent],
 })

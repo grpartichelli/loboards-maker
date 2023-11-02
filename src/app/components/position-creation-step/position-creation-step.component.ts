@@ -1,4 +1,10 @@
-import { Component, NgModule, Input, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  NgModule,
+  Input,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from "@angular/core";
 import { NgOptimizedImage, NgIf, NgForOf, NgStyle } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -27,8 +33,9 @@ export class PositionCreationStepComponent implements AfterViewInit {
   @Input() model!: BoardModel;
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
-  public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
+  public cardBorderStyle = "";
   public colors = PositionColorModel.allColorful();
+  public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
 
   public ngAfterViewInit(): void {
     this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
@@ -89,6 +96,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onColorChange() {
+    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
@@ -98,18 +106,21 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onPositionMouseEnter(position: PositionModel) {
+    this.updateCardBorderStyle();
     position.selected = true;
     this.drawCanvas();
   }
 
   public onPositionMouseLeave(position: PositionModel) {
+    this.updateCardBorderStyle();
     position.selected = false;
     this.drawCanvas();
   }
 
-  public onSliderPercantageChange() {
+  public onSliderPercentageChange() {
     this.model.positionRadiusScale =
       this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;
+    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
@@ -118,6 +129,10 @@ export class PositionCreationStepComponent implements AfterViewInit {
     const x = mouseEvent.clientX - rect.left;
     const y = mouseEvent.clientY - rect.top;
     return new CoordinateModel(x, y);
+  }
+
+  private updateCardBorderStyle() {
+    this.cardBorderStyle = `2px solid ${this.model.selectedPositionColor}`;
   }
 }
 

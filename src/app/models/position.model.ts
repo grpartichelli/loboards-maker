@@ -4,21 +4,15 @@ export class PositionModel {
   public selected = false;
 
   public static fromOther(other: PositionModel): PositionModel {
-    return new PositionModel(
-      other.id,
-      CoordinateModel.fromOther(other.coord),
-      other.accessibilityOrder,
-    );
+    return new PositionModel(other.id, CoordinateModel.fromOther(other.coord));
   }
 
   public constructor(
     public id: string,
     public coord: CoordinateModel,
-    public accessibilityOrder: number,
   ) {
     this.id = id;
     this.coord = coord;
-    this.accessibilityOrder = accessibilityOrder;
   }
 
   public equalsTo(other: PositionModel): boolean {

@@ -61,20 +61,29 @@
 
   &__position-card {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
     height: 6rem;
     margin-bottom: 1.5rem;
     border-radius: 1rem;
     padding: 1rem;
+    column-gap: 1.5rem;
 
     &-delete {
       position: absolute;
       top: 18%;
-      right: 2%;
+      right: 3%;
       cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    &-move {
       transform: scale(1.5);
-      color: colors.$accent;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+
+    &-id-input {
     }
   }
 

@@ -11,7 +11,10 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public isAcceptEnabled(): boolean {
-    return false;
+    return (
+      this.model.positions.length > 1 &&
+      !this.model.positions.some((position) => position.id.length === 0)
+    );
   }
 
   public isTerminal(): boolean {

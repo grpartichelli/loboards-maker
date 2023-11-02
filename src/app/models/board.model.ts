@@ -1,9 +1,6 @@
 import { PositionModel } from "./position.model";
 import { CoordinateModel } from "./coordinate.model";
-import {
-  PositionColorHexTypeModel,
-  PositionColorModel,
-} from "./position-color-hex-type.model";
+import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
 
 export class BoardModel {
   public static fromOther(other: BoardModel | null): BoardModel {
@@ -13,9 +10,9 @@ export class BoardModel {
       model.selectedPositionColor = other.selectedPositionColor;
       model.positionColor = other.positionColor;
       model.image = other.image;
-      // model.positions = other.positions.map((position) =>
-      //   PositionModel.fromOther(position),
-      // );
+      model.positions = other.positions.map((position) =>
+        PositionModel.fromOther(position),
+      );
     }
     return model;
   }
@@ -28,27 +25,10 @@ export class BoardModel {
     BoardModel.MAX_RADIUS_SCALE * BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   public positionColor = PositionColorHexTypeModel.RED;
   public positions = new Array<PositionModel>();
-  public selectedPositionColor = PositionColorHexTypeModel.GREEN;
+  public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
 
   public addNewPosition(coordinate: CoordinateModel): void {
-    this.positions.push(
-      new PositionModel(
-        this.calculateId(),
-        coordinate,
-        this.calculateAccessibilityOrder(),
-      ),
-    );
-  }
-
-  private calculateAccessibilityOrder(): number {
-    const accessibilityOrders = this.positions.map(
-      (position) => position.accessibilityOrder,
-    );
-    let accessibilityOrder = 0;
-    while (accessibilityOrders.includes(accessibilityOrder)) {
-      accessibilityOrder++;
-    }
-    return accessibilityOrder;
+    this.positions.push(new PositionModel(this.calculateId(), coordinate));
   }
 
   private calculateId(): string {

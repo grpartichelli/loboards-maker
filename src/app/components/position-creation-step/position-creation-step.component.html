@@ -7,8 +7,21 @@
           class="position-creation-step__position-card"
           (mouseenter)="onPositionMouseEnter(position)"
           (mouseleave)="onPositionMouseLeave(position)"
+          [ngStyle]="{
+            border: position.selected ? cardBorderStyle : null
+          }"
         >
-          {{ position.id }}
+          <mat-icon class="position-creation-step__position-card-move"
+            >menu</mat-icon
+          >
+
+          <mat-form-field
+            subscriptSizing="dynamic"
+            class="position-creation-step__position-card-id-input"
+          >
+            <mat-label>Identificador</mat-label>
+            <input required matInput type="text" [(ngModel)]="position.id" />
+          </mat-form-field>
           <mat-icon
             class="position-creation-step__position-card-delete"
             (click)="onPositionDeleteClicked(position)"
@@ -29,7 +42,7 @@
             <input
               matSliderThumb
               [(ngModel)]="sliderPercentage"
-              (ngModelChange)="onSliderPercantageChange()"
+              (ngModelChange)="onSliderPercentageChange()"
             />
           </mat-slider>
         </div>

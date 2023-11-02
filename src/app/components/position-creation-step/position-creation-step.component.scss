@@ -66,6 +66,16 @@
     height: 6rem;
     margin-bottom: 1.5rem;
     border-radius: 1rem;
+    padding: 1rem;
+
+    &-delete {
+      position: absolute;
+      top: 18%;
+      right: 2%;
+      cursor: pointer;
+      transform: scale(1.5);
+      color: colors.$accent;
+    }
   }
 
   &__color-selects {

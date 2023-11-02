@@ -5,10 +5,15 @@
         <mat-card
           *ngFor="let position of model.positions"
           class="position-creation-step__position-card"
-          (mouseenter)="onPositionCardMouseEnter(position)"
-          (mouseleave)="onPositionCardMouseLeave(position)"
+          (mouseenter)="onPositionMouseEnter(position)"
+          (mouseleave)="onPositionMouseLeave(position)"
         >
-          Test
+          {{ position.id }}
+          <mat-icon
+            class="position-creation-step__position-card-delete"
+            (click)="onPositionDeleteClicked(position)"
+            >close</mat-icon
+          >
         </mat-card>
       </div>
       <div class="position-creation-step__settings">

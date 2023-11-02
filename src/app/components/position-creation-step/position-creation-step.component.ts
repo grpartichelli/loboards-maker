@@ -27,7 +27,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   @Input() model!: BoardModel;
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
-  public sliderPercentage = 0.25;
+  public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   public colors = PositionColorModel.allColorful();
 
   public ngAfterViewInit(): void {
@@ -92,12 +92,17 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  public onPositionCardMouseEnter(position: PositionModel) {
+  public onPositionDeleteClicked(position: PositionModel) {
+    this.model.deletePosition(position);
+    this.drawCanvas();
+  }
+
+  public onPositionMouseEnter(position: PositionModel) {
     position.selected = true;
     this.drawCanvas();
   }
 
-  public onPositionCardMouseLeave(position: PositionModel) {
+  public onPositionMouseLeave(position: PositionModel) {
     position.selected = false;
     this.drawCanvas();
   }

@@ -21,9 +21,11 @@ export class BoardModel {
   }
 
   public static MAX_RADIUS_SCALE = 0.2;
+  public static DEFAULT_RADIUS_PERCENTAGE = 0.3;
 
   public image: HTMLImageElement = new Image();
-  public positionRadiusScale = BoardModel.MAX_RADIUS_SCALE * 0.25;
+  public positionRadiusScale =
+    BoardModel.MAX_RADIUS_SCALE * BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   public positionColor = PositionColorHexTypeModel.RED;
   public positions = new Array<PositionModel>();
   public selectedPositionColor = PositionColorHexTypeModel.GREEN;
@@ -71,8 +73,8 @@ export class BoardModel {
     return id;
   }
 
-  public findPositionById(id: string): PositionModel | null {
-    return this.positions.find((position) => position.id === id) ?? null;
+  public deletePosition(position: PositionModel): void {
+    this.positions = this.positions.filter((it) => !it.equalsTo(position));
   }
 
   public get imageExists(): boolean {

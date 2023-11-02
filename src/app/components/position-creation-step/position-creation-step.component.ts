@@ -92,6 +92,16 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
+  public onPositionCardMouseEnter(position: PositionModel) {
+    position.selected = true;
+    this.drawCanvas();
+  }
+
+  public onPositionCardMouseLeave(position: PositionModel) {
+    position.selected = false;
+    this.drawCanvas();
+  }
+
   public onSliderPercantageChange() {
     this.model.positionRadiusScale =
       this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;

@@ -5,6 +5,8 @@
         <mat-card
           *ngFor="let position of model.positions"
           class="position-creation-step__position-card"
+          (mouseenter)="onPositionCardMouseEnter(position)"
+          (mouseleave)="onPositionCardMouseLeave(position)"
         >
           Test
         </mat-card>

@@ -41,6 +41,11 @@
     }
   }
 
+  &__radius-slider {
+    display: flex;
+    align-items: center;
+  }
+
   &__position-cards {
     margin-inline: auto;
     overflow-y: auto;

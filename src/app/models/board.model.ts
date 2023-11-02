@@ -24,9 +24,9 @@ export class BoardModel {
 
   public image: HTMLImageElement = new Image();
   public positionRadiusScale = BoardModel.MAX_RADIUS_SCALE * 0.25;
-  public positionColor = PositionColorHexTypeModel.DARK_BLUE;
+  public positionColor = PositionColorHexTypeModel.RED;
   public positions = new Array<PositionModel>();
-  public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
+  public selectedPositionColor = PositionColorHexTypeModel.GREEN;
 
   public addNewPosition(coordinate: CoordinateModel): void {
     this.positions.push(
@@ -92,6 +92,6 @@ export class BoardModel {
   }
 
   public getSelectedPositionRadius(width: number): number {
-    return this.getBorderPositionRadius(width) * 1.11;
+    return this.getBorderPositionRadius(width) * 1.1;
   }
 }

@@ -1,4 +1,9 @@
-<div class="position-creation-step">
+<div
+  class="position-creation-step"
+  [ngStyle]="{
+    cursor: isCursorGrabbing ? 'grabbing' : null
+  }"
+>
   <div class="position-creation-step__container">
     <div class="position-creation-step__container-left">
       <div
@@ -15,9 +20,6 @@
           cdkDrag
           (mouseenter)="onPositionMouseEnter(position)"
           (mouseleave)="onPositionMouseLeave(position)"
-          [ngStyle]="{
-            border: position.selected ? cardBorderStyle : null
-          }"
         >
           <mat-card
             class="position-creation-step__position-card"

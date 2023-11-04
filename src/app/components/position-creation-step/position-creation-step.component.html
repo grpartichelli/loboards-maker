@@ -39,6 +39,55 @@
             <mat-label>Identificador</mat-label>
             <input required matInput type="text" [(ngModel)]="position.id" />
           </mat-form-field>
+
+          <div class="position-creation-step__position-card-vertical-arrows">
+            <mat-icon
+              class="position-creation-step__position-card-arrow"
+              (click)="onArrowUpClicked(position)"
+              >keyboard_arrow_up
+            </mat-icon>
+            <div>
+              <input
+                class="position-creation-step__position-card-coordinate-input position-creation-step__position-card-coordinate-input--height"
+                required
+                matInput
+                type="number"
+                [ngModel]="position.lengthPercentage.height"
+                (ngModelChange)="
+                  onPositionLengthPercentageChanged(position, $event)
+                "
+              />%
+            </div>
+            <mat-icon
+              (click)="onArrowDownClicked(position)"
+              class="position-creation-step__position-card-arrow"
+              >keyboard_arrow_down
+            </mat-icon>
+          </div>
+
+          <div class="position-creation-step__position-card-horizontal-arrows">
+            <mat-icon
+              (click)="onArrowLeftClicked(position)"
+              class="position-creation-step__position-card-arrow"
+              >keyboard_arrow_left
+            </mat-icon>
+
+            <input
+              class="position-creation-step__position-card-coordinate-input"
+              required
+              matInput
+              type="number"
+              [ngModel]="position.lengthPercentage.width"
+              (ngModelChange)="onWidthChanged(position, $event)"
+            />%
+
+            <mat-icon
+              (click)="onArrowRightClicked(position)"
+              class="position-creation-step__position-card-arrow"
+              >keyboard_arrow_right
+            </mat-icon>
+          </div>
+
           <mat-icon
             class="position-creation-step__position-card-delete"
             (click)="onPositionDeleteClicked(position)"
@@ -54,7 +103,7 @@
             max="1"
             step="0.01"
             discrete
-            [displayWith]="formatSliderLabel"
+            [displayWith]="formatRadiusSlider"
           >
             <input
               matSliderThumb

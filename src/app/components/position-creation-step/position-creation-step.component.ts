@@ -5,7 +5,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
-import { CoordinateModel } from "../../models/coordinate.model";
+import { LengthPercentageModel } from "../../models/length-percentage.model";
 import { PositionModel } from "../../models/position.model";
 import {
   PositionColorModel,
@@ -38,7 +38,9 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public cardBorderStyle = "";
   public colors = PositionColorModel.allColorful();
   public isCursorGrabbing = false;
+  public percentage = 10.32;
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
+  PERCENTAGE_STEP_SIZE = 0.1;
 
   public ngAfterViewInit(): void {
     this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
@@ -83,13 +85,47 @@ export class PositionCreationStepComponent implements AfterViewInit {
     hexTypeModel: PositionColorHexTypeModel,
   ) {
     this.ctx.beginPath();
-    this.ctx.arc(position.coord.x, position.coord.y, radius, 0, 2 * Math.PI);
+    this.ctx.arc(
+      position.lengthPercentage.width * this.canvas.width,
+      position.lengthPercentage.height * this.canvas.height,
+      radius,
+      0,
+      2 * Math.PI,
+    );
     this.ctx.fillStyle = hexTypeModel;
     this.ctx.fill();
   }
 
-  public formatSliderLabel(value: number): string {
+  public formatRadiusSlider(value: number): string {
     return `${Math.round(value * 100)}%`;
+  }
+
+  public formatPositionPercentage(value: number): string {
+    return `${(value * 100).toFixed(2)}%`;
+  }
+
+  public onArrowUpClicked(position: PositionModel) {
+    const newY = position.lengthPercentage.height - this.PERCENTAGE_STEP_SIZE;
+    position.lengthPercentage.height = Math.max(newY, 0);
+    this.drawCanvas();
+  }
+
+  public onArrowLeftClicked(position: PositionModel) {
+    const newX = position.lengthPercentage.width - this.PERCENTAGE_STEP_SIZE;
+    position.lengthPercentage.width = Math.max(newX, 0);
+    this.drawCanvas();
+  }
+
+  public onArrowRightClicked(position: PositionModel) {
+    const newX = position.lengthPercentage.width + this.PERCENTAGE_STEP_SIZE;
+    position.lengthPercentage.width = Math.min(newX, 1);
+    this.drawCanvas();
+  }
+
+  public onArrowDownClicked(position: PositionModel) {
+    const newY = position.lengthPercentage.height + this.PERCENTAGE_STEP_SIZE;
+    position.lengthPercentage.height = Math.min(newY, 1);
+    this.drawCanvas();
   }
 
   public onCanvasClick(mouseEvent: MouseEvent) {
@@ -140,11 +176,21 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  private resolveCursorPosition(mouseEvent: MouseEvent): CoordinateModel {
+  private resolveCursorPosition(mouseEvent: MouseEvent): LengthPercentageModel {
     const rect = this.canvas.getBoundingClientRect();
-    const x = mouseEvent.clientX - rect.left;
-    const y = mouseEvent.clientY - rect.top;
-    return new CoordinateModel(x, y);
+    const x = this.calculatePercentage(
+      mouseEvent.clientX - rect.left,
+      rect.width,
+    );
+    const y = this.calculatePercentage(
+      mouseEvent.clientY - rect.top,
+      rect.height,
+    );
+    return new LengthPercentageModel(x, y);
+  }
+
+  private calculatePercentage(numerator: number, denominator: number): number {
+    return Math.max(0, Math.min(1, numerator / denominator));
   }
 
   private updateCardBorderStyle() {

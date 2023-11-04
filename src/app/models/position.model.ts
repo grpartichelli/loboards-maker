@@ -1,18 +1,21 @@
-import { CoordinateModel } from "./coordinate.model";
+import { LengthPercentageModel } from "./length-percentage.model";
 
 export class PositionModel {
   public selected = false;
 
   public static fromOther(other: PositionModel): PositionModel {
-    return new PositionModel(other.id, CoordinateModel.fromOther(other.coord));
+    return new PositionModel(
+      other.id,
+      LengthPercentageModel.fromOther(other.lengthPercentage),
+    );
   }
 
   public constructor(
     public id: string,
-    public coord: CoordinateModel,
+    public lengthPercentage: LengthPercentageModel,
   ) {
     this.id = id;
-    this.coord = coord;
+    this.lengthPercentage = lengthPercentage;
   }
 
   public equalsTo(other: PositionModel): boolean {

@@ -1,5 +1,5 @@
 import { PositionModel } from "./position.model";
-import { CoordinateModel } from "./coordinate.model";
+import { LengthPercentageModel } from "./length-percentage.model";
 import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
 
 export class BoardModel {
@@ -27,7 +27,7 @@ export class BoardModel {
   public positions = new Array<PositionModel>();
   public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
 
-  public addNewPosition(coordinate: CoordinateModel): void {
+  public addNewPosition(coordinate: LengthPercentageModel): void {
     this.positions.push(new PositionModel(this.calculateId(), coordinate));
   }
 
@@ -74,6 +74,6 @@ export class BoardModel {
   }
 
   public getSelectedPositionRadius(width: number): number {
-    return this.getBorderPositionRadius(width) * 1.1;
+    return this.getBorderPositionRadius(width) * 1.11;
   }
 }

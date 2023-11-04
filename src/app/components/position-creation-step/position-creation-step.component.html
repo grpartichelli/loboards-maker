@@ -46,13 +46,18 @@
               (click)="onArrowUpClicked(position)"
               >keyboard_arrow_up
             </mat-icon>
-            <input
-              class="position-creation-step__position-card-coordinate-input"
-              required
-              matInput
-              type="number"
-              [(ngModel)]="percentage"
-            />
+            <div>
+              <input
+                class="position-creation-step__position-card-coordinate-input position-creation-step__position-card-coordinate-input--height"
+                required
+                matInput
+                type="number"
+                [ngModel]="position.lengthPercentage.height"
+                (ngModelChange)="
+                  onPositionLengthPercentageChanged(position, $event)
+                "
+              />%
+            </div>
             <mat-icon
               (click)="onArrowDownClicked(position)"
               class="position-creation-step__position-card-arrow"
@@ -72,8 +77,9 @@
               required
               matInput
               type="number"
-              [(ngModel)]="percentage"
-            />
+              [ngModel]="position.lengthPercentage.width"
+              (ngModelChange)="onWidthChanged(position, $event)"
+            />%
 
             <mat-icon
               (click)="onArrowRightClicked(position)"

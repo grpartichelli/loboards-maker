@@ -1,4 +1,10 @@
-import { Component, NgModule, Input, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  NgModule,
+  Input,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from "@angular/core";
 import { NgOptimizedImage, NgIf, NgForOf, NgStyle } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -38,9 +44,10 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public cardBorderStyle = "";
   public colors = PositionColorModel.allColorful();
   public isCursorGrabbing = false;
-  public percentage = 10.32;
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
-  PERCENTAGE_STEP_SIZE = 0.1;
+  private readonly PERCENTAGE_STEP_SIZE = 0.1;
+
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
   public ngAfterViewInit(): void {
     this.canvas = document.getElementById("image-canvas") as HTMLCanvasElement;
@@ -86,8 +93,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
   ) {
     this.ctx.beginPath();
     this.ctx.arc(
-      position.lengthPercentage.width * this.canvas.width,
-      position.lengthPercentage.height * this.canvas.height,
+      position.lengthPercentage.widthNormalized * this.canvas.width,
+      position.lengthPercentage.heightNormalized * this.canvas.height,
       radius,
       0,
       2 * Math.PI,
@@ -96,35 +103,45 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.ctx.fill();
   }
 
+  private ensurePercentageBounds(value: number): number {
+    const percent = Math.max(0, Math.min(100, value));
+    return Number.parseFloat(`${percent.toFixed(2)}`);
+  }
+
   public formatRadiusSlider(value: number): string {
     return `${Math.round(value * 100)}%`;
   }
 
-  public formatPositionPercentage(value: number): string {
-    return `${(value * 100).toFixed(2)}%`;
-  }
-
   public onArrowUpClicked(position: PositionModel) {
-    const newY = position.lengthPercentage.height - this.PERCENTAGE_STEP_SIZE;
-    position.lengthPercentage.height = Math.max(newY, 0);
+    position.lengthPercentage.height = this.ensurePercentageBounds(
+      position.lengthPercentage.height - this.PERCENTAGE_STEP_SIZE,
+    );
     this.drawCanvas();
   }
 
   public onArrowLeftClicked(position: PositionModel) {
-    const newX = position.lengthPercentage.width - this.PERCENTAGE_STEP_SIZE;
-    position.lengthPercentage.width = Math.max(newX, 0);
+    position.lengthPercentage.width = this.ensurePercentageBounds(
+      position.lengthPercentage.width - this.PERCENTAGE_STEP_SIZE,
+    );
     this.drawCanvas();
   }
 
   public onArrowRightClicked(position: PositionModel) {
-    const newX = position.lengthPercentage.width + this.PERCENTAGE_STEP_SIZE;
-    position.lengthPercentage.width = Math.min(newX, 1);
+    position.lengthPercentage.width = this.ensurePercentageBounds(
+      position.lengthPercentage.width + this.PERCENTAGE_STEP_SIZE,
+    );
     this.drawCanvas();
   }
 
   public onArrowDownClicked(position: PositionModel) {
-    const newY = position.lengthPercentage.height + this.PERCENTAGE_STEP_SIZE;
-    position.lengthPercentage.height = Math.min(newY, 1);
+    console.log("before");
+    console.log(position.lengthPercentage.height);
+    console.log(this.PERCENTAGE_STEP_SIZE);
+    position.lengthPercentage.height = this.ensurePercentageBounds(
+      position.lengthPercentage.height + this.PERCENTAGE_STEP_SIZE,
+    );
+    console.log("after");
+    console.log(position.lengthPercentage.height);
     this.drawCanvas();
   }
 
@@ -149,6 +166,53 @@ export class PositionCreationStepComponent implements AfterViewInit {
 
   public onColorChange() {
     this.updateCardBorderStyle();
+    this.drawCanvas();
+  }
+
+  public onPositionLengthPercentageChanged(
+    position: PositionModel,
+    event: number,
+  ) {
+    if (this.isPercentageValid(event)) {
+      position.lengthPercentage.height = event;
+      return;
+    }
+
+    // HACK: This is a hack to force the input to update
+    position.lengthPercentage.height = -1;
+    this.changeDetectorRef.detectChanges();
+    // END HACK
+
+    position.lengthPercentage.height = this.ensurePercentageBounds(event);
+    console.log("updated to: " + position.lengthPercentage.height);
+    this.drawCanvas();
+  }
+
+  private isPercentageValid(percentage: number) {
+    if (percentage == null) {
+      return false;
+    }
+
+    if (percentage < 0 || percentage > 100) {
+      return false;
+    }
+    if (Math.floor(percentage) === percentage) {
+      return true;
+    }
+    return (percentage.toString().split(".")[1].length || 0) <= 2;
+  }
+
+  public onWidthChanged(position: PositionModel, event: number) {
+    if (this.isPercentageValid(event)) {
+      return;
+    }
+
+    // HACK: This is a hack to force the input to update
+    position.lengthPercentage.width = 0;
+    this.changeDetectorRef.detectChanges();
+    // END HACK
+
+    position.lengthPercentage.width = this.ensurePercentageBounds(event);
     this.drawCanvas();
   }
 
@@ -178,19 +242,13 @@ export class PositionCreationStepComponent implements AfterViewInit {
 
   private resolveCursorPosition(mouseEvent: MouseEvent): LengthPercentageModel {
     const rect = this.canvas.getBoundingClientRect();
-    const x = this.calculatePercentage(
-      mouseEvent.clientX - rect.left,
-      rect.width,
+    const x = this.ensurePercentageBounds(
+      ((mouseEvent.clientX - rect.left) / rect.width) * 100,
     );
-    const y = this.calculatePercentage(
-      mouseEvent.clientY - rect.top,
-      rect.height,
+    const y = this.ensurePercentageBounds(
+      ((mouseEvent.clientY - rect.top) / rect.height) * 100,
     );
     return new LengthPercentageModel(x, y);
-  }
-
-  private calculatePercentage(numerator: number, denominator: number): number {
-    return Math.max(0, Math.min(1, numerator / denominator));
   }
 
   private updateCardBorderStyle() {

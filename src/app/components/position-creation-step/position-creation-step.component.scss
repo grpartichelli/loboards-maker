@@ -117,12 +117,16 @@
     }
 
     &-coordinate-input {
-      width: 3rem;
+      width: 2.5rem;
       border: 0;
       text-align: center;
       background: rgba(0, 0, 0, 0);
       font-size: 1rem;
       color: white;
+
+      &--height {
+        margin-left: 0.75rem;
+      }
     }
   }
 

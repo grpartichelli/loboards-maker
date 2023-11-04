@@ -88,6 +88,7 @@
     }
 
     &-id-input {
+      width: 8.5rem;
       @media (min-width: 1586px) {
         width: 25rem;
       }
@@ -125,7 +126,7 @@
       color: white;
 
       &--height {
-        margin-left: 0.75rem;
+        padding-left: 0.75rem;
       }
     }
   }

@@ -28,7 +28,7 @@ export class BoardModel {
     BoardModel.MAX_RADIUS_SCALE * BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   public positionColor = PositionColorHexTypeModel.RED;
   public positions = new Array<PositionModel>();
-  public selectedPositionColor = PositionColorHexTypeModel.DARK_BLUE;
+  public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
 
   public addNewPosition(coordinate: LengthPercentageModel): void {
     this.positions.push(new PositionModel(this.calculateId(), coordinate));

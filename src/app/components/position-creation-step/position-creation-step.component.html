@@ -131,7 +131,10 @@
               [(value)]="model.selectedPositionColor"
               (selectionChange)="onColorChange()"
             >
-              <mat-option *ngFor="let color of colors" [value]="color.hex">
+              <mat-option
+                *ngFor="let color of selectedPositionColors"
+                [value]="color.hex"
+              >
                 <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
                 {{ color.name }}</mat-option
               >

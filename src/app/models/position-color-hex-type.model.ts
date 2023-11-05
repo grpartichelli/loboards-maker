@@ -7,19 +7,32 @@ export enum PositionColorHexTypeModel {
   LIGHT_BLUE = "#00ffff",
   YELLOW = "#ffff00",
   PINK = "#ff00ff",
+  TRANSPARENT = "#",
 }
 
 export class PositionColorModel {
   public static allColorful(): PositionColorModel[] {
+    return this.allColorfulAndTransparent().filter(
+      (it) => it !== PositionColorModel.TRANSPARENT,
+    );
+  }
+
+  public static allColorfulAndTransparent(): PositionColorModel[] {
     return [
       PositionColorModel.YELLOW,
       PositionColorModel.LIGHT_BLUE,
       PositionColorModel.DARK_BLUE,
       PositionColorModel.PINK,
+      PositionColorModel.TRANSPARENT,
       PositionColorModel.GREEN,
       PositionColorModel.RED,
     ];
   }
+
+  public static TRANSPARENT = new PositionColorModel(
+    PositionColorHexTypeModel.TRANSPARENT,
+    "Transparente",
+  );
 
   public static WHITE = new PositionColorModel(
     PositionColorHexTypeModel.WHITE,

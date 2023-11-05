@@ -42,8 +42,9 @@ export class PositionCreationStepComponent implements AfterViewInit {
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
   public cardBorderStyle = "";
-  public colors = PositionColorModel.allColorful();
+  public colors = PositionColorModel.allColorfulAndTransparent();
   public isCursorGrabbing = false;
+  public selectedPositionColors = PositionColorModel.allColorful();
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   private readonly PERCENTAGE_STEP_SIZE = 0.1;
 
@@ -73,16 +74,31 @@ export class PositionCreationStepComponent implements AfterViewInit {
       this.canvas.width,
     );
     this.model.positions.forEach((position) => {
+      if (this.model.positionColor === PositionColorModel.TRANSPARENT.hex) {
+        const hexColor = position.selected
+          ? this.model.selectedPositionColor
+          : PositionColorHexTypeModel.BLACK;
+        this.drawCircle(position, radius, false, hexColor);
+        this.drawCircle(position, radius * 0.1, true, hexColor);
+        return;
+      }
+
       if (position.selected) {
         this.drawCircle(
           position,
           selectedRadius,
+          true,
           this.model.selectedPositionColor,
         );
       } else {
-        this.drawCircle(position, borderRadius, PositionColorModel.BLACK.hex);
+        this.drawCircle(
+          position,
+          borderRadius,
+          true,
+          PositionColorHexTypeModel.BLACK,
+        );
       }
-      this.drawCircle(position, radius, this.model.positionColor);
+      this.drawCircle(position, radius, true, this.model.positionColor);
     });
     this.changeDetectorRef.detectChanges();
   }
@@ -90,7 +106,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public drawCircle(
     position: PositionModel,
     radius: number,
-    hexTypeModel: PositionColorHexTypeModel,
+    isFilledCircled: boolean,
+    hexColor: PositionColorHexTypeModel,
   ) {
     this.ctx.beginPath();
     this.ctx.arc(
@@ -100,8 +117,15 @@ export class PositionCreationStepComponent implements AfterViewInit {
       0,
       2 * Math.PI,
     );
-    this.ctx.fillStyle = hexTypeModel;
-    this.ctx.fill();
+
+    if (isFilledCircled) {
+      this.ctx.fillStyle = hexColor;
+      this.ctx.fill();
+    } else {
+      this.ctx.strokeStyle = hexColor;
+      this.ctx.lineWidth = 4;
+      this.ctx.stroke();
+    }
   }
 
   private ensurePercentageBounds(value: number): number {

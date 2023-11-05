@@ -54,9 +54,6 @@ export class ImageUploadStepComponent {
       }
 
       if (this.model.image.naturalWidth === this.model.image.naturalHeight) {
-        this.localStorageService.saveImage("board-image", this.model.image);
-        this.model.image.src =
-          this.localStorageService.getImage("board-image")?.src ?? "";
         this.changeDetectorRef.detectChanges();
         return;
       }

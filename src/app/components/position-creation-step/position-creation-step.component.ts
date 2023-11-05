@@ -45,6 +45,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public colors = PositionColorModel.allColorfulAndTransparent();
   private grabbedPosition: PositionModel | null = null;
   public isCursorGrabbing = false;
+  public isCursorPointer = false;
+  public isDeleteHighlighted = false;
   public selectedPositionColors = PositionColorModel.allColorful();
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   private readonly PERCENTAGE_STEP_SIZE = 0.1;
@@ -216,11 +218,33 @@ export class PositionCreationStepComponent implements AfterViewInit {
     if (position != null) {
       if (this.isCursorGrabbing) {
         position.lengthPercentage = lengthPercentage;
+      } else {
+        this.isCursorPointer = true;
       }
       position.selected = true;
       this.scrollPositionIntoView(position);
+    } else {
+      this.isCursorPointer = false;
     }
     this.drawCanvas();
+  }
+
+  public onDeleteMouseLeave() {
+    this.isDeleteHighlighted = false;
+  }
+
+  public onDeleteMouseMove(mouseEvent: MouseEvent) {
+    this.isDeleteHighlighted = true;
+    this.onCanvasMouseMove(mouseEvent);
+  }
+
+  public onDeleteMouseUp() {
+    if (this.grabbedPosition == null) {
+      return;
+    }
+    this.model.deletePosition(this.grabbedPosition);
+    this.grabbedPosition = null;
+    this.isCursorGrabbing = false;
   }
 
   public onCdkHandleClicked() {
@@ -256,6 +280,10 @@ export class PositionCreationStepComponent implements AfterViewInit {
 
     position.lengthPercentage.height = this.ensurePercentageBounds(event);
     this.drawCanvas();
+  }
+
+  public get isDeleteVisible(): boolean {
+    return Boolean(this.grabbedPosition);
   }
 
   private isPercentageValid(percentage: number) {

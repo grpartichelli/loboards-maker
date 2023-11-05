@@ -1,7 +1,7 @@
 <div
   class="position-creation-step"
   [ngStyle]="{
-    cursor: isCursorGrabbing ? 'grabbing' : null
+    cursor: isCursorGrabbing ? 'grabbing' : isCursorPointer ? 'pointer' : null
   }"
 >
   <div class="position-creation-step__container">
@@ -159,6 +159,17 @@
           (mousemove)="onCanvasMouseMove($event)"
           (mouseup)="onCanvasMouseUp($event)"
         ></canvas>
+        <mat-icon
+          *ngIf="isDeleteVisible"
+          class="position-creation-step__delete"
+          (mouseup)="onDeleteMouseUp()"
+          (mousemove)="onDeleteMouseMove($event)"
+          (mouseleave)="onDeleteMouseLeave()"
+          [ngStyle]="{
+            transform: isDeleteHighlighted ? 'scale(2)' : null
+          }"
+          >delete_forever</mat-icon
+        >
       </mat-card>
     </div>
   </div>

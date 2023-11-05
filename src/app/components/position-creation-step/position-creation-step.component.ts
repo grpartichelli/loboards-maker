@@ -43,6 +43,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
   private ctx!: CanvasRenderingContext2D;
   public cardBorderStyle = "";
   public colors = PositionColorModel.allColorfulAndTransparent();
+  private grabbedPosition: PositionModel | null = null;
   public isCursorGrabbing = false;
   public selectedPositionColors = PositionColorModel.allColorful();
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
@@ -187,40 +188,39 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  public onCanvasClick(mouseEvent: MouseEvent) {
-    const coord = this.resolveCursorLengthPercentage(mouseEvent);
-    this.model.addNewPosition(coord);
-    this.drawCanvas();
+  public onCanvasMouseDown(mouseEvent: MouseEvent) {
+    const lengthPercentage = this.resolveCursorLengthPercentage(mouseEvent);
+    const position = this.findPosition(lengthPercentage);
+    if (position == null) {
+      this.model.addNewPosition(lengthPercentage);
+      this.drawCanvas();
+      return;
+    }
+    this.isCursorGrabbing = true;
+    this.grabbedPosition = position;
+  }
+
+  public onCanvasMouseUp(mouseEvent: MouseEvent) {
+    this.isCursorGrabbing = false;
+    this.grabbedPosition = null;
   }
 
   public onCanvasMouseMove(mouseEvent: MouseEvent) {
     const lengthPercentage = this.resolveCursorLengthPercentage(mouseEvent);
-    const position = this.findPosition(lengthPercentage);
+    const position = this.isCursorGrabbing
+      ? this.grabbedPosition
+      : this.findPosition(lengthPercentage);
+
+    this.model.positions.forEach((position) => (position.selected = false));
+
     if (position != null) {
+      if (this.isCursorGrabbing) {
+        position.lengthPercentage = lengthPercentage;
+      }
       position.selected = true;
-      this.drawCanvas();
-      const positionElement = document.getElementById(position.id);
-      const containerElement = document.getElementById("card-container");
-
-      if (!positionElement || !containerElement) {
-        return;
-      }
-
-      const positionRect = positionElement.getBoundingClientRect();
-      const containerRect = containerElement.getBoundingClientRect();
-
-      if (
-        positionRect.bottom > containerRect.bottom ||
-        positionRect.top < containerRect.top
-      ) {
-        positionElement.scrollIntoView();
-      }
-    } else {
-      if (this.model.positions.some((it) => it.selected)) {
-        this.model.positions.forEach((position) => (position.selected = false));
-        this.drawCanvas();
-      }
+      this.scrollPositionIntoView(position);
     }
+    this.drawCanvas();
   }
 
   public onCdkHandleClicked() {
@@ -320,6 +320,25 @@ export class PositionCreationStepComponent implements AfterViewInit {
       ((mouseEvent.clientY - rect.top) / rect.height) * 100,
     );
     return new LengthPercentageModel(x, y);
+  }
+
+  private scrollPositionIntoView(position: PositionModel) {
+    const positionElement = document.getElementById(position.id);
+    const containerElement = document.getElementById("card-container");
+
+    if (!positionElement || !containerElement) {
+      return;
+    }
+
+    const positionRect = positionElement.getBoundingClientRect();
+    const containerRect = containerElement.getBoundingClientRect();
+
+    if (
+      positionRect.bottom > containerRect.bottom ||
+      positionRect.top < containerRect.top
+    ) {
+      positionElement.scrollIntoView();
+    }
   }
 
   private updateCardBorderStyle() {

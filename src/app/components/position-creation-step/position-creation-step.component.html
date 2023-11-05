@@ -155,8 +155,9 @@
         <canvas
           class="position-creation-step__canvas"
           id="image-canvas"
-          (click)="onCanvasClick($event)"
+          (mousedown)="onCanvasMouseDown($event)"
           (mousemove)="onCanvasMouseMove($event)"
+          (mouseup)="onCanvasMouseUp($event)"
         ></canvas>
       </mat-card>
     </div>

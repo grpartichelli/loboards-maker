@@ -53,9 +53,7 @@
                 matInput
                 type="number"
                 [ngModel]="position.lengthPercentage.height"
-                (ngModelChange)="
-                  onPositionLengthPercentageChanged(position, $event)
-                "
+                (ngModelChange)="onHeightChanged(position, $event)"
               />%
             </div>
             <mat-icon

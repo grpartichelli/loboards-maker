@@ -84,6 +84,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
       }
       this.drawCircle(position, radius, this.model.positionColor);
     });
+    this.changeDetectorRef.detectChanges();
   }
 
   public drawCircle(
@@ -134,14 +135,9 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onArrowDownClicked(position: PositionModel) {
-    console.log("before");
-    console.log(position.lengthPercentage.height);
-    console.log(this.PERCENTAGE_STEP_SIZE);
     position.lengthPercentage.height = this.ensurePercentageBounds(
       position.lengthPercentage.height + this.PERCENTAGE_STEP_SIZE,
     );
-    console.log("after");
-    console.log(position.lengthPercentage.height);
     this.drawCanvas();
   }
 
@@ -169,12 +165,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  public onPositionLengthPercentageChanged(
-    position: PositionModel,
-    event: number,
-  ) {
+  public onHeightChanged(position: PositionModel, event: number) {
     if (this.isPercentageValid(event)) {
       position.lengthPercentage.height = event;
+      this.drawCanvas();
+
       return;
     }
 
@@ -184,7 +179,6 @@ export class PositionCreationStepComponent implements AfterViewInit {
     // END HACK
 
     position.lengthPercentage.height = this.ensurePercentageBounds(event);
-    console.log("updated to: " + position.lengthPercentage.height);
     this.drawCanvas();
   }
 
@@ -204,6 +198,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
 
   public onWidthChanged(position: PositionModel, event: number) {
     if (this.isPercentageValid(event)) {
+      position.lengthPercentage.width = event;
+      this.drawCanvas();
       return;
     }
 

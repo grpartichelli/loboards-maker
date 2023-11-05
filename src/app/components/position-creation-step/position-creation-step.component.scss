@@ -71,8 +71,12 @@
     height: 6.25rem;
     margin-bottom: 1.5rem;
     border-radius: 1rem;
-    padding: 0.75rem 3rem 0.75rem 0.75rem; // weird numbers because it considers the border
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
     column-gap: 1.5rem;
+
+    @media (min-width: 1586px) {
+      padding-right: 3.25rem;
+    }
 
     &-delete {
       position: absolute;

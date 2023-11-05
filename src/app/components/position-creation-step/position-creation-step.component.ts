@@ -199,6 +199,22 @@ export class PositionCreationStepComponent implements AfterViewInit {
     if (position != null) {
       position.selected = true;
       this.drawCanvas();
+      const positionElement = document.getElementById(position.id);
+      const containerElement = document.getElementById("card-container");
+
+      if (!positionElement || !containerElement) {
+        return;
+      }
+
+      const positionRect = positionElement.getBoundingClientRect();
+      const containerRect = containerElement.getBoundingClientRect();
+
+      if (
+        positionRect.bottom > containerRect.bottom ||
+        positionRect.top < containerRect.top
+      ) {
+        positionElement.scrollIntoView();
+      }
     } else {
       if (this.model.positions.some((it) => it.selected)) {
         this.model.positions.forEach((position) => (position.selected = false));

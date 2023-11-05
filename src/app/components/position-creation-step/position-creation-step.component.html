@@ -8,6 +8,7 @@
     <div class="position-creation-step__container-left">
       <div
         class="position-creation-step__position-cards"
+        id="card-container"
         cdkDropList
         (cdkDropListDropped)="onCdkDropListDropped($event)"
         [ngStyle]="{
@@ -16,6 +17,7 @@
       >
         <mat-card
           *ngFor="let position of model.positions"
+          [id]="position.id"
           class="position-creation-step__position-card"
           cdkDrag
           (mouseenter)="onPositionMouseEnter(position)"

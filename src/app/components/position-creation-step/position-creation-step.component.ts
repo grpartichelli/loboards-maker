@@ -55,6 +55,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.canvas.width = this.canvas.offsetWidth;
     this.canvas.height = this.canvas.offsetHeight;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
@@ -133,6 +134,27 @@ export class PositionCreationStepComponent implements AfterViewInit {
     return Number.parseFloat(`${percent.toFixed(2)}`);
   }
 
+  private findPosition(
+    lengthPercentageModel: LengthPercentageModel,
+  ): PositionModel | null {
+    for (const position of this.model.positions) {
+      const distance = Math.sqrt(
+        (position.lengthPercentage.width - lengthPercentageModel.width) ** 2 +
+          (position.lengthPercentage.height - lengthPercentageModel.height) **
+            2,
+      );
+      const radius =
+        (this.model.getBorderPositionRadius(this.canvas.width) /
+          this.canvas.width) *
+        100;
+
+      if (distance < radius) {
+        return position;
+      }
+    }
+    return null;
+  }
+
   public formatRadiusSlider(value: number): string {
     return `${Math.round(value * 100)}%`;
   }
@@ -166,9 +188,21 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onCanvasClick(mouseEvent: MouseEvent) {
-    const coord = this.resolveCursorPosition(mouseEvent);
+    const coord = this.resolveCursorLengthPercentage(mouseEvent);
     this.model.addNewPosition(coord);
     this.drawCanvas();
+  }
+
+  public onCanvasMouseMove(mouseEvent: MouseEvent) {
+    const lengthPercentage = this.resolveCursorLengthPercentage(mouseEvent);
+    const position = this.findPosition(lengthPercentage);
+    if (position != null) {
+      position.selected = true;
+      this.drawCanvas();
+    } else {
+      this.model.positions.forEach((position) => (position.selected = false));
+      this.drawCanvas();
+    }
   }
 
   public onCdkHandleClicked() {
@@ -242,13 +276,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onPositionMouseEnter(position: PositionModel) {
-    this.updateCardBorderStyle();
     position.selected = true;
     this.drawCanvas();
   }
 
   public onPositionMouseLeave(position: PositionModel) {
-    this.updateCardBorderStyle();
     position.selected = false;
     this.drawCanvas();
   }
@@ -256,11 +288,12 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public onSliderPercentageChange() {
     this.model.positionRadiusScale =
       this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;
-    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
-  private resolveCursorPosition(mouseEvent: MouseEvent): LengthPercentageModel {
+  private resolveCursorLengthPercentage(
+    mouseEvent: MouseEvent,
+  ): LengthPercentageModel {
     const rect = this.canvas.getBoundingClientRect();
     const x = this.ensurePercentageBounds(
       ((mouseEvent.clientX - rect.left) / rect.width) * 100,

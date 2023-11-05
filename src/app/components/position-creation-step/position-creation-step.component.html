@@ -20,6 +20,11 @@
           cdkDrag
           (mouseenter)="onPositionMouseEnter(position)"
           (mouseleave)="onPositionMouseLeave(position)"
+          [ngStyle]="{
+            border: position.selected
+              ? cardBorderStyle
+              : '2px solid transparent'
+          }"
         >
           <mat-card
             class="position-creation-step__position-card"
@@ -149,6 +154,7 @@
           class="position-creation-step__canvas"
           id="image-canvas"
           (click)="onCanvasClick($event)"
+          (mousemove)="onCanvasMouseMove($event)"
         ></canvas>
       </mat-card>
     </div>

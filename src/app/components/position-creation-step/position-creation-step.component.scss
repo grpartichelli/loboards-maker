@@ -70,7 +70,7 @@
     height: 6.25rem;
     margin-bottom: 1.5rem;
     border-radius: 1rem;
-    padding: 1rem 3.25rem 1rem 1rem;
+    padding: 0.75rem 3rem 0.75rem 0.75rem; // weird numbers because it considers the border
     column-gap: 1.5rem;
 
     &-delete {
@@ -126,7 +126,7 @@
       color: white;
 
       &--height {
-        padding-left: 0.75rem;
+        margin-left: 0.5rem;
       }
     }
   }

@@ -200,8 +200,10 @@ export class PositionCreationStepComponent implements AfterViewInit {
       position.selected = true;
       this.drawCanvas();
     } else {
-      this.model.positions.forEach((position) => (position.selected = false));
-      this.drawCanvas();
+      if (this.model.positions.some((it) => it.selected)) {
+        this.model.positions.forEach((position) => (position.selected = false));
+        this.drawCanvas();
+      }
     }
   }
 

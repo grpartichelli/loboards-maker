@@ -42,8 +42,12 @@ export class PositionCreationStepComponent implements AfterViewInit {
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
   public cardBorderStyle = "";
-  public colors = PositionColorModel.allColorful();
+  public colors = PositionColorModel.allColorfulAndTransparent();
+  private grabbedPosition: PositionModel | null = null;
   public isCursorGrabbing = false;
+  public isCursorPointer = false;
+  public isDeleteHighlighted = false;
+  public selectedPositionColors = PositionColorModel.allColorful();
   public sliderPercentage = BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   private readonly PERCENTAGE_STEP_SIZE = 0.1;
 
@@ -54,6 +58,7 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.canvas.width = this.canvas.offsetWidth;
     this.canvas.height = this.canvas.offsetHeight;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
@@ -73,23 +78,40 @@ export class PositionCreationStepComponent implements AfterViewInit {
       this.canvas.width,
     );
     this.model.positions.forEach((position) => {
+      if (this.model.positionColor === PositionColorModel.TRANSPARENT.hex) {
+        const hexColor = position.selected
+          ? this.model.selectedPositionColor
+          : PositionColorHexTypeModel.BLACK;
+        this.drawCircle(position, radius, false, hexColor);
+        this.drawCircle(position, radius * 0.1, true, hexColor);
+        return;
+      }
+
       if (position.selected) {
         this.drawCircle(
           position,
           selectedRadius,
+          true,
           this.model.selectedPositionColor,
         );
       } else {
-        this.drawCircle(position, borderRadius, PositionColorModel.BLACK.hex);
+        this.drawCircle(
+          position,
+          borderRadius,
+          true,
+          PositionColorHexTypeModel.BLACK,
+        );
       }
-      this.drawCircle(position, radius, this.model.positionColor);
+      this.drawCircle(position, radius, true, this.model.positionColor);
     });
+    this.changeDetectorRef.detectChanges();
   }
 
   public drawCircle(
     position: PositionModel,
     radius: number,
-    hexTypeModel: PositionColorHexTypeModel,
+    isFilledCircled: boolean,
+    hexColor: PositionColorHexTypeModel,
   ) {
     this.ctx.beginPath();
     this.ctx.arc(
@@ -99,13 +121,41 @@ export class PositionCreationStepComponent implements AfterViewInit {
       0,
       2 * Math.PI,
     );
-    this.ctx.fillStyle = hexTypeModel;
-    this.ctx.fill();
+
+    if (isFilledCircled) {
+      this.ctx.fillStyle = hexColor;
+      this.ctx.fill();
+    } else {
+      this.ctx.strokeStyle = hexColor;
+      this.ctx.lineWidth = 4;
+      this.ctx.stroke();
+    }
   }
 
   private ensurePercentageBounds(value: number): number {
     const percent = Math.max(0, Math.min(100, value));
     return Number.parseFloat(`${percent.toFixed(2)}`);
+  }
+
+  private findPosition(
+    lengthPercentageModel: LengthPercentageModel,
+  ): PositionModel | null {
+    for (const position of this.model.positions) {
+      const distance = Math.sqrt(
+        (position.lengthPercentage.width - lengthPercentageModel.width) ** 2 +
+          (position.lengthPercentage.height - lengthPercentageModel.height) **
+            2,
+      );
+      const radius =
+        (this.model.getBorderPositionRadius(this.canvas.width) /
+          this.canvas.width) *
+        100;
+
+      if (distance < radius) {
+        return position;
+      }
+    }
+    return null;
   }
 
   public formatRadiusSlider(value: number): string {
@@ -134,21 +184,67 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onArrowDownClicked(position: PositionModel) {
-    console.log("before");
-    console.log(position.lengthPercentage.height);
-    console.log(this.PERCENTAGE_STEP_SIZE);
     position.lengthPercentage.height = this.ensurePercentageBounds(
       position.lengthPercentage.height + this.PERCENTAGE_STEP_SIZE,
     );
-    console.log("after");
-    console.log(position.lengthPercentage.height);
     this.drawCanvas();
   }
 
-  public onCanvasClick(mouseEvent: MouseEvent) {
-    const coord = this.resolveCursorPosition(mouseEvent);
-    this.model.addNewPosition(coord);
+  public onCanvasMouseDown(mouseEvent: MouseEvent) {
+    const lengthPercentage = this.resolveCursorLengthPercentage(mouseEvent);
+    const position = this.findPosition(lengthPercentage);
+    if (position == null) {
+      this.model.addNewPosition(lengthPercentage);
+      this.drawCanvas();
+      return;
+    }
+    this.isCursorGrabbing = true;
+    this.grabbedPosition = position;
+  }
+
+  public onCanvasMouseUp(mouseEvent: MouseEvent) {
+    this.isCursorGrabbing = false;
+    this.grabbedPosition = null;
+  }
+
+  public onCanvasMouseMove(mouseEvent: MouseEvent) {
+    const lengthPercentage = this.resolveCursorLengthPercentage(mouseEvent);
+    const position = this.isCursorGrabbing
+      ? this.grabbedPosition
+      : this.findPosition(lengthPercentage);
+
+    this.model.positions.forEach((position) => (position.selected = false));
+
+    if (position != null) {
+      if (this.isCursorGrabbing) {
+        position.lengthPercentage = lengthPercentage;
+      } else {
+        this.isCursorPointer = true;
+      }
+      position.selected = true;
+      this.scrollPositionIntoView(position);
+    } else {
+      this.isCursorPointer = false;
+    }
     this.drawCanvas();
+  }
+
+  public onDeleteMouseLeave() {
+    this.isDeleteHighlighted = false;
+  }
+
+  public onDeleteMouseMove(mouseEvent: MouseEvent) {
+    this.isDeleteHighlighted = true;
+    this.onCanvasMouseMove(mouseEvent);
+  }
+
+  public onDeleteMouseUp() {
+    if (this.grabbedPosition == null) {
+      return;
+    }
+    this.model.deletePosition(this.grabbedPosition);
+    this.grabbedPosition = null;
+    this.isCursorGrabbing = false;
   }
 
   public onCdkHandleClicked() {
@@ -169,12 +265,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
     this.drawCanvas();
   }
 
-  public onPositionLengthPercentageChanged(
-    position: PositionModel,
-    event: number,
-  ) {
+  public onHeightChanged(position: PositionModel, event: number) {
     if (this.isPercentageValid(event)) {
       position.lengthPercentage.height = event;
+      this.drawCanvas();
+
       return;
     }
 
@@ -184,8 +279,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
     // END HACK
 
     position.lengthPercentage.height = this.ensurePercentageBounds(event);
-    console.log("updated to: " + position.lengthPercentage.height);
     this.drawCanvas();
+  }
+
+  public get isDeleteVisible(): boolean {
+    return Boolean(this.grabbedPosition);
   }
 
   private isPercentageValid(percentage: number) {
@@ -204,6 +302,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
 
   public onWidthChanged(position: PositionModel, event: number) {
     if (this.isPercentageValid(event)) {
+      position.lengthPercentage.width = event;
+      this.drawCanvas();
       return;
     }
 
@@ -222,13 +322,11 @@ export class PositionCreationStepComponent implements AfterViewInit {
   }
 
   public onPositionMouseEnter(position: PositionModel) {
-    this.updateCardBorderStyle();
     position.selected = true;
     this.drawCanvas();
   }
 
   public onPositionMouseLeave(position: PositionModel) {
-    this.updateCardBorderStyle();
     position.selected = false;
     this.drawCanvas();
   }
@@ -236,11 +334,12 @@ export class PositionCreationStepComponent implements AfterViewInit {
   public onSliderPercentageChange() {
     this.model.positionRadiusScale =
       this.sliderPercentage * BoardModel.MAX_RADIUS_SCALE;
-    this.updateCardBorderStyle();
     this.drawCanvas();
   }
 
-  private resolveCursorPosition(mouseEvent: MouseEvent): LengthPercentageModel {
+  private resolveCursorLengthPercentage(
+    mouseEvent: MouseEvent,
+  ): LengthPercentageModel {
     const rect = this.canvas.getBoundingClientRect();
     const x = this.ensurePercentageBounds(
       ((mouseEvent.clientX - rect.left) / rect.width) * 100,
@@ -249,6 +348,25 @@ export class PositionCreationStepComponent implements AfterViewInit {
       ((mouseEvent.clientY - rect.top) / rect.height) * 100,
     );
     return new LengthPercentageModel(x, y);
+  }
+
+  private scrollPositionIntoView(position: PositionModel) {
+    const positionElement = document.getElementById(position.id);
+    const containerElement = document.getElementById("card-container");
+
+    if (!positionElement || !containerElement) {
+      return;
+    }
+
+    const positionRect = positionElement.getBoundingClientRect();
+    const containerRect = containerElement.getBoundingClientRect();
+
+    if (
+      positionRect.bottom > containerRect.bottom ||
+      positionRect.top < containerRect.top
+    ) {
+      positionElement.scrollIntoView();
+    }
   }
 
   private updateCardBorderStyle() {

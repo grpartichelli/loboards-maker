@@ -23,7 +23,7 @@ export class BoardModel {
   public image: HTMLImageElement = new Image();
   public positionRadiusScale =
     BoardModel.MAX_RADIUS_SCALE * BoardModel.DEFAULT_RADIUS_PERCENTAGE;
-  public positionColor = PositionColorHexTypeModel.RED;
+  public positionColor = PositionColorHexTypeModel.PINK;
   public positions = new Array<PositionModel>();
   public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
 

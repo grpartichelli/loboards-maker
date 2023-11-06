@@ -12,7 +12,7 @@ export class ImageUploadState extends BoardCreatorState {
   }
 
   public isAcceptEnabled(): boolean {
-    return Boolean(this.model.image.src);
+    return this.model.isImageLoadedCorrectly;
   }
 
   public isTerminal(): boolean {

@@ -27,13 +27,6 @@ export abstract class BoardCreatorState {
       this.localStorageService,
       this.navigationService,
     );
-    if (this.model.imageExists) {
-      this.localStorageService.saveImage("boardImage", this.model.image);
-      this.model.image.src =
-        this.localStorageService.getImage("boardImage")?.src ?? "";
-    } else {
-      this.localStorageService.removeData("boardImage");
-    }
     this.localStorageService.saveData("board", this.model);
     this.localStorageService.saveData("state", nextState.type());
     return Promise.resolve(nextState);

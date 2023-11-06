@@ -17,7 +17,7 @@ export abstract class BoardCreatorState {
   public abstract acceptMessage(): string;
   public abstract reject(): Promise<BoardCreatorState>;
   public abstract isAcceptEnabled(): boolean;
-  public abstract type(): CreatorStateType;
+  public abstract type(): BoardCreatorStateType;
   public abstract progress(): number;
 
   public moveTo(
@@ -37,28 +37,33 @@ export abstract class BoardCreatorState {
     return Promise.resolve(this);
   }
 
+  public get isBoardSelectState(): boolean {
+    return this.type() === BoardCreatorStateType.BOARD_SELECT;
+  }
+
   public get isImageUploadState(): boolean {
-    return this.type() === CreatorStateType.IMAGE_UPLOAD;
+    return this.type() === BoardCreatorStateType.IMAGE_UPLOAD;
   }
 
   public get isPositionCreationState(): boolean {
-    return this.type() === CreatorStateType.POSITION_CREATION;
+    return this.type() === BoardCreatorStateType.POSITION_CREATION;
   }
 
   public get isSuccessState(): boolean {
-    return this.type() === CreatorStateType.SUCCESS;
+    return this.type() === BoardCreatorStateType.SUCCESS;
   }
 
   public get isTerminalState(): boolean {
-    return this.type() === CreatorStateType.TERMINAL;
+    return this.type() === BoardCreatorStateType.TERMINAL;
   }
 }
 
-export enum CreatorStateType {
-  IMAGE_UPLOAD = "creator.state.image-upload",
-  POSITION_CREATION = "creator.state.position-creation",
-  SUCCESS = "creator.state.success",
-  TERMINAL = "creator.state.cancel",
+export enum BoardCreatorStateType {
+  BOARD_SELECT = "board.creator.state.board-select",
+  IMAGE_UPLOAD = "board.creator.state.image-upload",
+  POSITION_CREATION = "board.creator.state.position-creation",
+  SUCCESS = "board.creator.state.success",
+  TERMINAL = "board.creator.state.cancel",
 }
 
 type CreatorStateImplementations =

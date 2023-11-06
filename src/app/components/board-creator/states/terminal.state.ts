@@ -1,4 +1,7 @@
-import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
+import {
+  BoardCreatorState,
+  BoardCreatorStateType,
+} from "./board-creator.state";
 
 export class TerminalState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
@@ -17,8 +20,8 @@ export class TerminalState extends BoardCreatorState {
     return false;
   }
 
-  public type(): CreatorStateType {
-    return CreatorStateType.TERMINAL;
+  public type(): BoardCreatorStateType {
+    return BoardCreatorStateType.TERMINAL;
   }
 
   public progress(): number {

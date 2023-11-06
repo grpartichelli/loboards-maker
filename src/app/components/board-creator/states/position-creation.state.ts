@@ -1,4 +1,7 @@
-import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
+import {
+  BoardCreatorState,
+  BoardCreatorStateType,
+} from "./board-creator.state";
 import { ImageUploadState } from "./image-upload.state";
 import { SuccessState } from "./success.state";
 
@@ -22,11 +25,11 @@ export class PositionCreationState extends BoardCreatorState {
     );
   }
 
-  public type(): CreatorStateType {
-    return CreatorStateType.POSITION_CREATION;
+  public type(): BoardCreatorStateType {
+    return BoardCreatorStateType.POSITION_CREATION;
   }
 
   public progress(): number {
-    return 66;
+    return 75;
   }
 }

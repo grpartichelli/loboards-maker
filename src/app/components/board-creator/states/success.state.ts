@@ -1,4 +1,7 @@
-import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
+import {
+  BoardCreatorState,
+  BoardCreatorStateType,
+} from "./board-creator.state";
 import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 
@@ -20,7 +23,7 @@ export class SuccessState extends BoardCreatorState {
   }
 
   public type() {
-    return CreatorStateType.SUCCESS;
+    return BoardCreatorStateType.SUCCESS;
   }
 
   public progress() {

@@ -15,6 +15,10 @@
     />
   </div>
   <div class="board-creator__body" [class]="enterAnimationClass">
+    <board-select-step
+      *ngIf="state.isBoardSelectState"
+      [model]="state.model"
+    ></board-select-step>
     <image-upload-step
       *ngIf="state.isImageUploadState"
       [model]="state.model"

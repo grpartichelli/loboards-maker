@@ -16,12 +16,14 @@ import { LocalStorageService } from "../../commons/local-storage.service";
 import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
 import {
   BoardCreatorState,
-  CreatorStateType,
+  BoardCreatorStateType,
 } from "./states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
 import { ImageUploadState } from "./states/image-upload.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
+import { BoardSelectModule } from "../board-select-step/board-select-step.component";
+import { BoardSelectState } from "./states/board-select.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -51,23 +53,24 @@ export class BoardCreatorComponent implements OnInit {
   public ngOnInit(): void {
     const state = this.resolveInitialState();
 
-    if (state.model.imageExists) {
-      state.model.image.onload = () => {
-        if (state.model.isImageLoadedCorrectly) {
-          this.onStateChanged(state);
-        } else {
-          this.onStateChanged(
-            new ImageUploadState(
-              state.model,
-              this.localStorageService,
-              this.navigationService,
-            ),
-          );
-        }
-      };
-    } else {
+    if (!state.model.imageExists) {
       this.onStateChanged(state);
+      return;
     }
+
+    state.model.image.onload = () => {
+      if (state.model.isImageLoadedCorrectly) {
+        this.onStateChanged(state);
+      } else {
+        this.onStateChanged(
+          new ImageUploadState(
+            state.model,
+            this.localStorageService,
+            this.navigationService,
+          ),
+        );
+      }
+    };
   }
 
   public onAccept(): void {
@@ -109,19 +112,17 @@ export class BoardCreatorComponent implements OnInit {
       this.localStorageService.getImage("boardImage") ?? new Image();
 
     const stateType =
-      this.localStorageService.getData<CreatorStateType>("state");
+      this.localStorageService.getData<BoardCreatorStateType>("state");
 
-    const imageUpload = new ImageUploadState(
-      model,
-      this.localStorageService,
-      this.navigationService,
-    );
-
-    if (!model.imageExists) {
-      return imageUpload;
+    if (stateType === BoardCreatorStateType.IMAGE_UPLOAD) {
+      return new ImageUploadState(
+        model,
+        this.localStorageService,
+        this.navigationService,
+      );
     }
 
-    if (stateType === CreatorStateType.POSITION_CREATION) {
+    if (stateType === BoardCreatorStateType.POSITION_CREATION) {
       return new PositionCreationState(
         model,
         this.localStorageService,
@@ -129,7 +130,11 @@ export class BoardCreatorComponent implements OnInit {
       );
     }
 
-    return imageUpload;
+    return new BoardSelectState(
+      model,
+      this.localStorageService,
+      this.navigationService,
+    );
   }
 
   private updateEnteringAnimations() {
@@ -156,6 +161,7 @@ export class BoardCreatorComponent implements OnInit {
     ImageUploadStepModule,
     PositionCreationStepModule,
     SuccessStepModule,
+    BoardSelectModule,
   ],
   exports: [BoardCreatorComponent],
 })

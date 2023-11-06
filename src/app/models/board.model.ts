@@ -18,7 +18,7 @@ export class BoardModel {
   }
 
   public static MAX_RADIUS_SCALE = 0.2;
-  public static DEFAULT_RADIUS_PERCENTAGE = 0.3;
+  public static DEFAULT_RADIUS_PERCENTAGE = 0.5;
 
   public image: HTMLImageElement = new Image();
   public positionRadiusScale =

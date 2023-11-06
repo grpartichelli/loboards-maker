@@ -21,6 +21,7 @@ import {
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
 import { ImageUploadState } from "./states/image-upload.state";
+import { SuccessStepModule } from "../success-step/success-step.component";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -37,6 +38,7 @@ const enum ChangeStateCommand {
 export class BoardCreatorComponent implements OnInit {
   public enterAnimationClass = "";
   private lastChangeStateCommand = ChangeStateCommand.ACCEPT;
+  public acceptMessage = "";
   public progress = 0;
   public state!: BoardCreatorState;
 
@@ -68,15 +70,15 @@ export class BoardCreatorComponent implements OnInit {
     }
   }
 
-  public get isAcceptEnabled(): boolean {
-    return this.state.isAcceptEnabled();
-  }
-
   public onAccept(): void {
     this.state.accept().then((newState) => {
       this.lastChangeStateCommand = ChangeStateCommand.ACCEPT;
       this.onStateChanged(newState);
     });
+  }
+
+  public get isAcceptEnabled(): boolean {
+    return this.state.isAcceptEnabled();
   }
 
   public onReject(): void {
@@ -87,12 +89,13 @@ export class BoardCreatorComponent implements OnInit {
   }
 
   private onStateChanged(newState: BoardCreatorState): void {
-    if (newState.isTerminal()) {
+    if (newState.isTerminalState) {
       this.navigationService.navigateToHome().then();
       return;
     }
 
     this.state = newState;
+    this.acceptMessage = newState.acceptMessage();
     this.progress = newState.progress();
     this.updateEnteringAnimations();
   }
@@ -152,6 +155,7 @@ export class BoardCreatorComponent implements OnInit {
     NgIf,
     ImageUploadStepModule,
     PositionCreationStepModule,
+    SuccessStepModule,
   ],
   exports: [BoardCreatorComponent],
 })

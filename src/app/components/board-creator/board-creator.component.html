@@ -24,6 +24,10 @@
       [model]="state.model"
     >
     </position-creation-step>
+    <success-step
+      *ngIf="state.isSuccessState"
+      [model]="state.model"
+    ></success-step>
   </div>
 
   <div class="board-creator__actions">
@@ -34,7 +38,7 @@
       (click)="onAccept()"
       [disabled]="!isAcceptEnabled"
     >
-      Continuar
+      {{ acceptMessage }}
     </button>
   </div>
 </div>

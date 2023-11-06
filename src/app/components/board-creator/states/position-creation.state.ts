@@ -1,9 +1,14 @@
 import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
 import { ImageUploadState } from "./image-upload.state";
+import { SuccessState } from "./success.state";
 
 export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    return this.stayOnCurrentState();
+    return this.moveTo(SuccessState);
+  }
+
+  public acceptMessage(): string {
+    return "Baixar";
   }
 
   public reject(): Promise<BoardCreatorState> {
@@ -13,12 +18,8 @@ export class PositionCreationState extends BoardCreatorState {
   public isAcceptEnabled(): boolean {
     return (
       this.model.positions.length > 1 &&
-      !this.model.positions.some((position) => position.id.length === 0)
+      !this.model.positions.some((position) => !position.id.length)
     );
-  }
-
-  public isTerminal(): boolean {
-    return false;
   }
 
   public type(): CreatorStateType {

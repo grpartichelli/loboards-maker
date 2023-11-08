@@ -2,12 +2,12 @@ import {
   BoardCreatorState,
   BoardCreatorStateType,
 } from "./board-creator.state";
-import { ImageUploadState } from "./image-upload.state";
+import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 
 export class BoardSelectState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    return this.moveTo(ImageUploadState);
+    return this.moveTo(PositionCreationState);
   }
 
   public acceptMessage(): string {
@@ -19,7 +19,7 @@ export class BoardSelectState extends BoardCreatorState {
   }
 
   public isAcceptEnabled(): boolean {
-    return true;
+    return this.model.isImageLoadedCorrectly;
   }
 
   public type(): BoardCreatorStateType {
@@ -27,6 +27,6 @@ export class BoardSelectState extends BoardCreatorState {
   }
 
   public progress(): number {
-    return 25;
+    return 33;
   }
 }

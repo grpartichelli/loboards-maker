@@ -2,7 +2,7 @@ import {
   BoardCreatorState,
   BoardCreatorStateType,
 } from "./board-creator.state";
-import { ImageUploadState } from "./image-upload.state";
+import { BoardSelectState } from "./board-select.state";
 import { SuccessState } from "./success.state";
 
 export class PositionCreationState extends BoardCreatorState {
@@ -15,7 +15,7 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public reject(): Promise<BoardCreatorState> {
-    return this.moveTo(ImageUploadState);
+    return this.moveTo(BoardSelectState);
   }
 
   public isAcceptEnabled(): boolean {
@@ -30,6 +30,6 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public progress(): number {
-    return 75;
+    return 66;
   }
 }

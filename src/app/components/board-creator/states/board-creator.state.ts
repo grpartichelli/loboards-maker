@@ -1,5 +1,5 @@
 import { NavigationService } from "../../../commons/navigation.service";
-import { ImageUploadState } from "./image-upload.state";
+import { BoardSelectState } from "./board-select.state";
 import { TerminalState } from "./terminal.state";
 import { BoardModel } from "../../../models/board.model";
 import { LocalStorageService } from "../../../commons/local-storage.service";
@@ -41,10 +41,6 @@ export abstract class BoardCreatorState {
     return this.type() === BoardCreatorStateType.BOARD_SELECT;
   }
 
-  public get isImageUploadState(): boolean {
-    return this.type() === BoardCreatorStateType.IMAGE_UPLOAD;
-  }
-
   public get isPositionCreationState(): boolean {
     return this.type() === BoardCreatorStateType.POSITION_CREATION;
   }
@@ -60,14 +56,13 @@ export abstract class BoardCreatorState {
 
 export enum BoardCreatorStateType {
   BOARD_SELECT = "board.creator.state.board-select",
-  IMAGE_UPLOAD = "board.creator.state.image-upload",
   POSITION_CREATION = "board.creator.state.position-creation",
   SUCCESS = "board.creator.state.success",
   TERMINAL = "board.creator.state.cancel",
 }
 
 type CreatorStateImplementations =
-  | typeof ImageUploadState
+  | typeof BoardSelectState
   | typeof TerminalState
   | typeof PositionCreationState
   | typeof SuccessState;

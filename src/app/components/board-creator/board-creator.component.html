@@ -19,10 +19,6 @@
       *ngIf="state.isBoardSelectState"
       [model]="state.model"
     ></board-select-step>
-    <image-upload-step
-      *ngIf="state.isImageUploadState"
-      [model]="state.model"
-    ></image-upload-step>
     <position-creation-step
       *ngIf="state.isPositionCreationState"
       [model]="state.model"

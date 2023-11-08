@@ -1,3 +1,36 @@
 <div class="board-select-step">
-  <span>selecionar board</span>
+  <div class="board-select-step__container-left"></div>
+  <div class="board-select-step__container-right">
+    <mat-card
+      *ngIf="!isImageLoadedCorrectly"
+      class="board-select-step__upload"
+      (click)="imageInput.click()"
+    >
+      <input
+        type="file"
+        class="board-select-step__input"
+        (change)="onImageUpload($event)"
+        accept="image/*"
+        #imageInput
+      />
+      <mat-icon>add_photo_alternate</mat-icon>
+      <span>Imagem do tabuleiro</span>
+    </mat-card>
+
+    <mat-card
+      *ngIf="isImageLoadedCorrectly"
+      class="board-select-step__image-card"
+    >
+      <img
+        class="board-select-step__image"
+        alt="tabuleiro"
+        [src]="boardImage.src"
+      />
+      <mat-icon
+        class="board-select-step__image-delete"
+        (click)="onDeleteClicked()"
+        >delete_forever</mat-icon
+      >
+    </mat-card>
+  </div>
 </div>

@@ -4,173 +4,169 @@
     cursor: isCursorGrabbing ? 'grabbing' : isCursorPointer ? 'pointer' : null
   }"
 >
-  <div class="position-creation-step__container">
-    <div class="position-creation-step__container-left">
-      <div
-        class="position-creation-step__position-cards"
-        id="card-container"
-        cdkDropList
-        (cdkDropListDropped)="onCdkDropListDropped($event)"
+  <div class="position-creation-step__container-left">
+    <div
+      class="position-creation-step__position-cards"
+      id="card-container"
+      cdkDropList
+      (cdkDropListDropped)="onCdkDropListDropped($event)"
+      [ngStyle]="{
+        cursor: isCursorGrabbing ? 'grabbing' : null
+      }"
+    >
+      <mat-card
+        *ngFor="let position of model.positions"
+        [id]="position.id"
+        class="position-creation-step__position-card"
+        cdkDrag
+        (mouseenter)="onPositionMouseEnter(position)"
+        (mouseleave)="onPositionMouseLeave(position)"
         [ngStyle]="{
-          cursor: isCursorGrabbing ? 'grabbing' : null
+          border: position.selected ? cardBorderStyle : '2px solid transparent'
         }"
       >
         <mat-card
-          *ngFor="let position of model.positions"
-          [id]="position.id"
           class="position-creation-step__position-card"
-          cdkDrag
-          (mouseenter)="onPositionMouseEnter(position)"
-          (mouseleave)="onPositionMouseLeave(position)"
-          [ngStyle]="{
-            border: position.selected
-              ? cardBorderStyle
-              : '2px solid transparent'
-          }"
+          *cdkDragPlaceholder
+        ></mat-card>
+        <mat-icon
+          (mousedown)="onCdkHandleClicked()"
+          cdkDragHandle
+          class="position-creation-step__position-card-move"
+          >menu</mat-icon
         >
-          <mat-card
-            class="position-creation-step__position-card"
-            *cdkDragPlaceholder
-          ></mat-card>
+
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="position-creation-step__position-card-id-input"
+        >
+          <mat-label>Identificador</mat-label>
+          <input required matInput type="text" [(ngModel)]="position.id" />
+        </mat-form-field>
+
+        <div class="position-creation-step__position-card-vertical-arrows">
           <mat-icon
-            (mousedown)="onCdkHandleClicked()"
-            cdkDragHandle
-            class="position-creation-step__position-card-move"
-            >menu</mat-icon
-          >
-
-          <mat-form-field
-            subscriptSizing="dynamic"
-            class="position-creation-step__position-card-id-input"
-          >
-            <mat-label>Identificador</mat-label>
-            <input required matInput type="text" [(ngModel)]="position.id" />
-          </mat-form-field>
-
-          <div class="position-creation-step__position-card-vertical-arrows">
-            <mat-icon
-              class="position-creation-step__position-card-arrow"
-              (click)="onArrowUpClicked(position)"
-              >keyboard_arrow_up
-            </mat-icon>
-            <div>
-              <input
-                class="position-creation-step__position-card-coordinate-input position-creation-step__position-card-coordinate-input--height"
-                required
-                matInput
-                type="number"
-                [ngModel]="position.lengthPercentage.height"
-                (ngModelChange)="onHeightChanged(position, $event)"
-              />%
-            </div>
-            <mat-icon
-              (click)="onArrowDownClicked(position)"
-              class="position-creation-step__position-card-arrow"
-              >keyboard_arrow_down
-            </mat-icon>
-          </div>
-
-          <div class="position-creation-step__position-card-horizontal-arrows">
-            <mat-icon
-              (click)="onArrowLeftClicked(position)"
-              class="position-creation-step__position-card-arrow"
-              >keyboard_arrow_left
-            </mat-icon>
-
+            class="position-creation-step__position-card-arrow"
+            (click)="onArrowUpClicked(position)"
+            >keyboard_arrow_up
+          </mat-icon>
+          <div>
             <input
-              class="position-creation-step__position-card-coordinate-input"
+              class="position-creation-step__position-card-coordinate-input position-creation-step__position-card-coordinate-input--height"
               required
               matInput
               type="number"
-              [ngModel]="position.lengthPercentage.width"
-              (ngModelChange)="onWidthChanged(position, $event)"
+              [ngModel]="position.lengthPercentage.height"
+              (ngModelChange)="onHeightChanged(position, $event)"
             />%
-
-            <mat-icon
-              (click)="onArrowRightClicked(position)"
-              class="position-creation-step__position-card-arrow"
-              >keyboard_arrow_right
-            </mat-icon>
           </div>
+          <mat-icon
+            (click)="onArrowDownClicked(position)"
+            class="position-creation-step__position-card-arrow"
+            >keyboard_arrow_down
+          </mat-icon>
+        </div>
+
+        <div class="position-creation-step__position-card-horizontal-arrows">
+          <mat-icon
+            (click)="onArrowLeftClicked(position)"
+            class="position-creation-step__position-card-arrow"
+            >keyboard_arrow_left
+          </mat-icon>
+
+          <input
+            class="position-creation-step__position-card-coordinate-input"
+            required
+            matInput
+            type="number"
+            [ngModel]="position.lengthPercentage.width"
+            (ngModelChange)="onWidthChanged(position, $event)"
+          />%
 
           <mat-icon
-            class="position-creation-step__position-card-delete"
-            (click)="onPositionDeleteClicked(position)"
-            >close</mat-icon
-          >
-        </mat-card>
-      </div>
-      <div class="position-creation-step__settings">
-        <div class="position-creation-step__radius-slider">
-          <mat-label>Tamanho das peças: </mat-label>
-          <mat-slider
-            min="0.01"
-            max="1"
-            step="0.01"
-            discrete
-            [displayWith]="formatRadiusSlider"
-          >
-            <input
-              matSliderThumb
-              [(ngModel)]="sliderPercentage"
-              (ngModelChange)="onSliderPercentageChange()"
-            />
-          </mat-slider>
+            (click)="onArrowRightClicked(position)"
+            class="position-creation-step__position-card-arrow"
+            >keyboard_arrow_right
+          </mat-icon>
         </div>
 
-        <div class="position-creation-step__color-selects">
-          <mat-form-field subscriptSizing="dynamic">
-            <mat-label>Cor das peças</mat-label>
-            <mat-select
-              [(value)]="model.positionColor"
-              (selectionChange)="onColorChange()"
-            >
-              <mat-option *ngFor="let color of colors" [value]="color.hex">
-                <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
-                {{ color.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field subscriptSizing="dynamic">
-            <mat-label>Cor do cursor</mat-label>
-            <mat-select
-              [(value)]="model.selectedPositionColor"
-              (selectionChange)="onColorChange()"
-            >
-              <mat-option
-                *ngFor="let color of selectedPositionColors"
-                [value]="color.hex"
-              >
-                <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
-                {{ color.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-    <div class="position-creation-step__container-right">
-      <mat-card class="position-creation-step__board-card">
-        <canvas
-          class="position-creation-step__canvas"
-          id="image-canvas"
-          (mousedown)="onCanvasMouseDown($event)"
-          (mousemove)="onCanvasMouseMove($event)"
-          (mouseup)="onCanvasMouseUp($event)"
-        ></canvas>
         <mat-icon
-          *ngIf="isDeleteVisible"
-          class="position-creation-step__delete"
-          (mouseup)="onDeleteMouseUp()"
-          (mousemove)="onDeleteMouseMove($event)"
-          (mouseleave)="onDeleteMouseLeave()"
-          [ngStyle]="{
-            transform: isDeleteHighlighted ? 'scale(2)' : null
-          }"
-          >delete_forever</mat-icon
+          class="position-creation-step__position-card-delete"
+          (click)="onPositionDeleteClicked(position)"
+          >close</mat-icon
         >
       </mat-card>
     </div>
+    <div class="position-creation-step__settings">
+      <div class="position-creation-step__radius-slider">
+        <mat-label>Tamanho das peças: </mat-label>
+        <mat-slider
+          min="0.01"
+          max="1"
+          step="0.01"
+          discrete
+          [displayWith]="formatRadiusSlider"
+        >
+          <input
+            matSliderThumb
+            [(ngModel)]="sliderPercentage"
+            (ngModelChange)="onSliderPercentageChange()"
+          />
+        </mat-slider>
+      </div>
+
+      <div class="position-creation-step__color-selects">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Cor das peças</mat-label>
+          <mat-select
+            [(value)]="model.positionColor"
+            (selectionChange)="onColorChange()"
+          >
+            <mat-option *ngFor="let color of colors" [value]="color.hex">
+              <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
+              {{ color.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Cor do cursor</mat-label>
+          <mat-select
+            [(value)]="model.selectedPositionColor"
+            (selectionChange)="onColorChange()"
+          >
+            <mat-option
+              *ngFor="let color of selectedPositionColors"
+              [value]="color.hex"
+            >
+              <mat-icon [ngStyle]="{ color: color.hex }">color_lens</mat-icon>
+              {{ color.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="position-creation-step__container-right">
+    <mat-card class="position-creation-step__board-card">
+      <canvas
+        class="position-creation-step__canvas"
+        id="image-canvas"
+        (mousedown)="onCanvasMouseDown($event)"
+        (mousemove)="onCanvasMouseMove($event)"
+        (mouseup)="onCanvasMouseUp($event)"
+      ></canvas>
+      <mat-icon
+        *ngIf="isDeleteVisible"
+        class="position-creation-step__delete"
+        (mouseup)="onDeleteMouseUp()"
+        (mousemove)="onDeleteMouseMove($event)"
+        (mouseleave)="onDeleteMouseLeave()"
+        [ngStyle]="{
+          transform: isDeleteHighlighted ? 'scale(2)' : null
+        }"
+        >delete_forever</mat-icon
+      >
+    </mat-card>
   </div>
 </div>

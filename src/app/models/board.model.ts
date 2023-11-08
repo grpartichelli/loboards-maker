@@ -21,6 +21,7 @@ export class BoardModel {
   public static DEFAULT_RADIUS_PERCENTAGE = 0.3;
 
   public image: HTMLImageElement = new Image();
+  public name = "";
   public positionRadiusScale =
     BoardModel.MAX_RADIUS_SCALE * BoardModel.DEFAULT_RADIUS_PERCENTAGE;
   public positionColor = PositionColorHexTypeModel.PINK;

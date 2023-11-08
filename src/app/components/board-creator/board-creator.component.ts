@@ -11,7 +11,7 @@ import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 
 import { NavigationService } from "../../commons/navigation.service";
-import { ImageUploadStepModule } from "../image-upload-step/image-upload-step.component";
+import { BoardSelectStepModule } from "../board-select-step/board-select-step.component";
 import { LocalStorageService } from "../../commons/local-storage.service";
 import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
 import {
@@ -20,10 +20,8 @@ import {
 } from "./states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
-import { ImageUploadState } from "./states/image-upload.state";
-import { SuccessStepModule } from "../success-step/success-step.component";
-import { BoardSelectModule } from "../board-select-step/board-select-step.component";
 import { BoardSelectState } from "./states/board-select.state";
+import { SuccessStepModule } from "../success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
 
 const enum ChangeStateCommand {
@@ -64,7 +62,7 @@ export class BoardCreatorComponent implements OnInit {
         this.onStateChanged(state);
       } else {
         this.onStateChanged(
-          new ImageUploadState(
+          new BoardSelectState(
             state.model,
             this.localStorageService,
             this.navigationService,
@@ -116,12 +114,6 @@ export class BoardCreatorComponent implements OnInit {
       this.localStorageService.getData<BoardCreatorStateType>("state");
 
     switch (stateType) {
-      case BoardCreatorStateType.IMAGE_UPLOAD:
-        return new ImageUploadState(
-          model,
-          this.localStorageService,
-          this.navigationService,
-        );
       case BoardCreatorStateType.POSITION_CREATION:
         return new PositionCreationState(
           model,
@@ -164,10 +156,9 @@ export class BoardCreatorComponent implements OnInit {
     MatButtonModule,
     NgOptimizedImage,
     NgIf,
-    ImageUploadStepModule,
+    BoardSelectStepModule,
     PositionCreationStepModule,
     SuccessStepModule,
-    BoardSelectModule,
   ],
   exports: [BoardCreatorComponent],
 })

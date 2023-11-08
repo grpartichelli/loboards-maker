@@ -13,6 +13,7 @@ export class BoardModel {
       model.positions = other.positions.map((position) =>
         PositionModel.fromOther(position),
       );
+      model.name = other.name;
     }
     return model;
   }

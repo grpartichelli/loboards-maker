@@ -19,7 +19,7 @@ export class BoardSelectState extends BoardCreatorState {
   }
 
   public isAcceptEnabled(): boolean {
-    return this.model.isImageLoadedCorrectly;
+    return this.model.name.length > 2 && this.model.isImageLoadedCorrectly;
   }
 
   public type(): BoardCreatorStateType {

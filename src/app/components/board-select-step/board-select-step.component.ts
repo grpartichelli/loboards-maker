@@ -13,6 +13,9 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { DialogService } from "../../commons/dialog.service";
 import { BoardModel } from "../../models/board.model";
 import { LocalStorageService } from "../../commons/local-storage.service";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @Component({
   selector: "board-select-step[model]",
@@ -105,6 +108,10 @@ export class BoardSelectStepComponent implements OnInit {
     MatIconModule,
     RouterLink,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [BoardSelectStepComponent],
 })

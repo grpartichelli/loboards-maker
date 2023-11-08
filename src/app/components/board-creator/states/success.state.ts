@@ -4,9 +4,12 @@ import {
 } from "./board-creator.state";
 import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
+import { BoardModel } from "../../../models/board.model";
 
 export class SuccessState extends BoardCreatorState {
   public accept() {
+    this.model = new BoardModel();
+    this.localStorageService.clearData();
     return this.moveTo(TerminalState);
   }
 

@@ -24,6 +24,7 @@ import { ImageUploadState } from "./states/image-upload.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
 import { BoardSelectModule } from "../board-select-step/board-select-step.component";
 import { BoardSelectState } from "./states/board-select.state";
+import { SuccessState } from "./states/success.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -114,27 +115,32 @@ export class BoardCreatorComponent implements OnInit {
     const stateType =
       this.localStorageService.getData<BoardCreatorStateType>("state");
 
-    if (stateType === BoardCreatorStateType.IMAGE_UPLOAD) {
-      return new ImageUploadState(
-        model,
-        this.localStorageService,
-        this.navigationService,
-      );
+    switch (stateType) {
+      case BoardCreatorStateType.IMAGE_UPLOAD:
+        return new ImageUploadState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
+      case BoardCreatorStateType.POSITION_CREATION:
+        return new PositionCreationState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
+      case BoardCreatorStateType.SUCCESS:
+        return new SuccessState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
+      default:
+        return new BoardSelectState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
     }
-
-    if (stateType === BoardCreatorStateType.POSITION_CREATION) {
-      return new PositionCreationState(
-        model,
-        this.localStorageService,
-        this.navigationService,
-      );
-    }
-
-    return new BoardSelectState(
-      model,
-      this.localStorageService,
-      this.navigationService,
-    );
   }
 
   private updateEnteringAnimations() {

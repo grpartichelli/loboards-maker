@@ -8,7 +8,7 @@ import { SuccessState } from "./success.state";
 
 export abstract class BoardCreatorState {
   constructor(
-    public readonly model: BoardModel,
+    public model: BoardModel,
     protected readonly localStorageService: LocalStorageService,
     protected readonly navigationService: NavigationService,
   ) {}

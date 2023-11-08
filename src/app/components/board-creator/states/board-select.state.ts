@@ -3,16 +3,11 @@ import {
   BoardCreatorStateType,
 } from "./board-creator.state";
 import { ImageUploadState } from "./image-upload.state";
-import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 
 export class BoardSelectState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    if (this.model.isImageLoadedCorrectly) {
-      return this.moveTo(PositionCreationState);
-    } else {
-      return this.moveTo(ImageUploadState);
-    }
+    return this.moveTo(ImageUploadState);
   }
 
   public acceptMessage(): string {

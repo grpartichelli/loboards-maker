@@ -200,6 +200,8 @@ export class PositionCreationStepComponent implements AfterViewInit {
     }
     this.isCursorGrabbing = true;
     this.grabbedPosition = position;
+    this.grabbedPosition.lengthPercentage = lengthPercentage;
+    this.drawCanvas();
   }
 
   public onCanvasMouseUp(mouseEvent: MouseEvent) {

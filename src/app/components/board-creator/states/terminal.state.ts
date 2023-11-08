@@ -1,8 +1,15 @@
-import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
+import {
+  BoardCreatorState,
+  BoardCreatorStateType,
+} from "./board-creator.state";
 
-export class CancelState extends BoardCreatorState {
+export class TerminalState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
     return this.stayOnCurrentState();
+  }
+
+  public acceptMessage(): string {
+    return "";
   }
 
   public reject(): Promise<BoardCreatorState> {
@@ -13,12 +20,8 @@ export class CancelState extends BoardCreatorState {
     return false;
   }
 
-  public isTerminal(): boolean {
-    return true;
-  }
-
-  public type(): CreatorStateType {
-    return CreatorStateType.CANCEL;
+  public type(): BoardCreatorStateType {
+    return BoardCreatorStateType.TERMINAL;
   }
 
   public progress(): number {

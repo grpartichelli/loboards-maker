@@ -11,16 +11,18 @@ import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 
 import { NavigationService } from "../../commons/navigation.service";
-import { ImageUploadStepModule } from "../image-upload-step/image-upload-step.component";
+import { BoardSelectStepModule } from "../board-select-step/board-select-step.component";
 import { LocalStorageService } from "../../commons/local-storage.service";
 import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
 import {
   BoardCreatorState,
-  CreatorStateType,
+  BoardCreatorStateType,
 } from "./states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
-import { ImageUploadState } from "./states/image-upload.state";
+import { BoardSelectState } from "./states/board-select.state";
+import { SuccessStepModule } from "../success-step/success-step.component";
+import { SuccessState } from "./states/success.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -37,6 +39,7 @@ const enum ChangeStateCommand {
 export class BoardCreatorComponent implements OnInit {
   public enterAnimationClass = "";
   private lastChangeStateCommand = ChangeStateCommand.ACCEPT;
+  public acceptMessage = "";
   public progress = 0;
   public state!: BoardCreatorState;
 
@@ -49,27 +52,24 @@ export class BoardCreatorComponent implements OnInit {
   public ngOnInit(): void {
     const state = this.resolveInitialState();
 
-    if (state.model.imageExists) {
-      state.model.image.onload = () => {
-        if (state.model.isImageLoadedCorrectly) {
-          this.onStateChanged(state);
-        } else {
-          this.onStateChanged(
-            new ImageUploadState(
-              state.model,
-              this.localStorageService,
-              this.navigationService,
-            ),
-          );
-        }
-      };
-    } else {
+    if (!state.model.imageExists) {
       this.onStateChanged(state);
+      return;
     }
-  }
 
-  public get isAcceptEnabled(): boolean {
-    return this.state.isAcceptEnabled();
+    state.model.image.onload = () => {
+      if (state.model.isImageLoadedCorrectly) {
+        this.onStateChanged(state);
+      } else {
+        this.onStateChanged(
+          new BoardSelectState(
+            state.model,
+            this.localStorageService,
+            this.navigationService,
+          ),
+        );
+      }
+    };
   }
 
   public onAccept(): void {
@@ -77,6 +77,10 @@ export class BoardCreatorComponent implements OnInit {
       this.lastChangeStateCommand = ChangeStateCommand.ACCEPT;
       this.onStateChanged(newState);
     });
+  }
+
+  public get isAcceptEnabled(): boolean {
+    return this.state.isAcceptEnabled();
   }
 
   public onReject(): void {
@@ -87,12 +91,13 @@ export class BoardCreatorComponent implements OnInit {
   }
 
   private onStateChanged(newState: BoardCreatorState): void {
-    if (newState.isTerminal()) {
+    if (newState.isTerminalState) {
       this.navigationService.navigateToHome().then();
       return;
     }
 
     this.state = newState;
+    this.acceptMessage = newState.acceptMessage();
     this.progress = newState.progress();
     this.updateEnteringAnimations();
   }
@@ -106,27 +111,28 @@ export class BoardCreatorComponent implements OnInit {
       this.localStorageService.getImage("boardImage") ?? new Image();
 
     const stateType =
-      this.localStorageService.getData<CreatorStateType>("state");
+      this.localStorageService.getData<BoardCreatorStateType>("state");
 
-    const imageUpload = new ImageUploadState(
-      model,
-      this.localStorageService,
-      this.navigationService,
-    );
-
-    if (!model.imageExists) {
-      return imageUpload;
+    switch (stateType) {
+      case BoardCreatorStateType.POSITION_CREATION:
+        return new PositionCreationState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
+      case BoardCreatorStateType.SUCCESS:
+        return new SuccessState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
+      default:
+        return new BoardSelectState(
+          model,
+          this.localStorageService,
+          this.navigationService,
+        );
     }
-
-    if (stateType === CreatorStateType.POSITION_CREATION) {
-      return new PositionCreationState(
-        model,
-        this.localStorageService,
-        this.navigationService,
-      );
-    }
-
-    return imageUpload;
   }
 
   private updateEnteringAnimations() {
@@ -150,8 +156,9 @@ export class BoardCreatorComponent implements OnInit {
     MatButtonModule,
     NgOptimizedImage,
     NgIf,
-    ImageUploadStepModule,
+    BoardSelectStepModule,
     PositionCreationStepModule,
+    SuccessStepModule,
   ],
   exports: [BoardCreatorComponent],
 })

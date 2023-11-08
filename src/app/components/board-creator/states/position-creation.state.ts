@@ -1,28 +1,32 @@
-import { BoardCreatorState, CreatorStateType } from "./board-creator.state";
-import { ImageUploadState } from "./image-upload.state";
+import {
+  BoardCreatorState,
+  BoardCreatorStateType,
+} from "./board-creator.state";
+import { BoardSelectState } from "./board-select.state";
+import { SuccessState } from "./success.state";
 
 export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    return this.stayOnCurrentState();
+    return this.moveTo(SuccessState);
+  }
+
+  public acceptMessage(): string {
+    return "Baixar";
   }
 
   public reject(): Promise<BoardCreatorState> {
-    return this.moveTo(ImageUploadState);
+    return this.moveTo(BoardSelectState);
   }
 
   public isAcceptEnabled(): boolean {
     return (
       this.model.positions.length > 1 &&
-      !this.model.positions.some((position) => position.id.length === 0)
+      !this.model.positions.some((position) => !position.id.length)
     );
   }
 
-  public isTerminal(): boolean {
-    return false;
-  }
-
-  public type(): CreatorStateType {
-    return CreatorStateType.POSITION_CREATION;
+  public type(): BoardCreatorStateType {
+    return BoardCreatorStateType.POSITION_CREATION;
   }
 
   public progress(): number {

@@ -1,0 +1,60 @@
+<div class="board-select-step">
+  <div class="board-select-step__container-left">
+    <mat-form-field
+      subscriptSizing="dynamic"
+      class="board-select-step__name-input"
+    >
+      <mat-label>Nome do Tabuleiro</mat-label>
+      <input
+        required
+        matInput
+        type="text"
+        [(ngModel)]="model.name"
+        minlength="3"
+        maxlength="25"
+      />
+      <mat-error class="board-select-step__name-input__error"
+        >Mínimo de três caracteres</mat-error
+      >
+    </mat-form-field>
+    <div class="board-select-step__import-container">
+      <mat-card class="board-select-step__import">
+        <mat-icon>get_app</mat-icon>
+        <span>Importar Tabuleiro</span>
+      </mat-card>
+    </div>
+  </div>
+  <div class="board-select-step__container-right">
+    <mat-card
+      *ngIf="!isImageLoadedCorrectly"
+      class="board-select-step__upload"
+      (click)="imageInput.click()"
+    >
+      <input
+        type="file"
+        class="board-select-step__input"
+        (change)="onImageUpload($event)"
+        accept="image/*"
+        #imageInput
+      />
+      <mat-icon>add_photo_alternate</mat-icon>
+      <span>Imagem do tabuleiro</span>
+    </mat-card>
+
+    <mat-card
+      *ngIf="isImageLoadedCorrectly"
+      class="board-select-step__image-card"
+    >
+      <img
+        class="board-select-step__image"
+        alt="tabuleiro"
+        [src]="boardImage.src"
+      />
+      <mat-icon
+        class="board-select-step__image-delete"
+        (click)="onDeleteClicked()"
+        >delete_forever</mat-icon
+      >
+    </mat-card>
+  </div>
+</div>

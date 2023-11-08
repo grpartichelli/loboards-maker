@@ -1,22 +1,23 @@
 import { NavigationService } from "../../../commons/navigation.service";
-import { ImageUploadState } from "./image-upload.state";
-import { CancelState } from "./cancel.state";
+import { BoardSelectState } from "./board-select.state";
+import { TerminalState } from "./terminal.state";
 import { BoardModel } from "../../../models/board.model";
 import { LocalStorageService } from "../../../commons/local-storage.service";
 import { PositionCreationState } from "./position-creation.state";
+import { SuccessState } from "./success.state";
 
 export abstract class BoardCreatorState {
   constructor(
-    public readonly model: BoardModel,
+    public model: BoardModel,
     protected readonly localStorageService: LocalStorageService,
     protected readonly navigationService: NavigationService,
   ) {}
 
   public abstract accept(): Promise<BoardCreatorState>;
+  public abstract acceptMessage(): string;
   public abstract reject(): Promise<BoardCreatorState>;
   public abstract isAcceptEnabled(): boolean;
-  public abstract isTerminal(): boolean;
-  public abstract type(): CreatorStateType;
+  public abstract type(): BoardCreatorStateType;
   public abstract progress(): number;
 
   public moveTo(
@@ -27,11 +28,6 @@ export abstract class BoardCreatorState {
       this.localStorageService,
       this.navigationService,
     );
-    if (this.model.imageExists) {
-      this.localStorageService.saveImage("boardImage", this.model.image);
-    } else {
-      this.localStorageService.removeData("boardImage");
-    }
     this.localStorageService.saveData("board", this.model);
     this.localStorageService.saveData("state", nextState.type());
     return Promise.resolve(nextState);
@@ -41,22 +37,32 @@ export abstract class BoardCreatorState {
     return Promise.resolve(this);
   }
 
-  public get isImageUploadState(): boolean {
-    return this.type() === CreatorStateType.IMAGE_UPLOAD;
+  public get isBoardSelectState(): boolean {
+    return this.type() === BoardCreatorStateType.BOARD_SELECT;
   }
 
   public get isPositionCreationState(): boolean {
-    return this.type() === CreatorStateType.POSITION_CREATION;
+    return this.type() === BoardCreatorStateType.POSITION_CREATION;
+  }
+
+  public get isSuccessState(): boolean {
+    return this.type() === BoardCreatorStateType.SUCCESS;
+  }
+
+  public get isTerminalState(): boolean {
+    return this.type() === BoardCreatorStateType.TERMINAL;
   }
 }
 
-export enum CreatorStateType {
-  CANCEL = "creator.cancel",
-  IMAGE_UPLOAD = "creator.image-upload",
-  POSITION_CREATION = "creator.position-creation",
+export enum BoardCreatorStateType {
+  BOARD_SELECT = "board.creator.state.board-select",
+  POSITION_CREATION = "board.creator.state.position-creation",
+  SUCCESS = "board.creator.state.success",
+  TERMINAL = "board.creator.state.cancel",
 }
 
 type CreatorStateImplementations =
-  | typeof ImageUploadState
-  | typeof CancelState
-  | typeof PositionCreationState;
+  | typeof BoardSelectState
+  | typeof TerminalState
+  | typeof PositionCreationState
+  | typeof SuccessState;

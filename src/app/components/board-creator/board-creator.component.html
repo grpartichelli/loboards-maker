@@ -15,15 +15,19 @@
     />
   </div>
   <div class="board-creator__body" [class]="enterAnimationClass">
-    <image-upload-step
-      *ngIf="state.isImageUploadState"
+    <board-select-step
+      *ngIf="state.isBoardSelectState"
       [model]="state.model"
-    ></image-upload-step>
+    ></board-select-step>
     <position-creation-step
       *ngIf="state.isPositionCreationState"
       [model]="state.model"
     >
     </position-creation-step>
+    <success-step
+      *ngIf="state.isSuccessState"
+      [model]="state.model"
+    ></success-step>
   </div>
 
   <div class="board-creator__actions">
@@ -34,7 +38,7 @@
       (click)="onAccept()"
       [disabled]="!isAcceptEnabled"
     >
-      Continuar
+      {{ acceptMessage }}
     </button>
   </div>
 </div>

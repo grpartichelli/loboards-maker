@@ -18,6 +18,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatDividerModule } from "@angular/material/divider";
 import { BoardCreatorState } from "../board-creator/states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
+import { BoardConfig } from "../../models/board.config";
 
 @Component({
   selector: "board-select-step[state]",
@@ -69,11 +70,10 @@ export class BoardSelectStepComponent implements OnInit {
       return;
     }
 
-    file.text().then((boardConfig: string) => {
+    file.text().then((text: string) => {
       try {
-        const boardModel = BoardModel.fromOther(JSON.parse(boardConfig));
-        this.state.model = boardModel;
-        this.localStorageService.saveData("boardModel", boardModel);
+        const boardConfig = JSON.parse(text) as BoardConfig;
+        this.state.model = BoardModel.fromBoardConfig(boardConfig);
       } catch (error) {
         this.dialogService.openAlert(
           "Falha ao carregar configuração",
@@ -113,9 +113,7 @@ export class BoardSelectStepComponent implements OnInit {
     }
 
     if (this.boardImage.naturalWidth === this.boardImage.naturalHeight) {
-      this.localStorageService.saveImage("boardImage", this.boardImage);
-      this.state.model.image.src =
-        this.localStorageService.getImage("boardImage")?.src ?? "";
+      this.state.model.image.src = this.resolveBase64Source(this.boardImage);
       this.state.model.image.onload = () =>
         this.changeDetectorRef.markForCheck();
       return;
@@ -130,6 +128,21 @@ export class BoardSelectStepComponent implements OnInit {
         ".",
     );
     this.resetImage();
+  }
+
+  private resolveBase64Source(img: HTMLImageElement): string {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return "";
+    }
+
+    ctx.drawImage(img, 0, 0);
+    canvas.remove();
+    return canvas.toDataURL("image/png");
   }
 }
 

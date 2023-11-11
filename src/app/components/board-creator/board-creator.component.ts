@@ -23,6 +23,7 @@ import { PositionCreationState } from "./states/position-creation.state";
 import { BoardSelectState } from "./states/board-select.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
+import { BoardConfig } from "../../models/board.config";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -103,12 +104,9 @@ export class BoardCreatorComponent implements OnInit {
   }
 
   public resolveInitialState() {
-    const model = BoardModel.fromOther(
-      this.localStorageService.getData<BoardModel>("board"),
+    const model = BoardModel.fromBoardConfig(
+      this.localStorageService.getData<BoardConfig>("boardConfig"),
     );
-
-    model.image =
-      this.localStorageService.getImage("boardImage") ?? new Image();
 
     const stateType =
       this.localStorageService.getData<BoardCreatorStateType>("state");

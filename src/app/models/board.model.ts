@@ -1,24 +1,42 @@
 import { PositionModel } from "./position.model";
 import { LengthPercentageModel } from "./length-percentage.model";
 import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
+import { BoardConfig } from "./board.config";
 
 export class BoardModel {
-  public static fromOther(other: BoardModel | null): BoardModel {
+  public static fromBoardConfig(config: BoardConfig | null): BoardModel {
     const model = new BoardModel();
-    if (!other) {
+
+    if (!config) {
       return model;
     }
 
-    model.positionRadiusScale =
-      other.positionRadiusScale || model.positionRadiusScale;
-    model.selectedPositionColor =
-      other.selectedPositionColor || model.selectedPositionColor;
-    model.positionColor = other.positionColor || model.positionColor;
-    model.image = other.image || model.image;
-    model.positions =
-      other.positions?.map((position) => PositionModel.fromOther(position)) ||
-      model.positions;
-    model.name = other.name;
+    if (config.name) {
+      model.name = config.name;
+    }
+
+    if (config.positionColor) {
+      model.positionColor = config.positionColor as PositionColorHexTypeModel;
+    }
+
+    if (config.positionRadiusScale) {
+      model.positionRadiusScale = config.positionRadiusScale;
+    }
+
+    if (config.selectedPositionColor) {
+      model.selectedPositionColor =
+        config.selectedPositionColor as PositionColorHexTypeModel;
+    }
+
+    if (config.positions) {
+      model.positions = config.positions.map((position) =>
+        PositionModel.fromOther(position),
+      );
+    }
+
+    if (config.imageUrl) {
+      model.image.src = config.imageUrl;
+    }
 
     return model;
   }

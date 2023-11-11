@@ -5,6 +5,7 @@ import { BoardModel } from "../../../models/board.model";
 import { LocalStorageService } from "../../../commons/local-storage.service";
 import { PositionCreationState } from "./position-creation.state";
 import { SuccessState } from "./success.state";
+import { BoardConfig } from "../../../models/board.config";
 
 export abstract class BoardCreatorState {
   constructor(
@@ -28,7 +29,10 @@ export abstract class BoardCreatorState {
       this.localStorageService,
       this.navigationService,
     );
-    this.localStorageService.saveData("board", this.model);
+    this.localStorageService.saveData(
+      "boardConfig",
+      BoardConfig.fromBoardModel(this.model),
+    );
     this.localStorageService.saveData("state", nextState.type());
     return Promise.resolve(nextState);
   }

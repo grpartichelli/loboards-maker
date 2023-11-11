@@ -11,20 +11,24 @@ import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DialogService } from "../../commons/dialog.service";
-import { BoardModel } from "../../models/board.model";
 import { LocalStorageService } from "../../commons/local-storage.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MatDividerModule } from "@angular/material/divider";
+import { BoardCreatorState } from "../board-creator/states/board-creator.state";
+import { BoardModel } from "../../models/board.model";
 
 @Component({
-  selector: "board-select-step[model]",
+  selector: "board-select-step[state]",
   templateUrl: "./board-select-step.component.html",
   styleUrls: ["./board-select-step.component.scss"],
 })
 export class BoardSelectStepComponent implements OnInit {
-  @Input() model!: BoardModel;
+  @Input() state!: BoardCreatorState;
   public boardImage = new Image();
+  public isImageInputVisible = true;
+  public isNameInputVisible = true;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
@@ -33,7 +37,7 @@ export class BoardSelectStepComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.boardImage.src = this.model.image.src;
+    this.boardImage.src = this.state.model.image.src;
     this.boardImage.onload = () => this.onImageLoad();
   }
 
@@ -44,8 +48,15 @@ export class BoardSelectStepComponent implements OnInit {
   private resetImage() {
     this.boardImage = new Image();
     this.boardImage.onload = () => this.onImageLoad();
-    this.model.image.src = "";
-    this.localStorageService.removeData("boardImage");
+    this.state.model = new BoardModel();
+    this.localStorageService.clearData();
+
+    // HACK: For reloading
+    this.isImageInputVisible = false;
+    this.isNameInputVisible = false;
+    this.changeDetectorRef.detectChanges();
+    this.isImageInputVisible = true;
+    this.isNameInputVisible = true;
     this.changeDetectorRef.detectChanges();
   }
 
@@ -81,9 +92,10 @@ export class BoardSelectStepComponent implements OnInit {
 
     if (this.boardImage.naturalWidth === this.boardImage.naturalHeight) {
       this.localStorageService.saveImage("boardImage", this.boardImage);
-      this.model.image.src =
+      this.state.model.image.src =
         this.localStorageService.getImage("boardImage")?.src ?? "";
-      this.model.image.onload = () => this.changeDetectorRef.markForCheck();
+      this.state.model.image.onload = () =>
+        this.changeDetectorRef.markForCheck();
       return;
     }
 
@@ -112,6 +124,7 @@ export class BoardSelectStepComponent implements OnInit {
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDividerModule,
   ],
   exports: [BoardSelectStepComponent],
 })

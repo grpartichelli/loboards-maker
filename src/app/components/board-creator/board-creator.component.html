@@ -17,7 +17,7 @@
   <div class="board-creator__body" [class]="enterAnimationClass">
     <board-select-step
       *ngIf="state.isBoardSelectState"
-      [model]="state.model"
+      [state]="state"
     ></board-select-step>
     <position-creation-step
       *ngIf="state.isPositionCreationState"

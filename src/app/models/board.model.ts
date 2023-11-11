@@ -5,16 +5,21 @@ import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
 export class BoardModel {
   public static fromOther(other: BoardModel | null): BoardModel {
     const model = new BoardModel();
-    if (other) {
-      model.positionRadiusScale = other.positionRadiusScale;
-      model.selectedPositionColor = other.selectedPositionColor;
-      model.positionColor = other.positionColor;
-      model.image = other.image;
-      model.positions = other.positions.map((position) =>
-        PositionModel.fromOther(position),
-      );
-      model.name = other.name;
+    if (!other) {
+      return model;
     }
+
+    model.positionRadiusScale =
+      other.positionRadiusScale || model.positionRadiusScale;
+    model.selectedPositionColor =
+      other.selectedPositionColor || model.selectedPositionColor;
+    model.positionColor = other.positionColor || model.positionColor;
+    model.image = other.image || model.image;
+    model.positions =
+      other.positions?.map((position) => PositionModel.fromOther(position)) ||
+      model.positions;
+    model.name = other.name;
+
     return model;
   }
 

@@ -27,8 +27,7 @@ import { BoardModel } from "../../models/board.model";
 export class BoardSelectStepComponent implements OnInit {
   @Input() state!: BoardCreatorState;
   public boardImage = new Image();
-  public isImageInputVisible = true;
-  public isNameInputVisible = true;
+  public isLoaded = true;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
@@ -51,12 +50,10 @@ export class BoardSelectStepComponent implements OnInit {
     this.state.model = new BoardModel();
     this.localStorageService.clearData();
 
-    // HACK: For reloading
-    this.isImageInputVisible = false;
-    this.isNameInputVisible = false;
+    // HACK: Reloads everything upon delete
+    this.isLoaded = false;
     this.changeDetectorRef.detectChanges();
-    this.isImageInputVisible = true;
-    this.isNameInputVisible = true;
+    this.isLoaded = true;
     this.changeDetectorRef.detectChanges();
   }
 
@@ -66,12 +63,37 @@ export class BoardSelectStepComponent implements OnInit {
     );
   }
 
-  public onImageUpload(event: any) {
+  public onBoardConfigUpload(event: any) {
+    const file = this.readFile(event);
+    if (file.type.match(/text\/plain\/*/) == null) {
+      return;
+    }
+
+    file.text().then((boardConfig: string) => {
+      try {
+        const boardModel = BoardModel.fromOther(JSON.parse(boardConfig));
+        this.state.model = boardModel;
+        this.localStorageService.saveData("boardModel", boardModel);
+      } catch (error) {
+        this.dialogService.openAlert(
+          "Falha ao carregar configuração",
+          "Por favor tente novamente",
+        );
+      }
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  private readFile(event: any) {
     const files = event.target.files;
     if (event.target.files === 0) {
       return;
     }
-    const file = files[0];
+    return files[0];
+  }
+
+  public onImageUpload(event: any) {
+    const file = this.readFile(event);
 
     if (file.type.match(/image\/*/) == null) {
       return;

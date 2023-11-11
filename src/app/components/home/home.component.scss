@@ -47,8 +47,10 @@
     align-items: center;
     justify-content: center;
 
-    height: 14rem;
-    width: 14rem;
+    max-height: 14rem;
+    min-height: 14rem;
+    max-width: 14rem;
+    min-width: 14rem;
 
     border-radius: 2rem;
     cursor: pointer;

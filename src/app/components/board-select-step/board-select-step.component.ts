@@ -39,8 +39,21 @@ export class BoardSelectStepComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadBoardImage();
+  }
+
+  private loadBoardImage(): void {
     this.boardImage.src = this.state.model.image.src;
     this.boardImage.onload = () => this.onImageLoad();
+    this.reset();
+  }
+
+  private reset() {
+    // HACK: Reloads everything upon delete
+    this.isLoaded = false;
+    this.changeDetectorRef.detectChanges();
+    this.isLoaded = true;
+    this.changeDetectorRef.detectChanges();
   }
 
   public onDeleteClicked() {
@@ -52,12 +65,7 @@ export class BoardSelectStepComponent implements OnInit {
     this.boardImage.onload = () => this.onImageLoad();
     this.state.model = new BoardModel();
     this.localStorageService.clearData();
-
-    // HACK: Reloads everything upon delete
-    this.isLoaded = false;
-    this.changeDetectorRef.detectChanges();
-    this.isLoaded = true;
-    this.changeDetectorRef.detectChanges();
+    this.reset();
   }
 
   public get isImageLoadedCorrectly() {
@@ -77,6 +85,7 @@ export class BoardSelectStepComponent implements OnInit {
       try {
         const boardConfig = JSON.parse(text) as BoardConfig;
         this.state.model = BoardModel.fromBoardConfig(boardConfig);
+        this.loadBoardImage();
       } catch (error) {
         this.displayTextFileAlert();
       }

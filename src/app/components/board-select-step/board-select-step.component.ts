@@ -19,6 +19,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { BoardCreatorState } from "../board-creator/states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
 import { BoardConfig } from "../../models/board.config";
+import { FileService } from "../../commons/file.service";
 
 @Component({
   selector: "board-select-step[state]",
@@ -33,6 +34,7 @@ export class BoardSelectStepComponent implements OnInit {
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly dialogService: DialogService,
+    private readonly fileService: FileService,
     private readonly localStorageService: LocalStorageService,
   ) {}
 
@@ -65,49 +67,49 @@ export class BoardSelectStepComponent implements OnInit {
   }
 
   public onBoardConfigUpload(event: any) {
-    const file = this.readFile(event);
-    if (file.type.match(/text\/plain\/*/) == null) {
+    const textFile = this.fileService.readTextFile(event);
+    if (!textFile) {
+      this.displayTextFileAlert();
       return;
     }
 
-    file.text().then((text: string) => {
+    textFile.text().then((text: string) => {
       try {
         const boardConfig = JSON.parse(text) as BoardConfig;
         this.state.model = BoardModel.fromBoardConfig(boardConfig);
       } catch (error) {
-        this.dialogService.openAlert(
-          "Falha ao carregar configuração",
-          "Por favor tente novamente",
-        );
+        this.displayTextFileAlert();
       }
       this.changeDetectorRef.detectChanges();
     });
   }
 
-  private readFile(event: any) {
-    const files = event.target.files;
-    if (event.target.files === 0) {
-      return;
-    }
-    return files[0];
+  private displayTextFileAlert() {
+    this.dialogService.openAlert(
+      "Falha ao carregar configuração",
+      "Por favor tente novamente",
+    );
   }
 
   public onImageUpload(event: any) {
-    const file = this.readFile(event);
-
-    if (file.type.match(/image\/*/) == null) {
+    const file = this.fileService.readImageFile(event);
+    if (!file) {
+      this.displayImageFileAlert();
       return;
     }
-
     this.boardImage.src = window.URL.createObjectURL(file);
+  }
+
+  private displayImageFileAlert() {
+    this.dialogService.openAlert(
+      "Falha ao carregar imagem",
+      "Por favor tente novamente",
+    );
   }
 
   public onImageLoad() {
     if (!this.isImageLoadedCorrectly) {
-      this.dialogService.openAlert(
-        "Falha ao carregar imagem",
-        "Por favor tente novamente",
-      );
+      this.displayImageFileAlert();
       this.resetImage();
       return;
     }

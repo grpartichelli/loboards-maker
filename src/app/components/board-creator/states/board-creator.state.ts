@@ -6,10 +6,12 @@ import { LocalStorageService } from "../../../commons/local-storage.service";
 import { PositionCreationState } from "./position-creation.state";
 import { SuccessState } from "./success.state";
 import { BoardConfig } from "../../../models/board.config";
+import { FileService } from "../../../commons/file.service";
 
 export abstract class BoardCreatorState {
   constructor(
     public model: BoardModel,
+    protected readonly fileService: FileService,
     protected readonly localStorageService: LocalStorageService,
     protected readonly navigationService: NavigationService,
   ) {}
@@ -26,6 +28,7 @@ export abstract class BoardCreatorState {
   ): Promise<BoardCreatorState> {
     const nextState = new state(
       this.model,
+      this.fileService,
       this.localStorageService,
       this.navigationService,
     );

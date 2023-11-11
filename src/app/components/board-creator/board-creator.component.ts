@@ -24,6 +24,7 @@ import { BoardSelectState } from "./states/board-select.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
 import { BoardConfig } from "../../models/board.config";
+import { FileService } from "../../commons/file.service";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -46,6 +47,7 @@ export class BoardCreatorComponent implements OnInit {
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly fileService: FileService,
     private readonly localStorageService: LocalStorageService,
     private readonly navigationService: NavigationService,
   ) {}
@@ -65,6 +67,7 @@ export class BoardCreatorComponent implements OnInit {
         this.onStateChanged(
           new BoardSelectState(
             state.model,
+            this.fileService,
             this.localStorageService,
             this.navigationService,
           ),
@@ -115,18 +118,21 @@ export class BoardCreatorComponent implements OnInit {
       case BoardCreatorStateType.POSITION_CREATION:
         return new PositionCreationState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );
       case BoardCreatorStateType.SUCCESS:
         return new SuccessState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );
       default:
         return new BoardSelectState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );

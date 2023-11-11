@@ -11,30 +11,49 @@ import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DialogService } from "../../commons/dialog.service";
-import { BoardModel } from "../../models/board.model";
 import { LocalStorageService } from "../../commons/local-storage.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MatDividerModule } from "@angular/material/divider";
+import { BoardCreatorState } from "../board-creator/states/board-creator.state";
+import { BoardModel } from "../../models/board.model";
+import { BoardConfig } from "../../models/board.config";
+import { FileService } from "../../commons/file.service";
 
 @Component({
-  selector: "board-select-step[model]",
+  selector: "board-select-step[state]",
   templateUrl: "./board-select-step.component.html",
   styleUrls: ["./board-select-step.component.scss"],
 })
 export class BoardSelectStepComponent implements OnInit {
-  @Input() model!: BoardModel;
+  @Input() state!: BoardCreatorState;
   public boardImage = new Image();
+  public isLoaded = true;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly dialogService: DialogService,
+    private readonly fileService: FileService,
     private readonly localStorageService: LocalStorageService,
   ) {}
 
   public ngOnInit(): void {
-    this.boardImage.src = this.model.image.src;
+    this.loadBoardImage();
+  }
+
+  private loadBoardImage(): void {
+    this.boardImage.src = this.state.model.image.src;
     this.boardImage.onload = () => this.onImageLoad();
+    this.reset();
+  }
+
+  private reset() {
+    // HACK: Reloads everything upon delete
+    this.isLoaded = false;
+    this.changeDetectorRef.detectChanges();
+    this.isLoaded = true;
+    this.changeDetectorRef.detectChanges();
   }
 
   public onDeleteClicked() {
@@ -44,9 +63,9 @@ export class BoardSelectStepComponent implements OnInit {
   private resetImage() {
     this.boardImage = new Image();
     this.boardImage.onload = () => this.onImageLoad();
-    this.model.image.src = "";
-    this.localStorageService.removeData("boardImage");
-    this.changeDetectorRef.detectChanges();
+    this.state.model = new BoardModel();
+    this.localStorageService.clearData();
+    this.reset();
   }
 
   public get isImageLoadedCorrectly() {
@@ -55,35 +74,59 @@ export class BoardSelectStepComponent implements OnInit {
     );
   }
 
+  public onBoardConfigUpload(event: any) {
+    const textFile = this.fileService.readTextFile(event);
+    if (!textFile) {
+      this.displayTextFileAlert();
+      return;
+    }
+
+    textFile.text().then((text: string) => {
+      try {
+        const boardConfig = JSON.parse(text) as BoardConfig;
+        this.state.model = BoardModel.fromBoardConfig(boardConfig);
+        this.loadBoardImage();
+      } catch (error) {
+        this.displayTextFileAlert();
+      }
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  private displayTextFileAlert() {
+    this.dialogService.openAlert(
+      "Falha ao carregar configuração",
+      "Por favor tente novamente",
+    );
+  }
+
   public onImageUpload(event: any) {
-    const files = event.target.files;
-    if (event.target.files === 0) {
+    const file = this.fileService.readImageFile(event);
+    if (!file) {
+      this.displayImageFileAlert();
       return;
     }
-    const file = files[0];
-
-    if (file.type.match(/image\/*/) == null) {
-      return;
-    }
-
     this.boardImage.src = window.URL.createObjectURL(file);
+  }
+
+  private displayImageFileAlert() {
+    this.dialogService.openAlert(
+      "Falha ao carregar imagem",
+      "Por favor tente novamente",
+    );
   }
 
   public onImageLoad() {
     if (!this.isImageLoadedCorrectly) {
-      this.dialogService.openAlert(
-        "Falha ao carregar imagem",
-        "Por favor tente novamente",
-      );
+      this.displayImageFileAlert();
       this.resetImage();
       return;
     }
 
     if (this.boardImage.naturalWidth === this.boardImage.naturalHeight) {
-      this.localStorageService.saveImage("boardImage", this.boardImage);
-      this.model.image.src =
-        this.localStorageService.getImage("boardImage")?.src ?? "";
-      this.model.image.onload = () => this.changeDetectorRef.markForCheck();
+      this.state.model.image.src = this.resolveBase64Source(this.boardImage);
+      this.state.model.image.onload = () =>
+        this.changeDetectorRef.markForCheck();
       return;
     }
 
@@ -96,6 +139,21 @@ export class BoardSelectStepComponent implements OnInit {
         ".",
     );
     this.resetImage();
+  }
+
+  private resolveBase64Source(img: HTMLImageElement): string {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return "";
+    }
+
+    ctx.drawImage(img, 0, 0);
+    canvas.remove();
+    return canvas.toDataURL("image/png");
   }
 }
 
@@ -112,6 +170,7 @@ export class BoardSelectStepComponent implements OnInit {
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDividerModule,
   ],
   exports: [BoardSelectStepComponent],
 })

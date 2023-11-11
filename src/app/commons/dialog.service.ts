@@ -26,17 +26,22 @@ export class DialogService {
     description: string,
     type: DialogType,
   ): Promise<boolean> {
+    const config = {
+      width: "450px",
+      enterAnimationDuration: "150ms",
+      exitAnimationDuration: "150ms",
+      data: {
+        title,
+        description,
+        type,
+      },
+    };
+
     return this.matDialog
-      .open<SimpleDialogComponent, DialogData, boolean>(SimpleDialogComponent, {
-        width: "450px",
-        enterAnimationDuration: "150ms",
-        exitAnimationDuration: "150ms",
-        data: {
-          title,
-          description,
-          type,
-        },
-      })
+      .open<SimpleDialogComponent, DialogData, boolean>(
+        SimpleDialogComponent,
+        config,
+      )
       .afterClosed()
       .toPromise()
       .then((it) => Boolean(it));

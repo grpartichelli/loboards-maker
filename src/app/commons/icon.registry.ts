@@ -11,10 +11,8 @@ export class IconRegistry {
 
   public registerAll() {
     this.iconRegistry.addSvgIcon(
-      "board_piece",
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/board_piece.svg",
-      ),
+      "board",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("assets/board.svg"),
     );
   }
 }

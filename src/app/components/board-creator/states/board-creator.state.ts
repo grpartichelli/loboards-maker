@@ -5,10 +5,13 @@ import { BoardModel } from "../../../models/board.model";
 import { LocalStorageService } from "../../../commons/local-storage.service";
 import { PositionCreationState } from "./position-creation.state";
 import { SuccessState } from "./success.state";
+import { BoardConfig } from "../../../models/board.config";
+import { FileService } from "../../../commons/file.service";
 
 export abstract class BoardCreatorState {
   constructor(
     public model: BoardModel,
+    protected readonly fileService: FileService,
     protected readonly localStorageService: LocalStorageService,
     protected readonly navigationService: NavigationService,
   ) {}
@@ -25,10 +28,14 @@ export abstract class BoardCreatorState {
   ): Promise<BoardCreatorState> {
     const nextState = new state(
       this.model,
+      this.fileService,
       this.localStorageService,
       this.navigationService,
     );
-    this.localStorageService.saveData("board", this.model);
+    this.localStorageService.saveData(
+      "boardConfig",
+      BoardConfig.fromBoardModel(this.model),
+    );
     this.localStorageService.saveData("state", nextState.type());
     return Promise.resolve(nextState);
   }

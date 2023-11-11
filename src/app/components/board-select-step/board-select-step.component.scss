@@ -16,39 +16,57 @@
       margin: auto;
       flex: 1;
       display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-right: 1rem;
     }
 
     &-left {
+      margin: auto;
       row-gap: 1rem;
-      padding: 6rem;
-
+      padding: 0 6rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
       flex: 1;
     }
   }
 
   &__name-input {
-    width: 100%;
-    margin-inline: auto;
+    width: 34rem;
 
     &__error {
       margin-left: -1rem;
     }
   }
 
-  &__import {
+  &__divider {
     &-container {
-      display: flex;
-      height: 100%;
       width: 100%;
-    }
+      display: flex;
+      align-items: center;
+      margin-block: 2rem;
 
+      span {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-inline: 1rem;
+      }
+    }
+    border-width: 0.15rem;
+    width: 100%;
+  }
+
+  &__option {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
 
-    height: 14rem;
-    width: 14rem;
+    max-height: 13rem;
+    min-height: 13rem;
+    max-width: 13rem;
+    min-width: 13rem;
 
     border-radius: 2rem;
     cursor: pointer;
@@ -58,17 +76,23 @@
     }
 
     .mat-icon {
-      transform: scale(4.5);
+      transform: scale(4.2);
     }
 
     span {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 500;
       position: absolute;
       top: 80%;
     }
 
-    background-color: rgba(colors.$accent, 0.7);
+    &--import {
+      background-color: rgba(colors.$accent, 0.7);
+    }
+
+    &--upload-image {
+      background-color: rgba(colors.$primary, 0.7);
+    }
   }
 
   &__image {
@@ -80,7 +104,21 @@
       max-width: 34rem;
       height: 34rem;
       max-height: 34rem;
-      background-color: colors.$lobogames-white;
+
+      &--loaded {
+        background-color: colors.$lobogames-white;
+      }
+
+      &--empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        mat-icon {
+          transform: scale(10);
+          opacity: 0.25;
+        }
+      }
     }
 
     &-delete {
@@ -95,36 +133,5 @@
 
   &__input {
     display: none;
-  }
-
-  &__upload {
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 25rem;
-    width: 25rem;
-
-    border-radius: 2rem;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.7;
-    }
-
-    .mat-icon {
-      transform: scale(7.5);
-    }
-
-    span {
-      font-size: 1.6rem;
-      font-weight: 500;
-      position: absolute;
-      top: 80%;
-    }
-
-    background-color: rgba(colors.$primary, 0.7);
   }
 }

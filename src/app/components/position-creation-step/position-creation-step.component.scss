@@ -152,7 +152,9 @@
   }
 
   &__board-name {
-    margin-top: 0 !important;
+    margin: 0 0 0.75rem 0;
+    font-weight: 500;
+    font-size: 1.25rem;
   }
   &__canvas {
     width: 100%;

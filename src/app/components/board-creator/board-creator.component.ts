@@ -23,6 +23,10 @@ import { PositionCreationState } from "./states/position-creation.state";
 import { BoardSelectState } from "./states/board-select.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
+import { BoardConfig } from "../../models/board.config";
+import { FileService } from "../../commons/file.service";
+import { DialogService } from "../../commons/dialog.service";
+import { MobileDetectionService } from "../../commons/mobile-detection.service";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -45,11 +49,27 @@ export class BoardCreatorComponent implements OnInit {
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly dialogService: DialogService,
+    private readonly fileService: FileService,
+    private readonly mobileDetectionService: MobileDetectionService,
     private readonly localStorageService: LocalStorageService,
     private readonly navigationService: NavigationService,
   ) {}
 
   public ngOnInit(): void {
+    if (this.mobileDetectionService.isMobile()) {
+      this.dialogService
+        .openConfirmation(
+          "Aplicação não está otimizada para celulares",
+          "Recomendamos fortemente que utilize um computador para ter a melhor experiência.",
+        )
+        .then((result) => {
+          if (!result) {
+            this.navigationService.navigateToHome().then();
+          }
+        });
+    }
+
     const state = this.resolveInitialState();
 
     if (!state.model.imageExists) {
@@ -64,6 +84,7 @@ export class BoardCreatorComponent implements OnInit {
         this.onStateChanged(
           new BoardSelectState(
             state.model,
+            this.fileService,
             this.localStorageService,
             this.navigationService,
           ),
@@ -103,12 +124,9 @@ export class BoardCreatorComponent implements OnInit {
   }
 
   public resolveInitialState() {
-    const model = BoardModel.fromOther(
-      this.localStorageService.getData<BoardModel>("board"),
+    const model = BoardModel.fromBoardConfig(
+      this.localStorageService.getData<BoardConfig>("boardConfig"),
     );
-
-    model.image =
-      this.localStorageService.getImage("boardImage") ?? new Image();
 
     const stateType =
       this.localStorageService.getData<BoardCreatorStateType>("state");
@@ -117,18 +135,21 @@ export class BoardCreatorComponent implements OnInit {
       case BoardCreatorStateType.POSITION_CREATION:
         return new PositionCreationState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );
       case BoardCreatorStateType.SUCCESS:
         return new SuccessState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );
       default:
         return new BoardSelectState(
           model,
+          this.fileService,
           this.localStorageService,
           this.navigationService,
         );

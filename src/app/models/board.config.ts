@@ -7,7 +7,11 @@ export class BoardConfig {
     config.name = model.name;
     config.positionColor = model.positionColor;
     config.positionRadiusScale = model.positionRadiusScale;
-    config.positions = model.positions;
+    config.positions = model.positions.map((it) => {
+      it.lengthPercentage.height = it.lengthPercentage.heightNormalized;
+      it.lengthPercentage.width = it.lengthPercentage.widthNormalized;
+      return it;
+    });
     config.selectedPositionColor = model.selectedPositionColor;
     config.imageUrl = model.image.src;
     return config;

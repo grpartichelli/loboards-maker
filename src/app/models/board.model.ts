@@ -29,9 +29,12 @@ export class BoardModel {
     }
 
     if (config.positions) {
-      model.positions = config.positions.map((position) =>
-        PositionModel.fromOther(position),
-      );
+      model.positions = config.positions.map((position) => {
+        position.lengthPercentage.height =
+          position.lengthPercentage.height * 100;
+        position.lengthPercentage.width = position.lengthPercentage.width * 100;
+        return PositionModel.fromOther(position);
+      });
     }
 
     if (config.imageUrl) {

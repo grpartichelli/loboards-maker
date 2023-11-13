@@ -30,9 +30,9 @@ export class BoardModel {
 
     if (config.positions) {
       model.positions = config.positions.map((position) => {
-        position.lengthPercentage.height =
-          position.lengthPercentage.height * 100;
-        position.lengthPercentage.width = position.lengthPercentage.width * 100;
+        const other = PositionModel.fromOther(position);
+        other.lengthPercentage.height *= 100;
+        position.lengthPercentage.width *= 100;
         return PositionModel.fromOther(position);
       });
     }

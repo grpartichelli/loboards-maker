@@ -8,9 +8,10 @@ export class BoardConfig {
     config.positionColor = model.positionColor;
     config.positionRadiusScale = model.positionRadiusScale;
     config.positions = model.positions.map((it) => {
-      it.lengthPercentage.height = it.lengthPercentage.heightNormalized;
-      it.lengthPercentage.width = it.lengthPercentage.widthNormalized;
-      return it;
+      const other = PositionModel.fromOther(it);
+      other.lengthPercentage.height = other.lengthPercentage.heightNormalized;
+      other.lengthPercentage.width = other.lengthPercentage.widthNormalized;
+      return other;
     });
     config.selectedPositionColor = model.selectedPositionColor;
     config.imageUrl = model.image.src;

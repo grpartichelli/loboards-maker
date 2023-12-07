@@ -32,8 +32,8 @@ export class BoardModel {
       model.positions = config.positions.map((position) => {
         const other = PositionModel.fromOther(position);
         other.lengthPercentage.height *= 100;
-        position.lengthPercentage.width *= 100;
-        return PositionModel.fromOther(position);
+        other.lengthPercentage.width *= 100;
+        return other;
       });
     }
 

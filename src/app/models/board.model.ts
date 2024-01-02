@@ -90,6 +90,10 @@ export class BoardModel {
     return id;
   }
 
+  public deleteGame(index: number): void {
+    this.games.splice(index, 1);
+  }
+
   public deletePosition(position: PositionModel): void {
     this.positions = this.positions.filter((it) => !it.equalsTo(position));
   }

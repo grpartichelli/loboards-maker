@@ -25,7 +25,7 @@ export class GameClassificationState extends BoardCreatorState {
   }
 
   public isAcceptEnabled() {
-    return true;
+    return !this.model.games.some((game) => game.name?.length < 2);
   }
 
   public type() {

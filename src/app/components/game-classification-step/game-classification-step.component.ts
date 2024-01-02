@@ -46,6 +46,10 @@ export class GameClassificationStepComponent {
       event.currentIndex,
     );
   }
+
+  public onDeleteGameClicked(index: number): void {
+    this.model.deleteGame(index);
+  }
 }
 
 @NgModule({

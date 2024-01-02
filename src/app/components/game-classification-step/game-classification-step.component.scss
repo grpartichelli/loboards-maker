@@ -32,14 +32,14 @@
     width: 35%;
     margin-inline: auto;
 
-    background-color: rgba(colors.$primary, 0.5);
+    background-color: rgba(colors.$primary, 0.7);
 
     mat-icon {
       transform: scale(1.25);
     }
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.7;
     }
   }
   &__list-container {
@@ -86,6 +86,11 @@
       width: 8.5rem;
       @media (min-width: 1586px) {
         width: 25rem;
+      }
+
+      &--error {
+        position: fixed;
+        margin-left: -1rem;
       }
     }
   }

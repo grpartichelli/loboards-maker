@@ -9,7 +9,7 @@
 >
   <div class="game-classification-step__list-container">
     <mat-card
-      *ngFor="let game of model.games"
+      *ngFor="let game of model.games; index as i"
       [id]="game.name"
       class="game-classification-step__game-card"
       cdkDrag
@@ -30,10 +30,21 @@
         class="game-classification-step__game-card-name-input"
       >
         <mat-label>Nome do jogo</mat-label>
-        <input required matInput type="text" [(ngModel)]="game.name" />
+        <input
+          required
+          matInput
+          type="text"
+          [(ngModel)]="game.name"
+          minlength="2"
+        />
+        <mat-error class="game-classification-step__game-card-name-input--error"
+          >Mínimo de dois caracteres</mat-error
+        >
       </mat-form-field>
 
-      <mat-icon class="game-classification-step__game-card-delete"
+      <mat-icon
+        class="game-classification-step__game-card-delete"
+        (click)="onDeleteGameClicked(i)"
         >close</mat-icon
       >
     </mat-card>

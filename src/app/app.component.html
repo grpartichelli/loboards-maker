@@ -1,8 +1,8 @@
 <div class="app">
-  <lobogames-toolbar
+  <loboards-toolbar
     *ngIf="isToolbarVisible"
     (onMenuActionRequested)="onMenuClicked()"
-  ></lobogames-toolbar>
+  ></loboards-toolbar>
   <mat-drawer-container class="app__sidenav-container">
     <mat-drawer class="app__sidenav" mode="side" [opened]="isSidenavOpen">
       <mat-nav-list class="app__sidenav-list">

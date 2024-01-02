@@ -6,13 +6,16 @@
       [value]="progress"
       color="accent"
     ></mat-progress-bar>
-    <img
-      class="board-creator__logo"
-      alt="lobogames logo"
-      ngSrc="assets/logo.png"
-      width="220"
-      height="59"
-    />
+    <div class="board-creator__logo-container">
+      <img
+        class="board-creator__logo"
+        alt="loboards logo"
+        ngSrc="assets/logo.png"
+        width="60"
+        height="60"
+      />
+      <span>LoBoards Maker</span>
+    </div>
   </div>
   <div class="board-creator__body" [class]="enterAnimationClass">
     <board-select-step
@@ -22,8 +25,11 @@
     <position-creation-step
       *ngIf="state.isPositionCreationState"
       [model]="state.model"
-    >
-    </position-creation-step>
+    ></position-creation-step>
+    <game-classification-step
+      *ngIf="state.isGameClassificationState"
+      [model]="state.model"
+    ></game-classification-step>
     <success-step
       *ngIf="state.isSuccessState"
       [model]="state.model"

@@ -6,7 +6,7 @@ import { NavigationService } from "../../commons/navigation.service";
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: "lobogames-home",
+  selector: "loboards-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
 })

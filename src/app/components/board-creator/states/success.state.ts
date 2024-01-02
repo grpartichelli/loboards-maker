@@ -5,6 +5,7 @@ import {
 import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 import { BoardModel } from "../../../models/board.model";
+import { GameClassificationState } from "./game-classification.state";
 
 export class SuccessState extends BoardCreatorState {
   public accept() {
@@ -18,7 +19,7 @@ export class SuccessState extends BoardCreatorState {
   }
 
   public reject() {
-    return this.moveTo(PositionCreationState);
+    return this.moveTo(GameClassificationState);
   }
 
   public isAcceptEnabled() {

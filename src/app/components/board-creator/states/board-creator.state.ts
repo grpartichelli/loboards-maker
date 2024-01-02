@@ -7,6 +7,7 @@ import { PositionCreationState } from "./position-creation.state";
 import { SuccessState } from "./success.state";
 import { BoardConfig } from "../../../models/board.config";
 import { FileService } from "../../../commons/file.service";
+import { GameClassificationState } from "./game-classification.state";
 
 export abstract class BoardCreatorState {
   constructor(
@@ -48,6 +49,10 @@ export abstract class BoardCreatorState {
     return this.type() === BoardCreatorStateType.BOARD_SELECT;
   }
 
+  public get isGameClassificationState(): boolean {
+    return this.type() === BoardCreatorStateType.GAME_CLASSIFICATION;
+  }
+
   public get isPositionCreationState(): boolean {
     return this.type() === BoardCreatorStateType.POSITION_CREATION;
   }
@@ -62,14 +67,16 @@ export abstract class BoardCreatorState {
 }
 
 export enum BoardCreatorStateType {
-  BOARD_SELECT = "board.creator.state.board-select",
-  POSITION_CREATION = "board.creator.state.position-creation",
-  SUCCESS = "board.creator.state.success",
-  TERMINAL = "board.creator.state.cancel",
+  BOARD_SELECT = "BOARD_SELECT",
+  GAME_CLASSIFICATION = "GAME_CLASSIFICATION",
+  POSITION_CREATION = "POSITION_CREATION",
+  SUCCESS = "SUCCESS",
+  TERMINAL = "TERMINAL",
 }
 
 type CreatorStateImplementations =
   | typeof BoardSelectState
+  | typeof GameClassificationState
   | typeof TerminalState
   | typeof PositionCreationState
   | typeof SuccessState;

@@ -27,6 +27,8 @@ import { BoardConfig } from "../../models/board.config";
 import { FileService } from "../../commons/file.service";
 import { DialogService } from "../../commons/dialog.service";
 import { MobileDetectionService } from "../../commons/mobile-detection.service";
+import { GameClassificationStepModule } from "../game-classification-step/game-classification-step.component";
+import { GameClassificationState } from "./states/game-classification.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -35,7 +37,7 @@ const enum ChangeStateCommand {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "lobogames-board-creator",
+  selector: "loboards-board-creator",
   templateUrl: "./board-creator.component.html",
   styleUrls: ["./board-creator.component.scss"],
   encapsulation: ViewEncapsulation.None,
@@ -146,6 +148,13 @@ export class BoardCreatorComponent implements OnInit {
           this.localStorageService,
           this.navigationService,
         );
+      case BoardCreatorStateType.GAME_CLASSIFICATION:
+        return new GameClassificationState(
+          model,
+          this.fileService,
+          this.localStorageService,
+          this.navigationService,
+        );
       default:
         return new BoardSelectState(
           model,
@@ -180,6 +189,7 @@ export class BoardCreatorComponent implements OnInit {
     BoardSelectStepModule,
     PositionCreationStepModule,
     SuccessStepModule,
+    GameClassificationStepModule,
   ],
   exports: [BoardCreatorComponent],
 })

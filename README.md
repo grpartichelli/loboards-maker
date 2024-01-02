@@ -1,2 +1,2 @@
-# lobogames-creator
-Board games creator for application LoboGames
+# loboards-maker
+Board games creator for application LoBoards

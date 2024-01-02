@@ -13,6 +13,10 @@ export class BoardModel {
       return model;
     }
 
+    if (config.games) {
+      model.games = config.games.map((game) => GameModel.fromOther(game));
+    }
+
     if (config.name) {
       model.name = config.name;
     }
@@ -60,7 +64,7 @@ export class BoardModel {
 
   public addNewGame(): void {
     this.games.push(
-      new GameModel("", GameCategoryTypeModel.ALIGNMENT_OR_BLOCK),
+      new GameModel(GameCategoryTypeModel.ALIGNMENT_OR_BLOCK, "", "", ""),
     );
   }
 

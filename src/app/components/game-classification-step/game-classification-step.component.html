@@ -25,22 +25,62 @@
         >menu</mat-icon
       >
 
-      <mat-form-field
-        subscriptSizing="dynamic"
-        class="game-classification-step__game-card-name-input"
-      >
-        <mat-label>Nome do jogo</mat-label>
-        <input
-          required
-          matInput
-          type="text"
-          [(ngModel)]="game.name"
-          minlength="2"
-        />
-        <mat-error class="game-classification-step__game-card-name-input--error"
-          >Mínimo de dois caracteres</mat-error
+      <div class="game-classification-step__game-card-section">
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="game-classification-step__game-card-input"
         >
-      </mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input
+            required
+            matInput
+            type="text"
+            [(ngModel)]="game.name"
+            minlength="2"
+          />
+          <mat-error
+            class="game-classification-step__game-card-name-input--error"
+            >Mínimo de dois caracteres</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="game-classification-step__game-card-input"
+        >
+          <mat-label>Link para texto</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="game.textUrl"
+            minlength="2"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="game-classification-step__game-card-section">
+        <mat-form-field
+          class="game-classification-step__game-card-input"
+          subscriptSizing="dynamic"
+        >
+          <mat-label>Classificação</mat-label>
+          <mat-select [(value)]="game.category">
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.type"
+            >
+              {{ category.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="game-classification-step__game-card-input"
+        >
+          <mat-label>Link para vídeo</mat-label>
+          <input matInput type="text" [(ngModel)]="game.videoUrl" />
+        </mat-form-field>
+      </div>
 
       <mat-icon
         class="game-classification-step__game-card-delete"

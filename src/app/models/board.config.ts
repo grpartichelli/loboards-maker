@@ -1,9 +1,11 @@
 import { PositionModel } from "./position.model";
 import { BoardModel } from "./board.model";
+import { GameModel } from "./game.model";
 
 export class BoardConfig {
   public static fromBoardModel(model: BoardModel): BoardConfig {
     const config = new BoardConfig();
+    config.games = model.games.map((it) => GameModel.fromOther(it));
     config.name = model.name;
     config.positionColor = model.positionColor;
     config.positionRadiusScale = model.positionRadiusScale;
@@ -18,6 +20,7 @@ export class BoardConfig {
     return config;
   }
 
+  public games: Array<GameModel> | null = null;
   public imageUrl: string | null = null;
   name: string | null = null;
   positionColor: string | null = null;

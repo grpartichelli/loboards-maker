@@ -2,9 +2,6 @@ import {
   BoardCreatorState,
   BoardCreatorStateType,
 } from "./board-creator.state";
-import { SuccessState } from "./success.state";
-import { BoardConfig } from "../../../models/board.config";
-import { Strings } from "../../../commons/strings";
 import { GameClassificationState } from "./game-classification.state";
 import { BoardSelectState } from "./board-select.state";
 

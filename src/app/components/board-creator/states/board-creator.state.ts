@@ -67,11 +67,11 @@ export abstract class BoardCreatorState {
 }
 
 export enum BoardCreatorStateType {
-  BOARD_SELECT = "board-select",
-  GAME_CLASSIFICATION = "game-classification",
-  POSITION_CREATION = "position-creation",
-  SUCCESS = "success",
-  TERMINAL = "terminal",
+  BOARD_SELECT = "BOARD_SELECT",
+  GAME_CLASSIFICATION = "GAME_CLASSIFICATION",
+  POSITION_CREATION = "POSITION_CREATION",
+  SUCCESS = "SUCCESS",
+  TERMINAL = "TERMINAL",
 }
 
 type CreatorStateImplementations =

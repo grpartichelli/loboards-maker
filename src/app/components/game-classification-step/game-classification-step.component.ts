@@ -30,7 +30,9 @@ export class GameClassificationStepComponent {
   @Input() model!: BoardModel;
   public isCursorGrabbing = false;
 
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
+  public onAddGameClicked() {
+    this.model.addNewGame();
+  }
 
   public onCdkHandleClicked() {
     this.isCursorGrabbing = true;

@@ -8,55 +8,59 @@
 
 .game-classification-step {
   display: flex;
-  width: 100%;
+  flex: 1;
   height: 100%;
+  width: 100%;
 
   margin: auto;
-  display: flex;
   flex-direction: column;
-  padding: 1rem 3rem 0 2rem;
-  flex: 1;
-  row-gap: 1rem;
+  padding-inline: 12rem;
 
-  &__settings {
-    margin-inline: auto;
-    width: 30rem;
-
-    @media (min-width: 1586px) {
-      display: flex;
-      column-gap: 1.5rem;
-      width: unset;
-    }
-  }
-
-  &__radius-slider {
+  &__add-button {
     display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    font-size: 18px;
     align-items: center;
-    column-gap: 1rem;
-  }
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 2rem;
+    min-height: 5rem;
 
-  &__position-cards {
+    border-radius: 1rem;
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+    width: 35%;
     margin-inline: auto;
-    overflow-y: auto;
-    width: 30rem;
-    height: 25.75rem;
-    padding: 1rem;
 
-    @media (min-width: 1586px) {
-      width: 49rem;
-      height: 28.5rem;
+    background-color: rgba(colors.$primary, 0.5);
+
+    mat-icon {
+      transform: scale(1.25);
+    }
+
+    &:hover {
+      opacity: 0.5;
     }
   }
+  &__list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    row-gap: 1rem;
+    overflow-y: auto;
+  }
 
-  &__position-card {
+  &__game-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 6.25rem;
-    margin-bottom: 1.5rem;
+    min-height: 7rem;
+
     border-radius: 1rem;
     padding: 0.75rem 2.5rem 0.75rem 0.75rem;
     column-gap: 1.5rem;
+    width: 97%;
 
     @media (min-width: 1586px) {
       padding-right: 3.25rem;
@@ -64,10 +68,12 @@
 
     &-delete {
       position: absolute;
-      top: 18%;
-      right: 3%;
+      top: 0;
+      right: 0;
       cursor: pointer;
-      transform: scale(1.2);
+      padding-right: 1.5rem;
+      padding-top: 1.5rem;
+      transform: scale(1.5);
     }
 
     &-move {
@@ -76,46 +82,10 @@
       cursor: pointer;
     }
 
-    &-id-input {
+    &-name-input {
       width: 8.5rem;
       @media (min-width: 1586px) {
         width: 25rem;
-      }
-    }
-
-    &-vertical-arrows {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-      height: 100%;
-    }
-
-    &-horizontal-arrows {
-      display: flex;
-      align-items: center;
-      margin: auto;
-
-      justify-content: center;
-      height: 100%;
-    }
-
-    &-arrow {
-      cursor: pointer;
-      transform: scale(1.5);
-    }
-
-    &-coordinate-input {
-      width: 2.5rem;
-      border: 0;
-      text-align: center;
-      background: rgba(0, 0, 0, 0);
-      font-size: 1rem;
-      color: white;
-
-      &--height {
-        margin-left: 0.5rem;
       }
     }
   }

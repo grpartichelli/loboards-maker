@@ -28,6 +28,7 @@ import { FileService } from "../../commons/file.service";
 import { DialogService } from "../../commons/dialog.service";
 import { MobileDetectionService } from "../../commons/mobile-detection.service";
 import { GameClassificationStepModule } from "../game-classification-step/game-classification-step.component";
+import { GameClassificationState } from "./states/game-classification.state";
 
 const enum ChangeStateCommand {
   ACCEPT = "ACCEPT",
@@ -142,6 +143,13 @@ export class BoardCreatorComponent implements OnInit {
         );
       case BoardCreatorStateType.SUCCESS:
         return new SuccessState(
+          model,
+          this.fileService,
+          this.localStorageService,
+          this.navigationService,
+        );
+      case BoardCreatorStateType.GAME_CLASSIFICATION:
+        return new GameClassificationState(
           model,
           this.fileService,
           this.localStorageService,

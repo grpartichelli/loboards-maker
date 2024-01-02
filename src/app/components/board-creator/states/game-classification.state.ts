@@ -2,8 +2,6 @@ import {
   BoardCreatorState,
   BoardCreatorStateType,
 } from "./board-creator.state";
-import { TerminalState } from "./terminal.state";
-import { BoardModel } from "../../../models/board.model";
 import { SuccessState } from "./success.state";
 import { PositionCreationState } from "./position-creation.state";
 import { BoardConfig } from "../../../models/board.config";

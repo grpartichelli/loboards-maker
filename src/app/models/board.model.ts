@@ -2,6 +2,8 @@ import { PositionModel } from "./position.model";
 import { LengthPercentageModel } from "./length-percentage.model";
 import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
 import { BoardConfig } from "./board.config";
+import { GameModel } from "./game.model";
+import { GameCategoryTypeModel } from "./game-category.model";
 
 export class BoardModel {
   public static fromBoardConfig(config: BoardConfig | null): BoardModel {
@@ -47,6 +49,7 @@ export class BoardModel {
   public static MAX_RADIUS_SCALE = 0.2;
   public static DEFAULT_RADIUS_PERCENTAGE = 0.3;
 
+  public games = new Array<GameModel>();
   public image: HTMLImageElement = new Image();
   public name = "";
   public positionRadiusScale =
@@ -54,6 +57,12 @@ export class BoardModel {
   public positionColor = PositionColorHexTypeModel.PINK;
   public positions = new Array<PositionModel>();
   public selectedPositionColor = PositionColorHexTypeModel.LIGHT_BLUE;
+
+  public addNewGame(): void {
+    this.games.push(
+      new GameModel("", GameCategoryTypeModel.ALIGNMENT_OR_BLOCK),
+    );
+  }
 
   public addNewPosition(coordinate: LengthPercentageModel): void {
     this.positions.push(new PositionModel(this.calculateId(), coordinate));

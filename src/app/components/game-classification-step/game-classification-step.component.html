@@ -1,41 +1,48 @@
-<div class="game-classification-step">
-  <div
-    class="game-classification-step__position-cards"
-    id="card-container"
-    cdkDropList
-    (cdkDropListDropped)="onCdkDropListDropped($event)"
-    [ngStyle]="{
-      cursor: isCursorGrabbing ? 'grabbing' : null
-    }"
-  >
+<div
+  class="game-classification-step"
+  id="card-container"
+  cdkDropList
+  (cdkDropListDropped)="onCdkDropListDropped($event)"
+  [ngStyle]="{
+    cursor: isCursorGrabbing ? 'grabbing' : null
+  }"
+>
+  <div class="game-classification-step__list-container">
     <mat-card
-      *ngFor="let position of model.positions"
-      [id]="position.id"
-      class="game-classification-step__position-card"
+      *ngFor="let game of model.games"
+      [id]="game.name"
+      class="game-classification-step__game-card"
       cdkDrag
     >
       <mat-card
-        class="game-classification-step__position-card"
+        class="game-classification-step__game-card"
         *cdkDragPlaceholder
       ></mat-card>
       <mat-icon
         (mousedown)="onCdkHandleClicked()"
         cdkDragHandle
-        class="game-classification-step__position-card-move"
+        class="game-classification-step__game-card-move"
         >menu</mat-icon
       >
 
       <mat-form-field
         subscriptSizing="dynamic"
-        class="game-classification-step__position-card-id-input"
+        class="game-classification-step__game-card-name-input"
       >
-        <mat-label>Identificador</mat-label>
-        <input required matInput type="text" [(ngModel)]="position.id" />
+        <mat-label>Nome do jogo</mat-label>
+        <input required matInput type="text" [(ngModel)]="game.name" />
       </mat-form-field>
 
-      <mat-icon class="game-classification-step__position-card-delete"
+      <mat-icon class="game-classification-step__game-card-delete"
         >close</mat-icon
       >
     </mat-card>
   </div>
+  <mat-card
+    class="game-classification-step__add-button"
+    (click)="onAddGameClicked()"
+  >
+    <mat-icon>add</mat-icon>
+    <span>ADICIONAR NOVO JOGO</span>
+  </mat-card>
 </div>

@@ -27,6 +27,6 @@ export class BoardSelectState extends BoardCreatorState {
   }
 
   public progress(): number {
-    return 33;
+    return 25;
   }
 }

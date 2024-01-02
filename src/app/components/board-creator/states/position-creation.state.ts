@@ -2,22 +2,19 @@ import {
   BoardCreatorState,
   BoardCreatorStateType,
 } from "./board-creator.state";
-import { BoardSelectState } from "./board-select.state";
 import { SuccessState } from "./success.state";
 import { BoardConfig } from "../../../models/board.config";
 import { Strings } from "../../../commons/strings";
+import { GameClassificationState } from "./game-classification.state";
+import { BoardSelectState } from "./board-select.state";
 
 export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
-    const config = BoardConfig.fromBoardModel(this.model);
-    const text = JSON.stringify(config);
-    const name = Strings.toKebabCase(this.model.name) + "-loboards-config.txt";
-    this.fileService.downloadTxt(text, name);
-    return this.moveTo(SuccessState);
+    return this.moveTo(GameClassificationState);
   }
 
   public acceptMessage(): string {
-    return "Baixar";
+    return "Continuar";
   }
 
   public reject(): Promise<BoardCreatorState> {
@@ -36,6 +33,6 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public progress(): number {
-    return 66;
+    return 50;
   }
 }

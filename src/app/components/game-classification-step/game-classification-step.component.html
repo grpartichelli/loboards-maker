@@ -1,0 +1,41 @@
+<div class="game-classification-step">
+  <div
+    class="game-classification-step__position-cards"
+    id="card-container"
+    cdkDropList
+    (cdkDropListDropped)="onCdkDropListDropped($event)"
+    [ngStyle]="{
+      cursor: isCursorGrabbing ? 'grabbing' : null
+    }"
+  >
+    <mat-card
+      *ngFor="let position of model.positions"
+      [id]="position.id"
+      class="game-classification-step__position-card"
+      cdkDrag
+    >
+      <mat-card
+        class="game-classification-step__position-card"
+        *cdkDragPlaceholder
+      ></mat-card>
+      <mat-icon
+        (mousedown)="onCdkHandleClicked()"
+        cdkDragHandle
+        class="game-classification-step__position-card-move"
+        >menu</mat-icon
+      >
+
+      <mat-form-field
+        subscriptSizing="dynamic"
+        class="game-classification-step__position-card-id-input"
+      >
+        <mat-label>Identificador</mat-label>
+        <input required matInput type="text" [(ngModel)]="position.id" />
+      </mat-form-field>
+
+      <mat-icon class="game-classification-step__position-card-delete"
+        >close</mat-icon
+      >
+    </mat-card>
+  </div>
+</div>

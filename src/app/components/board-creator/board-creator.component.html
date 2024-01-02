@@ -1,47 +1,50 @@
 <div class="board-creator" *ngIf="state">
-    <div class="board-creator__header">
-        <mat-progress-bar
-                class="board-creator__progress-bar"
-                mode="determinate"
-                [value]="progress"
-                color="accent"
-        ></mat-progress-bar>
-        <div class="board-creator__logo-container">
-            <img
-                    class="board-creator__logo"
-                    alt="loboards logo"
-                    ngSrc="assets/logo.png"
-                    width="60"
-                    height="60"
-            />
-            <span>LoBoards Maker</span>
-        </div>
+  <div class="board-creator__header">
+    <mat-progress-bar
+      class="board-creator__progress-bar"
+      mode="determinate"
+      [value]="progress"
+      color="accent"
+    ></mat-progress-bar>
+    <div class="board-creator__logo-container">
+      <img
+        class="board-creator__logo"
+        alt="loboards logo"
+        ngSrc="assets/logo.png"
+        width="60"
+        height="60"
+      />
+      <span>LoBoards Maker</span>
     </div>
-    <div class="board-creator__body" [class]="enterAnimationClass">
-        <board-select-step
-                *ngIf="state.isBoardSelectState"
-                [state]="state"
-        ></board-select-step>
-        <position-creation-step
-                *ngIf="state.isPositionCreationState"
-                [model]="state.model"
-        >
-        </position-creation-step>
-        <success-step
-                *ngIf="state.isSuccessState"
-                [model]="state.model"
-        ></success-step>
-    </div>
+  </div>
+  <div class="board-creator__body" [class]="enterAnimationClass">
+    <board-select-step
+      *ngIf="state.isBoardSelectState"
+      [state]="state"
+    ></board-select-step>
+    <position-creation-step
+      *ngIf="state.isPositionCreationState"
+      [model]="state.model"
+    ></position-creation-step>
+    <game-classification-step
+      *ngIf="state.isGameClassificationState"
+      [model]="state.model"
+    ></game-classification-step>
+    <success-step
+      *ngIf="state.isSuccessState"
+      [model]="state.model"
+    ></success-step>
+  </div>
 
-    <div class="board-creator__actions">
-        <button mat-raised-button (click)="onReject()">Voltar</button>
-        <button
-                mat-raised-button
-                color="accent"
-                (click)="onAccept()"
-                [disabled]="!isAcceptEnabled"
-        >
-            {{ acceptMessage }}
-        </button>
-    </div>
+  <div class="board-creator__actions">
+    <button mat-raised-button (click)="onReject()">Voltar</button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="onAccept()"
+      [disabled]="!isAcceptEnabled"
+    >
+      {{ acceptMessage }}
+    </button>
+  </div>
 </div>

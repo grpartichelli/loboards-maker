@@ -17,7 +17,7 @@ export class SuccessStepComponent {
 
   constructor(private readonly navigationService: NavigationService) {}
 
-  public onLoboGamesLinkClick(): void {
+  public onloboardsLinkClick(): void {
     this.navigationService.navigateToApp();
   }
 }

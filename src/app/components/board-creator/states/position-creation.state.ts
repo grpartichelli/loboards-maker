@@ -11,7 +11,7 @@ export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
     const config = BoardConfig.fromBoardModel(this.model);
     const text = JSON.stringify(config);
-    const name = Strings.toKebabCase(this.model.name) + "-lobogames-config.txt";
+    const name = Strings.toKebabCase(this.model.name) + "-loboards-config.txt";
     this.fileService.downloadTxt(text, name);
     return this.moveTo(SuccessState);
   }

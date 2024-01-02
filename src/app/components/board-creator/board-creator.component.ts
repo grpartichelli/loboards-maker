@@ -35,7 +35,7 @@ const enum ChangeStateCommand {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "lobogames-board-creator",
+  selector: "loboards-board-creator",
   templateUrl: "./board-creator.component.html",
   styleUrls: ["./board-creator.component.scss"],
   encapsulation: ViewEncapsulation.None,

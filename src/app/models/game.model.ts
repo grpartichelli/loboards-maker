@@ -1,9 +1,9 @@
-import { GameCategoryTypeModel } from "./game-category.model";
+import { GameModuleModel } from "./game-category.model";
 
 export class GameModel {
   public static fromOther(other: GameModel): GameModel {
     return new GameModel(
-      other.category,
+      other.module,
       other.name,
       other.maxPlayerPositionsCount,
       other.videoUrl,
@@ -12,7 +12,7 @@ export class GameModel {
   }
 
   public constructor(
-    public category: GameCategoryTypeModel,
+    public module: GameModuleModel,
     public name: string,
     public maxPlayerPositionsCount: number,
     public videoUrl: string,

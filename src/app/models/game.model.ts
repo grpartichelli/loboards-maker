@@ -5,6 +5,7 @@ export class GameModel {
     return new GameModel(
       other.category,
       other.name,
+      other.maxPlayerPositionsCount,
       other.videoUrl,
       other.textUrl,
     );
@@ -13,6 +14,7 @@ export class GameModel {
   public constructor(
     public category: GameCategoryTypeModel,
     public name: string,
+    public maxPlayerPositionsCount: number,
     public videoUrl: string,
     public textUrl: string,
   ) {}

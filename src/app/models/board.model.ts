@@ -64,7 +64,7 @@ export class BoardModel {
 
   public addNewGame(): void {
     this.games.push(
-      new GameModel(GameCategoryTypeModel.ALIGNMENT_OR_BLOCK, "", "", ""),
+      new GameModel(GameCategoryTypeModel.ALIGNMENT_OR_BLOCK, "", 10, "", ""),
     );
   }
 

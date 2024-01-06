@@ -88,8 +88,10 @@
       >
         <mat-label>Número de peças</mat-label>
         <input
+          required
           matInput
           type="number"
+          minlength="1"
           [(ngModel)]="game.maxPlayerPositionsCount"
         />
       </mat-form-field>

@@ -25,7 +25,9 @@ export class GameClassificationState extends BoardCreatorState {
   }
 
   public isAcceptEnabled() {
-    return !this.model.games.some((game) => game.name?.length < 2);
+    return !this.model.games.some(
+      (game) => game.name?.length < 2 || !game.maxPlayerPositionsCount,
+    );
   }
 
   public type() {

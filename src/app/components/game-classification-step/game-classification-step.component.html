@@ -44,21 +44,6 @@
           >
         </mat-form-field>
         <mat-form-field
-          subscriptSizing="dynamic"
-          class="game-classification-step__game-card-input"
-        >
-          <mat-label>Link para texto</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="game.textUrl"
-            minlength="2"
-          />
-        </mat-form-field>
-      </div>
-
-      <div class="game-classification-step__game-card-section">
-        <mat-form-field
           class="game-classification-step__game-card-input"
           subscriptSizing="dynamic"
         >
@@ -72,6 +57,21 @@
             >
           </mat-select>
         </mat-form-field>
+      </div>
+
+      <div class="game-classification-step__game-card-section">
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="game-classification-step__game-card-input"
+        >
+          <mat-label>Link para texto</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="game.textUrl"
+            minlength="2"
+          />
+        </mat-form-field>
 
         <mat-form-field
           subscriptSizing="dynamic"
@@ -81,6 +81,18 @@
           <input matInput type="text" [(ngModel)]="game.videoUrl" />
         </mat-form-field>
       </div>
+
+      <mat-form-field
+        subscriptSizing="dynamic"
+        class="game-classification-step__game-card-input"
+      >
+        <mat-label>Número de peças</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="game.maxPlayerPositionsCount"
+        />
+      </mat-form-field>
 
       <mat-icon
         class="game-classification-step__game-card-delete"

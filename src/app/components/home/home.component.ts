@@ -11,6 +11,8 @@ import { RouterLink } from "@angular/router";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
+  public readonly logoHeight = 390 * 0.55;
+  public readonly logoWidth = 1155 * 0.55;
   constructor(private readonly navigationService: NavigationService) {}
 
   public onAppClicked() {

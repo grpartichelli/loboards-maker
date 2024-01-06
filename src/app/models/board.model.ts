@@ -3,7 +3,7 @@ import { LengthPercentageModel } from "./length-percentage.model";
 import { PositionColorHexTypeModel } from "./position-color-hex-type.model";
 import { BoardConfig } from "./board.config";
 import { GameModel } from "./game.model";
-import { GameCategoryTypeModel } from "./game-category.model";
+import { GameModuleModel } from "./game-category.model";
 
 export class BoardModel {
   public static fromBoardConfig(config: BoardConfig | null): BoardModel {
@@ -64,7 +64,7 @@ export class BoardModel {
 
   public addNewGame(): void {
     this.games.push(
-      new GameModel(GameCategoryTypeModel.ALIGNMENT_OR_BLOCK, "", 10, "", ""),
+      new GameModel(GameModuleModel.ALIGNMENT_OR_BLOCK, "", 10, "", ""),
     );
   }
 

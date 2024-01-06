@@ -48,7 +48,7 @@
           subscriptSizing="dynamic"
         >
           <mat-label>Classificação</mat-label>
-          <mat-select [(value)]="game.category">
+          <mat-select [(value)]="game.module">
             <mat-option
               *ngFor="let category of categories"
               [value]="category.type"

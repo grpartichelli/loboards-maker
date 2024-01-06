@@ -1,4 +1,4 @@
-export enum GameCategoryTypeModel {
+export enum GameModuleModel {
   ALIGNMENT_OR_BLOCK = "ALIGNMENT_OR_BLOCK",
   DISLOCATION = "DISLOCATION",
   POSITION = "POSITION",
@@ -18,32 +18,29 @@ export class GameCategoryModel {
   }
 
   public constructor(
-    public readonly type: GameCategoryTypeModel,
+    public readonly type: GameModuleModel,
     public readonly name: string,
   ) {}
 
   public static ALIGNMENT_OR_BLOCK = new GameCategoryModel(
-    GameCategoryTypeModel.ALIGNMENT_OR_BLOCK,
+    GameModuleModel.ALIGNMENT_OR_BLOCK,
     "Alinhamento ou Bloqueio",
   );
 
   public static DISLOCATION = new GameCategoryModel(
-    GameCategoryTypeModel.DISLOCATION,
+    GameModuleModel.DISLOCATION,
     "Deslocamento",
   );
 
   public static POSITION = new GameCategoryModel(
-    GameCategoryTypeModel.POSITION,
+    GameModuleModel.POSITION,
     "Posicionamento",
   );
 
   public static CAPTURE = new GameCategoryModel(
-    GameCategoryTypeModel.CAPTURE,
+    GameModuleModel.CAPTURE,
     "Captura",
   );
 
-  public static HUNT = new GameCategoryModel(
-    GameCategoryTypeModel.HUNT,
-    "Caça",
-  );
+  public static HUNT = new GameCategoryModel(GameModuleModel.HUNT, "Caça");
 }

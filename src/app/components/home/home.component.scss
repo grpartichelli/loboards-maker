@@ -42,6 +42,9 @@
     column-gap: 4rem;
 
     @media (max-width: 860px) {
+      width: 100%;
+      align-items: center;
+      padding-bottom: 2rem;
       flex-direction: column;
     }
   }

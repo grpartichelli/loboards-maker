@@ -16,10 +16,6 @@ export class SuccessStepComponent {
   @Input() model!: BoardModel;
 
   constructor(private readonly navigationService: NavigationService) {}
-
-  public onloboardsLinkClick(): void {
-    this.navigationService.navigateToApp();
-  }
 }
 
 @NgModule({

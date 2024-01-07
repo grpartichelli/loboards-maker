@@ -15,6 +15,15 @@ export class FileService {
     document.body.removeChild(element);
   }
 
+  public downloadApk() {
+    const link = document.createElement("a");
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href", "assets/loboards.apk");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   public readTextFile(event: any): File | null {
     const file = this.readFile(event);
     if (file?.type.match(/text\/plain\/*/) == null) {

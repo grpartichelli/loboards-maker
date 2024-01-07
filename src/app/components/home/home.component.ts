@@ -4,6 +4,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { NgOptimizedImage } from "@angular/common";
 import { NavigationService } from "../../commons/navigation.service";
 import { RouterLink } from "@angular/router";
+import { FileService } from "../../commons/file.service";
 
 @Component({
   selector: "loboards-home",
@@ -13,10 +14,13 @@ import { RouterLink } from "@angular/router";
 export class HomeComponent {
   public readonly logoHeight = 390 * 0.55;
   public readonly logoWidth = 1155 * 0.55;
-  constructor(private readonly navigationService: NavigationService) {}
+  constructor(
+    private readonly navigationService: NavigationService,
+    private readonly fileService: FileService,
+  ) {}
 
   public onAppClicked() {
-    this.navigationService.navigateToApp();
+    this.fileService.downloadApk();
   }
 
   public onWebsiteClicked() {

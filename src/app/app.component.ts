@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { NavigationService } from "./commons/navigation.service";
-import { IconRegistry } from "./commons/icon.registry";
+import { NavigationService } from "./services/navigation.service";
+import { IconRegistryService } from "./services/icon-registry.service";
 import { Router } from "@angular/router";
-import { FileService } from "./commons/file.service";
+import { FileService } from "./services/file.service";
 
 @Component({
   selector: "app-root",
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   public isSidenavOpen = false;
 
   constructor(
-    private readonly iconRegistry: IconRegistry,
+    private readonly iconRegistry: IconRegistryService,
     private readonly fileService: FileService,
     private readonly navigationService: NavigationService,
     private readonly router: Router,

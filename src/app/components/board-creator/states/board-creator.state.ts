@@ -1,12 +1,12 @@
-import { NavigationService } from "../../../commons/navigation.service";
+import { NavigationService } from "../../../services/navigation.service";
 import { BoardSelectState } from "./board-select.state";
 import { TerminalState } from "./terminal.state";
 import { BoardModel } from "../../../models/board.model";
-import { LocalStorageService } from "../../../commons/local-storage.service";
+import { LocalStorageService } from "../../../services/local-storage.service";
 import { PositionCreationState } from "./position-creation.state";
 import { SuccessState } from "./success.state";
 import { BoardConfig } from "../../../models/board.config";
-import { FileService } from "../../../commons/file.service";
+import { FileService } from "../../../services/file.service";
 import { GameClassificationState } from "./game-classification.state";
 
 export abstract class BoardCreatorState {

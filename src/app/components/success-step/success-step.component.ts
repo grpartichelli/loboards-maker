@@ -5,7 +5,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BoardModel } from "../../models/board.model";
-import { NavigationService } from "../../commons/navigation.service";
+import { NavigationService } from "../../services/navigation.service";
 
 @Component({
   selector: "success-step[model]",

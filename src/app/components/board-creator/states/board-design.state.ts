@@ -5,7 +5,7 @@ import {
 import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 
-export class BoardSelectState extends BoardCreatorState {
+export class BoardDesignState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
     return this.moveTo(PositionCreationState);
   }
@@ -23,7 +23,7 @@ export class BoardSelectState extends BoardCreatorState {
   }
 
   public type(): BoardCreatorStateType {
-    return BoardCreatorStateType.BOARD_SELECT;
+    return BoardCreatorStateType.BOARD_DESIGN;
   }
 
   public progress(): number {

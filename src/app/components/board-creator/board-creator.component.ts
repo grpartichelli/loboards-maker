@@ -11,7 +11,7 @@ import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 
 import { NavigationService } from "../../services/navigation.service";
-import { BoardSelectStepModule } from "../board-select-step/board-select-step.component";
+import { BoardDesignStepModule } from "../board-design-step/board-design-step.component";
 import { LocalStorageService } from "../../services/local-storage.service";
 import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
 import {
@@ -20,7 +20,7 @@ import {
 } from "./states/board-creator.state";
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
-import { BoardSelectState } from "./states/board-select.state";
+import { BoardDesignState } from "./states/board-design.state";
 import { SuccessStepModule } from "../success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
 import { BoardConfig } from "../../models/board.config";
@@ -84,7 +84,7 @@ export class BoardCreatorComponent implements OnInit {
         this.onStateChanged(state);
       } else {
         this.onStateChanged(
-          new BoardSelectState(
+          new BoardDesignState(
             state.model,
             this.fileService,
             this.localStorageService,
@@ -156,7 +156,7 @@ export class BoardCreatorComponent implements OnInit {
           this.navigationService,
         );
       default:
-        return new BoardSelectState(
+        return new BoardDesignState(
           model,
           this.fileService,
           this.localStorageService,
@@ -186,7 +186,7 @@ export class BoardCreatorComponent implements OnInit {
     MatButtonModule,
     NgOptimizedImage,
     NgIf,
-    BoardSelectStepModule,
+    BoardDesignStepModule,
     PositionCreationStepModule,
     SuccessStepModule,
     GameClassificationStepModule,

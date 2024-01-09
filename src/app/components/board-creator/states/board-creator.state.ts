@@ -1,5 +1,5 @@
 import { NavigationService } from "../../../services/navigation.service";
-import { BoardSelectState } from "./board-select.state";
+import { BoardDesignState } from "./board-design.state";
 import { TerminalState } from "./terminal.state";
 import { BoardModel } from "../../../models/board.model";
 import { LocalStorageService } from "../../../services/local-storage.service";
@@ -45,8 +45,8 @@ export abstract class BoardCreatorState {
     return Promise.resolve(this);
   }
 
-  public get isBoardSelectState(): boolean {
-    return this.type() === BoardCreatorStateType.BOARD_SELECT;
+  public get isBoardDesignState(): boolean {
+    return this.type() === BoardCreatorStateType.BOARD_DESIGN;
   }
 
   public get isGameClassificationState(): boolean {
@@ -67,7 +67,7 @@ export abstract class BoardCreatorState {
 }
 
 export enum BoardCreatorStateType {
-  BOARD_SELECT = "BOARD_SELECT",
+  BOARD_DESIGN = "BOARD_DESIGN",
   GAME_CLASSIFICATION = "GAME_CLASSIFICATION",
   POSITION_CREATION = "POSITION_CREATION",
   SUCCESS = "SUCCESS",
@@ -75,7 +75,7 @@ export enum BoardCreatorStateType {
 }
 
 type CreatorStateImplementations =
-  | typeof BoardSelectState
+  | typeof BoardDesignState
   | typeof GameClassificationState
   | typeof TerminalState
   | typeof PositionCreationState

@@ -20,7 +20,7 @@ import {
   CdkDragPlaceholder,
   CdkDragHandle,
 } from "@angular/cdk/drag-drop";
-import { GameCategoryModel } from "../../models/game-category.model";
+import { GameModuleModel } from "../../models/game-module.model";
 
 @Component({
   selector: "game-classification-step[model]",
@@ -29,7 +29,7 @@ import { GameCategoryModel } from "../../models/game-category.model";
 })
 export class GameClassificationStepComponent {
   @Input() model!: BoardModel;
-  public categories = GameCategoryModel.all();
+  public categories = GameModuleModel.all();
 
   public isCursorGrabbing = false;
 

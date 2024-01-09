@@ -16,7 +16,7 @@ import { PositionModel } from "../../models/position.model";
 import {
   PositionColorModel,
   PositionColorHexTypeModel,
-} from "../../models/position-color-hex-type.model";
+} from "../../models/position-color.model";
 import { MatSliderModule } from "@angular/material/slider";
 import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";

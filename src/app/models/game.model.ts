@@ -1,4 +1,4 @@
-import { GameModuleModel } from "./game-category.model";
+import { GameModuleTypeModel } from "./game-module.model";
 
 export class GameModel {
   public static fromOther(other: GameModel): GameModel {
@@ -12,7 +12,7 @@ export class GameModel {
   }
 
   public constructor(
-    public module: GameModuleModel,
+    public module: GameModuleTypeModel,
     public name: string,
     public maxPlayerPositionsCount: number,
     public videoUrl: string,

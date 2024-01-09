@@ -22,11 +22,11 @@ import { BoardConfig } from "../../models/board.config";
 import { FileService } from "../../services/file.service";
 
 @Component({
-  selector: "board-select-step[state]",
-  templateUrl: "./board-select-step.component.html",
-  styleUrls: ["./board-select-step.component.scss"],
+  selector: "board-design-step[state]",
+  templateUrl: "./board-design-step.component.html",
+  styleUrls: ["./board-design-step.component.scss"],
 })
-export class BoardSelectStepComponent implements OnInit {
+export class BoardDesignStepComponent implements OnInit {
   @Input() state!: BoardCreatorState;
   public boardImage = new Image();
   public isLoaded = true;
@@ -158,7 +158,7 @@ export class BoardSelectStepComponent implements OnInit {
 }
 
 @NgModule({
-  declarations: [BoardSelectStepComponent],
+  declarations: [BoardDesignStepComponent],
   imports: [
     NgOptimizedImage,
     NgIf,
@@ -172,6 +172,6 @@ export class BoardSelectStepComponent implements OnInit {
     FormsModule,
     MatDividerModule,
   ],
-  exports: [BoardSelectStepComponent],
+  exports: [BoardDesignStepComponent],
 })
-export class BoardSelectStepModule {}
+export class BoardDesignStepModule {}

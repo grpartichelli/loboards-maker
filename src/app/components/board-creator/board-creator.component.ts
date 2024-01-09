@@ -11,9 +11,9 @@ import { NgOptimizedImage, NgIf } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 
 import { NavigationService } from "../../services/navigation.service";
-import { BoardDesignStepModule } from "../board-design-step/board-design-step.component";
+import { BoardDesignStepModule } from "./board-design-step/board-design-step.component";
 import { LocalStorageService } from "../../services/local-storage.service";
-import { PositionCreationStepModule } from "../position-creation-step/position-creation-step.component";
+import { PositionCreationStepModule } from "./position-creation-step/position-creation-step.component";
 import {
   BoardCreatorState,
   BoardCreatorStateType,
@@ -21,13 +21,13 @@ import {
 import { BoardModel } from "../../models/board.model";
 import { PositionCreationState } from "./states/position-creation.state";
 import { BoardDesignState } from "./states/board-design.state";
-import { SuccessStepModule } from "../success-step/success-step.component";
+import { SuccessStepModule } from "./success-step/success-step.component";
 import { SuccessState } from "./states/success.state";
 import { BoardConfig } from "../../models/board.config";
 import { FileService } from "../../services/file.service";
 import { DialogService } from "../../services/dialog.service";
 import { MobileDetectionService } from "../../services/mobile-detection.service";
-import { GameClassificationStepModule } from "../game-classification-step/game-classification-step.component";
+import { GameClassificationStepModule } from "./game-classification-step/game-classification-step.component";
 import { GameClassificationState } from "./states/game-classification.state";
 
 const enum ChangeStateCommand {

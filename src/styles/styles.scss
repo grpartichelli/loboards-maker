@@ -1,5 +1,5 @@
-@use "@angular/material" as mat;
-@use "src/colors";
+@use "../../node_modules/@angular/material/index" as mat;
+@use "styles/colors";
 
 $my-primary: mat.define-palette(mat.$purple-palette);
 $my-accent: mat.define-palette(mat.$deep-orange-palette);

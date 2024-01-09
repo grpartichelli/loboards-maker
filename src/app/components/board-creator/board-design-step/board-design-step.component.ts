@@ -10,16 +10,16 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
-import { DialogService } from "../../services/dialog.service";
-import { LocalStorageService } from "../../services/local-storage.service";
+import { DialogService } from "../../../services/dialog.service";
+import { LocalStorageService } from "../../../services/local-storage.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatDividerModule } from "@angular/material/divider";
-import { BoardCreatorState } from "../board-creator/states/board-creator.state";
-import { BoardModel } from "../../models/board.model";
-import { BoardConfig } from "../../models/board.config";
-import { FileService } from "../../services/file.service";
+import { BoardCreatorState } from "../states/board-creator.state";
+import { BoardModel } from "../../../models/board.model";
+import { BoardConfig } from "../../../models/board.config";
+import { FileService } from "../../../services/file.service";
 
 @Component({
   selector: "board-design-step[state]",

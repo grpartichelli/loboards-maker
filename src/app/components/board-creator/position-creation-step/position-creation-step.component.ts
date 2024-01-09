@@ -10,13 +10,13 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
-import { BoardModel } from "../../models/board.model";
-import { LengthPercentageModel } from "../../models/length-percentage.model";
-import { PositionModel } from "../../models/position.model";
+import { BoardModel } from "../../../models/board.model";
+import { LengthPercentageModel } from "../../../models/length-percentage.model";
+import { PositionModel } from "../../../models/position.model";
 import {
   PositionColorModel,
   PositionColorHexTypeModel,
-} from "../../models/position-color.model";
+} from "../../../models/position-color.model";
 import { MatSliderModule } from "@angular/material/slider";
 import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";

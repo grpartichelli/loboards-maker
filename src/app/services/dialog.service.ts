@@ -4,7 +4,7 @@ import {
   SimpleDialogComponent,
   DialogType,
   DialogData,
-} from "../components/confirmation-dialog/simple-dialog.component";
+} from "../components/board-creator/confirmation-dialog/simple-dialog.component";
 
 @Injectable({ providedIn: "root" })
 export class DialogService {

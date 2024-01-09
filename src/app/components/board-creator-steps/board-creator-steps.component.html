@@ -1,14 +1,14 @@
-<div class="board-creator" *ngIf="state">
-  <div class="board-creator__header">
+<div class="board-creator-steps" *ngIf="state">
+  <div class="board-creator-steps__header">
     <mat-progress-bar
-      class="board-creator__progress-bar"
+      class="board-creator-steps__progress-bar"
       mode="determinate"
       [value]="progress"
       color="accent"
     ></mat-progress-bar>
-    <div class="board-creator__logo-container">
+    <div class="board-creator-steps__logo-container">
       <img
-        class="board-creator__logo"
+        class="board-creator-steps__logo"
         alt="loboards logo"
         ngSrc="assets/small-logo.jpeg"
         width="187"
@@ -16,7 +16,7 @@
       />
     </div>
   </div>
-  <div class="board-creator__body" [class]="enterAnimationClass">
+  <div class="board-creator-steps__body" [class]="enterAnimationClass">
     <board-design-step
       *ngIf="state.isBoardDesignState"
       [state]="state"
@@ -35,7 +35,7 @@
     ></success-step>
   </div>
 
-  <div class="board-creator__actions">
+  <div class="board-creator-steps__actions">
     <button mat-raised-button (click)="onReject()">Voltar</button>
     <button
       mat-raised-button

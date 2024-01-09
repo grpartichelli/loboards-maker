@@ -37,12 +37,12 @@ const enum ChangeStateCommand {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "loboards-board-creator",
-  templateUrl: "./board-creator.component.html",
-  styleUrls: ["./board-creator.component.scss"],
+  selector: "board-creator-steps",
+  templateUrl: "./board-creator-steps.component.html",
+  styleUrls: ["./board-creator-steps.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class BoardCreatorComponent implements OnInit {
+export class BoardCreatorStepsComponent implements OnInit {
   public enterAnimationClass = "";
   private lastChangeStateCommand = ChangeStateCommand.ACCEPT;
   public acceptMessage = "";
@@ -168,8 +168,8 @@ export class BoardCreatorComponent implements OnInit {
   private updateEnteringAnimations() {
     this.enterAnimationClass =
       this.lastChangeStateCommand === ChangeStateCommand.ACCEPT
-        ? "board-creator__state--enter-left"
-        : "board-creator__state--enter-right";
+        ? "board-creator-steps__state--enter-left"
+        : "board-creator-steps__state--enter-right";
     this.changeDetectorRef.detectChanges();
 
     setTimeout(() => {
@@ -180,7 +180,7 @@ export class BoardCreatorComponent implements OnInit {
 }
 
 @NgModule({
-  declarations: [BoardCreatorComponent],
+  declarations: [BoardCreatorStepsComponent],
   imports: [
     MatProgressBarModule,
     MatButtonModule,
@@ -191,6 +191,6 @@ export class BoardCreatorComponent implements OnInit {
     SuccessStepModule,
     GameClassificationStepModule,
   ],
-  exports: [BoardCreatorComponent],
+  exports: [BoardCreatorStepsComponent],
 })
 export class CreatorModule {}

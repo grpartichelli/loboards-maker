@@ -1,13 +1,13 @@
 import { Router, RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { BoardCreatorComponent } from "./components/board-creator/board-creator.component";
+import { BoardCreatorStepsComponent } from "./components/board-creator-steps/board-creator-steps.component";
 import { HomeComponent } from "./components/home/home.component";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   {
     path: "creator",
-    component: BoardCreatorComponent,
+    component: BoardCreatorStepsComponent,
   },
   { path: "**", redirectTo: "home", pathMatch: "full" },
 ];

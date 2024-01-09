@@ -10,23 +10,23 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
-import { DialogService } from "../../commons/dialog.service";
-import { LocalStorageService } from "../../commons/local-storage.service";
+import { DialogService } from "../../../services/dialog.service";
+import { LocalStorageService } from "../../../services/local-storage.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatDividerModule } from "@angular/material/divider";
-import { BoardCreatorState } from "../board-creator/states/board-creator.state";
-import { BoardModel } from "../../models/board.model";
-import { BoardConfig } from "../../models/board.config";
-import { FileService } from "../../commons/file.service";
+import { BoardCreatorState } from "../states/board-creator.state";
+import { BoardModel } from "../../../models/board.model";
+import { BoardConfig } from "../../../models/board.config";
+import { FileService } from "../../../services/file.service";
 
 @Component({
-  selector: "board-select-step[state]",
-  templateUrl: "./board-select-step.component.html",
-  styleUrls: ["./board-select-step.component.scss"],
+  selector: "board-design-step[state]",
+  templateUrl: "./board-design-step.component.html",
+  styleUrls: ["./board-design-step.component.scss"],
 })
-export class BoardSelectStepComponent implements OnInit {
+export class BoardDesignStepComponent implements OnInit {
   @Input() state!: BoardCreatorState;
   public boardImage = new Image();
   public isLoaded = true;
@@ -158,7 +158,7 @@ export class BoardSelectStepComponent implements OnInit {
 }
 
 @NgModule({
-  declarations: [BoardSelectStepComponent],
+  declarations: [BoardDesignStepComponent],
   imports: [
     NgOptimizedImage,
     NgIf,
@@ -172,6 +172,6 @@ export class BoardSelectStepComponent implements OnInit {
     FormsModule,
     MatDividerModule,
   ],
-  exports: [BoardSelectStepComponent],
+  exports: [BoardDesignStepComponent],
 })
-export class BoardSelectStepModule {}
+export class BoardDesignStepModule {}

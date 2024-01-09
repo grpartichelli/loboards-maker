@@ -5,13 +5,16 @@ import {
 import { SuccessState } from "./success.state";
 import { PositionCreationState } from "./position-creation.state";
 import { BoardConfig } from "../../../models/board.config";
-import { Strings } from "../../../commons/strings";
 
 export class GameClassificationState extends BoardCreatorState {
   public accept() {
     const config = BoardConfig.fromBoardModel(this.model);
     const text = JSON.stringify(config);
-    const name = Strings.toKebabCase(this.model.name) + "-loboards-config.txt";
+    const name =
+      this.model.name
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/[\s_]+/g, "-")
+        .toLowerCase() + "-loboards-config.txt";
     this.fileService.downloadTxt(text, name);
     return this.moveTo(SuccessState);
   }

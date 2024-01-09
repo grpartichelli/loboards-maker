@@ -3,7 +3,7 @@ import {
   BoardCreatorStateType,
 } from "./board-creator.state";
 import { GameClassificationState } from "./game-classification.state";
-import { BoardSelectState } from "./board-select.state";
+import { BoardDesignState } from "./board-design.state";
 
 export class PositionCreationState extends BoardCreatorState {
   public accept(): Promise<BoardCreatorState> {
@@ -15,7 +15,7 @@ export class PositionCreationState extends BoardCreatorState {
   }
 
   public reject(): Promise<BoardCreatorState> {
-    return this.moveTo(BoardSelectState);
+    return this.moveTo(BoardDesignState);
   }
 
   public isAcceptEnabled(): boolean {

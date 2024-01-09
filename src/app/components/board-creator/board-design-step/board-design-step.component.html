@@ -1,12 +1,12 @@
-<div class="board-select-step" *ngIf="isLoaded">
-  <div class="board-select-step__container-left">
+<div class="board-design-step" *ngIf="isLoaded">
+  <div class="board-design-step__container-left">
     <mat-card
-      class="board-select-step__option board-select-step__option--upload-image"
+      class="board-design-step__option board-design-step__option--upload-image"
       (click)="imageInput.click()"
     >
       <input
         type="file"
-        class="board-select-step__input"
+        class="board-design-step__input"
         (change)="onImageUpload($event)"
         accept="image/*"
         #imageInput
@@ -15,19 +15,19 @@
       <span>Novo Tabuleiro</span>
     </mat-card>
 
-    <div class="board-select-step__divider-container">
-      <mat-divider class="board-select-step__divider"></mat-divider>
+    <div class="board-design-step__divider-container">
+      <mat-divider class="board-design-step__divider"></mat-divider>
       <span>ou</span>
-      <mat-divider class="board-select-step__divider"></mat-divider>
+      <mat-divider class="board-design-step__divider"></mat-divider>
     </div>
 
     <mat-card
-      class="board-select-step__option board-select-step__option--import"
+      class="board-design-step__option board-design-step__option--import"
       (click)="boardConfigInput.click()"
     >
       <input
         type="file"
-        class="board-select-step__input"
+        class="board-design-step__input"
         (change)="onBoardConfigUpload($event)"
         accept=".txt"
         #boardConfigInput
@@ -36,27 +36,27 @@
       <span>Importar Tabuleiro</span>
     </mat-card>
   </div>
-  <div class="board-select-step__container-right">
+  <div class="board-design-step__container-right">
     <mat-card
-      class="board-select-step__image-card"
-      [class.board-select-step__image-card--loaded]="isImageLoadedCorrectly"
-      [class.board-select-step__image-card--empty]="!isImageLoadedCorrectly"
+      class="board-design-step__image-card"
+      [class.board-design-step__image-card--loaded]="isImageLoadedCorrectly"
+      [class.board-design-step__image-card--empty]="!isImageLoadedCorrectly"
     >
       <img
         *ngIf="isImageLoadedCorrectly"
-        class="board-select-step__image"
+        class="board-design-step__image"
         alt="tabuleiro"
         [src]="boardImage.src"
       />
       <mat-icon
         *ngIf="isImageLoadedCorrectly"
-        class="board-select-step__image-delete"
+        class="board-design-step__image-delete"
         (click)="onDeleteClicked()"
         >delete_forever</mat-icon
       >
       <mat-icon *ngIf="!isImageLoadedCorrectly" svgIcon="board"></mat-icon>
     </mat-card>
-    <mat-form-field class="board-select-step__name-input">
+    <mat-form-field class="board-design-step__name-input">
       <mat-label>Nome do Tabuleiro</mat-label>
       <input
         required
@@ -66,7 +66,7 @@
         minlength="3"
         maxlength="25"
       />
-      <mat-error class="board-select-step__name-input__error"
+      <mat-error class="board-design-step__name-input__error"
         >Mínimo de três caracteres</mat-error
       >
     </mat-form-field>

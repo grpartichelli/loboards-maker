@@ -17,10 +17,10 @@
     </div>
   </div>
   <div class="board-creator__body" [class]="enterAnimationClass">
-    <board-select-step
-      *ngIf="state.isBoardSelectState"
+    <board-design-step
+      *ngIf="state.isBoardDesignState"
       [state]="state"
-    ></board-select-step>
+    ></board-design-step>
     <position-creation-step
       *ngIf="state.isPositionCreationState"
       [model]="state.model"

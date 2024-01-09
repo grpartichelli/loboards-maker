@@ -2,9 +2,9 @@ import { Component, NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { NgOptimizedImage } from "@angular/common";
-import { NavigationService } from "../../commons/navigation.service";
+import { NavigationService } from "../../services/navigation.service";
 import { RouterLink } from "@angular/router";
-import { FileService } from "../../commons/file.service";
+import { FileService } from "../../services/file.service";
 
 @Component({
   selector: "loboards-home",

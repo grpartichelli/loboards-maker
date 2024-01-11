@@ -11,7 +11,7 @@ export class BoardDesignState extends BoardCreatorState {
   }
 
   public acceptMessage(): string {
-    return "Continuar";
+    return "Iniciar";
   }
 
   public reject(): Promise<BoardCreatorState> {

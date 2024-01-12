@@ -7,7 +7,7 @@ import { PositionCreationState } from "./position-creation.state";
 import { BoardConfig } from "../../../models/board.config";
 
 export class GameClassificationState extends BoardCreatorState {
-  public accept() {
+  public confirm() {
     const config = BoardConfig.fromBoardModel(this.model);
     const text = JSON.stringify(config);
     const name =
@@ -19,7 +19,7 @@ export class GameClassificationState extends BoardCreatorState {
     return this.moveTo(SuccessState);
   }
 
-  public acceptMessage() {
+  public confirmMessage() {
     return "Baixar";
   }
 
@@ -27,7 +27,7 @@ export class GameClassificationState extends BoardCreatorState {
     return this.moveTo(PositionCreationState);
   }
 
-  public isAcceptEnabled() {
+  public isConfirmEnabled() {
     return !this.model.games.some(
       (game) => game.name?.length < 2 || !game.maxPlayerPositionsCount,
     );

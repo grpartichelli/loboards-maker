@@ -31,7 +31,7 @@ import { GameClassificationStepModule } from "./game-classification-step/game-cl
 import { GameClassificationState } from "./states/game-classification.state";
 
 const enum ChangeStateCommand {
-  ACCEPT = "ACCEPT",
+  CONFIRM = "CONFIRM",
   REJECT = "REJECT",
 }
 
@@ -44,8 +44,8 @@ const enum ChangeStateCommand {
 })
 export class BoardCreatorStepsComponent implements OnInit {
   public enterAnimationClass = "";
-  private lastChangeStateCommand = ChangeStateCommand.ACCEPT;
-  public acceptMessage = "";
+  private lastChangeStateCommand = ChangeStateCommand.CONFIRM;
+  public confirmMessage = "";
   public progress = 0;
   public state!: BoardCreatorState;
 
@@ -95,15 +95,15 @@ export class BoardCreatorStepsComponent implements OnInit {
     };
   }
 
-  public onAccept(): void {
-    this.state.accept().then((newState) => {
-      this.lastChangeStateCommand = ChangeStateCommand.ACCEPT;
+  public onConfirm(): void {
+    this.state.confirm().then((newState) => {
+      this.lastChangeStateCommand = ChangeStateCommand.CONFIRM;
       this.onStateChanged(newState);
     });
   }
 
-  public get isAcceptEnabled(): boolean {
-    return this.state.isAcceptEnabled();
+  public get isConfirmEnabled(): boolean {
+    return this.state.isConfirmEnabled();
   }
 
   public onReject(): void {
@@ -120,7 +120,7 @@ export class BoardCreatorStepsComponent implements OnInit {
     }
 
     this.state = newState;
-    this.acceptMessage = newState.acceptMessage();
+    this.confirmMessage = newState.confirmMessage();
     this.progress = newState.progress();
     this.updateEnteringAnimations();
   }
@@ -167,7 +167,7 @@ export class BoardCreatorStepsComponent implements OnInit {
 
   private updateEnteringAnimations() {
     this.enterAnimationClass =
-      this.lastChangeStateCommand === ChangeStateCommand.ACCEPT
+      this.lastChangeStateCommand === ChangeStateCommand.CONFIRM
         ? "board-creator-steps__state--enter-left"
         : "board-creator-steps__state--enter-right";
     this.changeDetectorRef.detectChanges();

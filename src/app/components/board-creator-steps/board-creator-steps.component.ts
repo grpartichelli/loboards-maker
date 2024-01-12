@@ -46,7 +46,7 @@ export class BoardCreatorStepsComponent implements OnInit {
   public enterAnimationClass = "";
   private lastChangeStateCommand = ChangeStateCommand.CONFIRM;
   public confirmMessage = "";
-  public progress = 0;
+  public progressPercentage = 0;
   public state!: BoardCreatorState;
 
   constructor(
@@ -121,7 +121,7 @@ export class BoardCreatorStepsComponent implements OnInit {
 
     this.state = newState;
     this.confirmMessage = newState.confirmMessage();
-    this.progress = newState.progress();
+    this.progressPercentage = newState.progressPercentage();
     this.updateEnteringAnimations();
   }
 

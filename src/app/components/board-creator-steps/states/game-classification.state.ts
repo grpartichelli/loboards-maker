@@ -37,7 +37,7 @@ export class GameClassificationState extends BoardCreatorState {
     return BoardCreatorStateType.GAME_CLASSIFICATION;
   }
 
-  public progress() {
+  public progressPercentage() {
     return 75;
   }
 }

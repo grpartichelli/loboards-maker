@@ -24,7 +24,7 @@ export class TerminalState extends BoardCreatorState {
     return BoardCreatorStateType.TERMINAL;
   }
 
-  public progress(): number {
+  public progressPercentage(): number {
     return 0;
   }
 }

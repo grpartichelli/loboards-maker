@@ -22,7 +22,7 @@ export abstract class BoardCreatorState {
   public abstract reject(): Promise<BoardCreatorState>;
   public abstract isConfirmEnabled(): boolean;
   public abstract type(): BoardCreatorStateType;
-  public abstract progress(): number;
+  public abstract progressPercentage(): number;
 
   public moveTo(
     state: CreatorStateImplementations,

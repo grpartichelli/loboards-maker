@@ -29,7 +29,7 @@ export class PositionCreationState extends BoardCreatorState {
     return BoardCreatorStateType.POSITION_CREATION;
   }
 
-  public progress(): number {
+  public progressPercentage(): number {
     return 50;
   }
 }

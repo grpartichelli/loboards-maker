@@ -26,7 +26,7 @@ export class BoardDesignState extends BoardCreatorState {
     return BoardCreatorStateType.BOARD_DESIGN;
   }
 
-  public progress(): number {
+  public progressPercentage(): number {
     return 25;
   }
 }

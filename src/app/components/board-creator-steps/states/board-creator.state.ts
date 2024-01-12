@@ -17,10 +17,10 @@ export abstract class BoardCreatorState {
     protected readonly navigationService: NavigationService,
   ) {}
 
-  public abstract accept(): Promise<BoardCreatorState>;
-  public abstract acceptMessage(): string;
+  public abstract confirm(): Promise<BoardCreatorState>;
+  public abstract confirmMessage(): string;
   public abstract reject(): Promise<BoardCreatorState>;
-  public abstract isAcceptEnabled(): boolean;
+  public abstract isConfirmEnabled(): boolean;
   public abstract type(): BoardCreatorStateType;
   public abstract progress(): number;
 

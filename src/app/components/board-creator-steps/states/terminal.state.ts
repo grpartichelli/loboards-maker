@@ -4,11 +4,11 @@ import {
 } from "./board-creator.state";
 
 export class TerminalState extends BoardCreatorState {
-  public accept(): Promise<BoardCreatorState> {
+  public confirm(): Promise<BoardCreatorState> {
     return this.stayOnCurrentState();
   }
 
-  public acceptMessage(): string {
+  public confirmMessage(): string {
     return "";
   }
 
@@ -16,7 +16,7 @@ export class TerminalState extends BoardCreatorState {
     return this.stayOnCurrentState();
   }
 
-  public isAcceptEnabled(): boolean {
+  public isConfirmEnabled(): boolean {
     return false;
   }
 

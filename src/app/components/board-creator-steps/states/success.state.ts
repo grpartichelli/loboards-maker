@@ -8,13 +8,13 @@ import { BoardModel } from "../../../models/board.model";
 import { GameClassificationState } from "./game-classification.state";
 
 export class SuccessState extends BoardCreatorState {
-  public accept() {
+  public confirm() {
     this.model = new BoardModel();
     this.localStorageService.clearData();
     return this.moveTo(TerminalState);
   }
 
-  public acceptMessage() {
+  public confirmMessage() {
     return "Concluir";
   }
 
@@ -22,7 +22,7 @@ export class SuccessState extends BoardCreatorState {
     return this.moveTo(GameClassificationState);
   }
 
-  public isAcceptEnabled() {
+  public isConfirmEnabled() {
     return true;
   }
 

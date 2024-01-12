@@ -6,11 +6,11 @@ import { PositionCreationState } from "./position-creation.state";
 import { TerminalState } from "./terminal.state";
 
 export class BoardDesignState extends BoardCreatorState {
-  public accept(): Promise<BoardCreatorState> {
+  public confirm(): Promise<BoardCreatorState> {
     return this.moveTo(PositionCreationState);
   }
 
-  public acceptMessage(): string {
+  public confirmMessage(): string {
     return "Iniciar";
   }
 
@@ -18,7 +18,7 @@ export class BoardDesignState extends BoardCreatorState {
     return this.moveTo(TerminalState);
   }
 
-  public isAcceptEnabled(): boolean {
+  public isConfirmEnabled(): boolean {
     return this.model.name.length > 2 && this.model.isImageLoadedCorrectly;
   }
 

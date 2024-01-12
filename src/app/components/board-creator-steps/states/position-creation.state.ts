@@ -6,11 +6,11 @@ import { GameClassificationState } from "./game-classification.state";
 import { BoardDesignState } from "./board-design.state";
 
 export class PositionCreationState extends BoardCreatorState {
-  public accept(): Promise<BoardCreatorState> {
+  public confirm(): Promise<BoardCreatorState> {
     return this.moveTo(GameClassificationState);
   }
 
-  public acceptMessage(): string {
+  public confirmMessage(): string {
     return "Continuar";
   }
 
@@ -18,7 +18,7 @@ export class PositionCreationState extends BoardCreatorState {
     return this.moveTo(BoardDesignState);
   }
 
-  public isAcceptEnabled(): boolean {
+  public isConfirmEnabled(): boolean {
     return (
       this.model.positions.length > 1 &&
       !this.model.positions.some((position) => !position.id.length)

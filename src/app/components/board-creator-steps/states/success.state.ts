@@ -30,7 +30,7 @@ export class SuccessState extends BoardCreatorState {
     return BoardCreatorStateType.SUCCESS;
   }
 
-  public progress() {
+  public progressPercentage() {
     return 100;
   }
 }
